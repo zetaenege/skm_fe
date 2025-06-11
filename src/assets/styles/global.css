@@ -1,0 +1,41 @@
+:root {
+
+
+    --color-black: #000000;
+    --color-blck2: #323232;
+    --color-white: #ffffff;
+    --color-gray: #f2f2f2;
+    --color-gray2: #D9D9D9;
+    --color-gray3: #7D7D7D;
+
+    --font-primary: "Inter", sans-serif;
+    --font-secondary: "Bagel Fat One", system-ui;
+
+    --container-width: 768px;
+
+    --font-size-base: 16px;
+    --line-height-base: 1.5;
+
+    --border-radius-base: 6px;
+}
+
+/* ========== BASE STYLES ========== */
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: var(--container-width);
+    padding: 0 20px;
+
+}
+
+h1, h2, h3 {
+    font-family: var(--font-secondary);
+}
