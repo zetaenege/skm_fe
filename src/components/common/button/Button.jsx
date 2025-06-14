@@ -22,7 +22,7 @@ function Button({
             type={type}
             onClick={onClick}
             disabled={disabled}
-            variant={variant}
+            className={`${styles[variant]}`}
         >
             {children}
         </button>

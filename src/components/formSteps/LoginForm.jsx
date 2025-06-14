@@ -2,7 +2,7 @@ import Button from "../common/button/Button.jsx";
 import styles from "./formSteps.module.css";
 
 
-function Login() {
+function LoginForm() {
     return (
 
         <section className={styles.centered__container}>
@@ -45,4 +45,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginForm;
