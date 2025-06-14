@@ -52,7 +52,8 @@ form p{
     margin-top: 50px;
 }
 
-form p a{
+form p a,
+span a {
     text-decoration: none;
     font-weight: 700;
     color: var(--color-black);
@@ -64,4 +65,57 @@ h2 {
     font-size: 24px;
     margin-bottom: 40px;
     font-weight: 100;
+}
+
+
+.form__label{
+    font-family: var(--font-primary);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-black);
+
+}
+
+.form__input__wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.form__checkbox__wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+
+.form__checkbox__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.form__checkbox__label input[type="checkbox"] {
+    margin: 0;
+}
+
+
+.custom__checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-black);
+    border-radius: 50%;
+    background-color: #fff;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.custom__checkbox:checked {
+    background-color: var(--color-black);
+    border-color: var(--color-gray3);
 }
