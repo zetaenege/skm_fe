@@ -1,0 +1,67 @@
+.centered__container {
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* centra horizontal */
+    align-items: center;     /* centra vertical */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    text-align: left; /* ← mantiene la alineación de textos e inputs a la izquierda */
+}
+
+.form__input {
+    height: 50px;
+    border-radius: var(--border-radius-base);
+    color: var(--color-gray3);
+    border: 2px solid var(--color-black);
+    line-height: 40px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0 16px;
+    max-width: 350px;
+    width: 100%;
+    box-sizing: border-box;
+   margin-bottom: 20px;
+}
+
+.form-input::placeholder {
+    color: var(--color-white);
+    opacity: 0.6;
+}
+
+.link__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+form p{
+    margin-bottom: 30px;
+}
+
+.link__wrapper{
+    margin-top: 50px;
+}
+
+form p a{
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--color-black);
+
+}
+
+h2 {
+    font-family: var(--font-secondary);
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: 100;
+}
