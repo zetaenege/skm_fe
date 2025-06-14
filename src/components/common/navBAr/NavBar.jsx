@@ -1,25 +1,29 @@
 import styles from './navbar.module.css';
+import logoMobile from "../../../assets/elementspage/wuap_icon.svg"
+import logoDesktop from "../../../assets/elementspage/wuap_logo.svg"
+import logOut from "../../../assets/icons/logout-exit-circle.svg";
+
 
 
 function NavBar() {
 
     return (
 
-            <nav>
-
-
-                <img src="https://via.placeholder.com/150" alt="Logo" className="logo desktop"/>
-                <img src="https://via.placeholder.com/100" alt="Logo Mobile" className="logo mobile"/>
-
-                <ul className="menu">
-                    <li className="logout-wrapper">
-                        <button className="logout-button">
-                            <img src="https://via.placeholder.com/20" className="logout-icon" alt="Log Out"/>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
+        <nav>
+            <div className={styles.navbar__logo_wrapper}>
+                <img src={logoDesktop} alt="Logo" className="logo desktop" className={`${styles.logo} ${styles.desktop}`}/>
+                <img src={logoMobile} alt="Logo Mobile" className="logo mobile"  className={`${styles.logo} ${styles.mobile}`}/>
+            </div>
+            <ul className={styles.menu}>
+                <li className={styles.logout__wrapper}>
+                    <button className={styles.logout__button}>
+                        <img src={logOut} className={styles.logout__icon} alt="Log Out"/>
+                    </button>
+                </li>
+            </ul>
+        </nav>
     );
 
 }
+
 export default NavBar;
