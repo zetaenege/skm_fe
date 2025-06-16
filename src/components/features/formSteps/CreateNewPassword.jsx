@@ -1,5 +1,5 @@
-import Button from "../common/button/Button.jsx";
-import styles from "./formSteps.module.css";
+import Button from "../../common/button/Button.jsx";
+import styles from "./FormSteps.module.css";
 
 
 function CreatedNewPassword() {

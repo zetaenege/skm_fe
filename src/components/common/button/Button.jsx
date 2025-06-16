@@ -18,11 +18,10 @@ function Button({
     return (
 
         <button
-            className={styles.button}
             type={type}
             onClick={onClick}
             disabled={disabled}
-            variant={variant}
+            className={`${styles[variant]}`}
         >
             {children}
         </button>

@@ -11,8 +11,8 @@ function NavBar() {
 
         <nav>
             <div className={styles.navbar__logo_wrapper}>
-                <img src={logoDesktop} alt="Logo" className="logo desktop" className={`${styles.logo} ${styles.desktop}`}/>
-                <img src={logoMobile} alt="Logo Mobile" className="logo mobile"  className={`${styles.logo} ${styles.mobile}`}/>
+                <img src={logoDesktop} alt="Logo"  className={`${styles.logo} ${styles.desktop}`}/>
+                <img src={logoMobile} alt="Logo Mobile"   className={`${styles.logo} ${styles.mobile}`}/>
             </div>
             <ul className={styles.menu}>
                 <li className={styles.logout__wrapper}>
