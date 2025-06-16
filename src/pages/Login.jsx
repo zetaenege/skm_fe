@@ -1,5 +1,5 @@
 
-import LoginForm from "../components/formSteps/LoginForm.jsx";
+import LoginForm from "../components/features/formSteps/LoginForm.jsx";
 
 function Login() {
     return (

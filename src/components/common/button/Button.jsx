@@ -18,7 +18,6 @@ function Button({
     return (
 
         <button
-            className={styles.button}
             type={type}
             onClick={onClick}
             disabled={disabled}

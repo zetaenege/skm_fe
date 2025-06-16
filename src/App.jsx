@@ -1,9 +1,9 @@
 import './App.css'
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
-import ForgotPassword from "./components/formSteps/ForgotPassword.jsx";
-import CreatedNewPassword from "./components/formSteps/CreateNewPassword.jsx";
-import SignUp from "./components/formSteps/SignUpForm.jsx";
-import AccountCreated from "./components/formSteps/AccountCreated.jsx";
+import ForgotPassword from "./components/features/formSteps/ForgotPassword.jsx";
+import CreatedNewPassword from "./components/features/formSteps/CreateNewPassword.jsx";
+import SignUp from "./components/features/formSteps/SignUpForm.jsx";
+import AccountCreated from "./components/features/formSteps/AccountCreated.jsx";
 import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import NavBar from "./components/common/navBAr/NavBar.jsx";
