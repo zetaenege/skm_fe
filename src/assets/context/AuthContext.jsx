@@ -1,18 +1,19 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import {createContext, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 import axios from "axios";
+import {API} from "../../Api.jsx"; // Ajusta si tu ruta es diferente
 
 export const AuthContext = createContext({});
 
-function AuthContextProvider({ children }) {
+function AuthContextProvider({children}) {
     const [authState, setAuthState] = useState({
         isAuth: false,
         user: null,
         status: "pending",
     });
-
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -20,68 +21,72 @@ function AuthContextProvider({ children }) {
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                void fetchUserData(decoded.sub, token);
-            } catch (e) {
-                console.error("Invalid token:", e);
-                logout(); // si el token no se puede decodificar
+                void fetchUserData(token);
+            } catch (err) {
+                console.error("❌ Token inválido:", err);
+                logout();
             }
         } else {
-            setAuthState({
-                isAuth: false,
-                user: null,
-                status: "done",
-            });
+            console.log("ℹ️ No hay token. Usuario no autenticado.");
+            setAuthState({isAuth: false, user: null, status: "done"});
         }
     }, []);
 
-    function login(JWT, redirectURL = "/profile") {
+    function login(JWT) {
         localStorage.setItem("token", JWT);
-        const decoded = jwtDecode(JWT);
-        void fetchUserData(decoded.sub, JWT, redirectURL);
+        console.log("🔐 Login exitoso. Token guardado.");
+        void fetchUserData(JWT, true);
     }
 
     function logout() {
         localStorage.removeItem("token");
-        setAuthState({
-            isAuth: false,
-            user: null,
-            status: "done",
-        });
-        console.log("User has been logged out!");
+        setAuthState({isAuth: false, user: null, status: "done"});
+        console.log("🚪 Sesión cerrada.");
         navigate("/");
     }
 
-    async function fetchUserData(id, token, redirectURL = "/profile") {
+    //FetchData
+    async function fetchUserData(token, redirect = false) {
         try {
-            const result = await axios.get(`http://localhost:3000/users/${id}`, {
+            const response = await axios.get(`${API}/users/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
+            console.log("🔍 Usuario recibido del backend:", response.data);
+
             const user = {
-                username: result.data.username,
-                email: result.data.email,
-                id: result.data.id,
-                isAdmin: result.data.isAdmin,
-                isCoach: result.data.isCoach,
+                id: response.data.id,
+                name: response.data.name,
+                email: response.data.email,
+                isAdmin: response.data.admin,
+                isCoach: response.data.coach,
+                position: response.data.position,
+                teamId: response.data.teamId,
+                tournamentId: response.data.tournamentId,
+                roles: response.data.admin ? ["ADMIN"] : ["USER"],
+
             };
+
 
             setAuthState({
                 isAuth: true,
                 user,
                 status: "done",
             });
+            console.log("✅ Usuario autenticado:", user);
 
-            if (user.isAdmin) {
-                navigate("/dashboard");
-            } else if (user.isCoach) {
-                navigate("/dashboarduser");
-            } else {
-                navigate("/profile");
+            if (redirect) {
+                if (user.isAdmin) {
+                    navigate("/dashboard");
+                } else {
+                    navigate("/dashboarduser");
+                }
             }
-        } catch (e) {
-            console.error("Error fetching user data:", e);
+
+        } catch (error) {
+            console.error("❌ Error al obtener usuario:", error);
             logout();
         }
     }

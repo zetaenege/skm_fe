@@ -2,6 +2,13 @@ import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useState } from "react";
 import axios from "axios";
+import {API} from "../../../Api.jsx";
+import {useNavigate} from "react-router-dom";
+
+
+
+
+
 
 function SignUp() {
     const [name, setName] = useState('');
@@ -10,6 +17,9 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+
+    const navigate = useNavigate();
+
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -21,10 +31,10 @@ function SignUp() {
             return;
         }
 
-        console.log("📨 Enviando registro con:", { name, email, password });
+        console.log("Enviando registro con:", { name, email, password });
 
         try {
-            const response = await axios.post("http://localhost:8080/api/users", {
+            const response = await axios.post(`${API}/users`, {
                 name,
                 email,
                 password
@@ -32,10 +42,16 @@ function SignUp() {
 
             console.log("✅ Usuario creado:", response.data);
             setSuccess("User created successfully!");
+
+            // Redirige al login después de un pequeño delay
+            setTimeout(() => {
+                navigate("/");
+            }, 1500);
+
         } catch (err) {
-            console.error("❌ Error al crear usuario:", err);
+            console.error( "Error al crear usuario:", err);
             if (err.response) {
-                console.error("📡 Respuesta del servidor con error:", err.response.data);
+                console.error(" Respuesta del servidor con error:", err.response.data);
                 setError(err.response.data.message || "Registration failed");
             } else {
                 setError("Registration failed");
