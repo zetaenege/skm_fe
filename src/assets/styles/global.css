@@ -98,6 +98,7 @@ body {
 
 h1, h2, h3 {
     font-family: var(--font-secondary);
+    font-weight: 300;
 }
 
 .text__display_tittle {

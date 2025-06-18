@@ -1,9 +1,10 @@
 import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
-import {useContext, useState} from "react";
-import {AuthContext} from "../../../assets/context/AuthContext.jsx";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { API } from "../../../Api.jsx";
 
 function LoginForm() {
     const { login } = useContext(AuthContext);
@@ -15,30 +16,30 @@ function LoginForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setError(null);
-        console.log("Submitting login form with email:", email);
 
         try {
-            const response = await axios.post("http://localhost:8080/api/login", {
-                email,
-                password,
-            });
+            const response = await axios.post(`${API}/login`, { email, password });
 
-            console.log("Response from server:", response);
-
-            if (response.data && response.data.accessToken) {
-                console.log("Login successful. TOKEN:", response.data.accessToken);
-                login(response.data.accessToken);
+            if (response.data?.accessToken) {
+                console.log("✅ Login successful");
+                if (typeof login === "function") {
+                    login(response.data.accessToken);
+                } else {
+                    console.error("❌ 'login' is not a function", login);
+                    setError("Internal error: login function missing.");
+                }
             } else {
-                console.warn("No accessToken in response:", response.data);
+                console.warn("⚠️ No token received");
                 setError("Login failed: No token received.");
             }
 
         } catch (e) {
-            console.error("Login error:", e);
-            if (e.response) {
-                console.error("Server responded with:", e.response.data);
+            console.error("❌ Login error:", e);
+            if (e.response?.data?.message) {
+                setError(e.response.data.message);
+            } else {
+                setError("Login failed. Please try again.");
             }
-            setError("Invalid email or password");
         }
     }
 
@@ -54,6 +55,7 @@ function LoginForm() {
                         name="email"
                         placeholder="Enter your email"
                         className={styles.form__input}
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
@@ -66,12 +68,17 @@ function LoginForm() {
                         name="password"
                         placeholder="Enter your password"
                         className={styles.form__input}
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
 
-                <p><Link to="/forgetpassword" className="info__text">Forgot password?</Link></p>
+                <p>
+                    <Link to="/forgetpassword" className="info__text">
+                        Forgot password?
+                    </Link>
+                </p>
 
                 {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -79,7 +86,7 @@ function LoginForm() {
 
                 <div className={styles.link__wrapper}>
                     <p className="info__text">
-                        Not a member? <Link to="/forgot-password">Register now</Link>
+                        Not a member? <Link to="/register">Register now</Link>
                     </p>
                 </div>
             </form>

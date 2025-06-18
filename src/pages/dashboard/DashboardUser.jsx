@@ -9,10 +9,14 @@ import TeamSquad from "../../components/features/statsvieuw/TeamSquad.jsx";
 import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
 import NewMember from "../../components/features/management/NewMember.jsx";
+import {useContext} from "react";
+import {AuthContext} from "../../assets/context/AuthContext.jsx";
+
 
 
 
 function DashboardUser() {
+    const { user } = useContext(AuthContext);
     return (
         <div >
             <div className="boxGlobal">
@@ -24,9 +28,13 @@ function DashboardUser() {
                     </div>
                 </div>
             </div>
-            <NewMember/>
-            <NewTeam/>
-            <JoinTeam/>
+            {user?.isCoach && <NewMember />}
+            {!user?.isCoach && !user?.teamId && (
+                <>
+                    <NewTeam />
+                    <JoinTeam />
+                </>
+            )}
             <PositionTable/>
             <TeamSquad/>
             <UpcomingMatches/>
