@@ -12,6 +12,7 @@ function JoinTeamForm() {
     const [teams, setTeams] = useState([]);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -22,11 +23,11 @@ function JoinTeamForm() {
                 setTeams(response.data);
             } catch (err) {
                 console.error("❌ Error loading teams:", err);
-                setError("Error loading teams.");
+                setError("Failed to load teams. Please try again.");
             }
         }
 
-        void fetchTeams();
+        fetchTeams();
     }, []);
 
     async function handleSubmit(e) {
@@ -34,26 +35,39 @@ function JoinTeamForm() {
         setError(null);
         setSuccess(null);
 
+        if (!position || !selectedTeam) {
+            setError("Please fill in all required fields.");
+            return;
+        }
+
         try {
             const token = localStorage.getItem("token");
-            console.log("Team seleccionado:", selectedTeam);
-            console.log("Posición:", position);
 
-
-            const response = await axios.put(`${API}/users/me`, {
-                name: user.name,
-                teamId: Number(selectedTeam),
-                position: position,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            const response = await axios.put(
+                `${API}/users/me`,
+                {
+                    name: user.name,
+                    teamId: Number(selectedTeam),
+                    position,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            });
+            );
+
+            console.log("✅ Usuario unido al equipo:", response.data);
             setSuccess("You've joined the team successfully!");
+
             setTimeout(() => navigate("/dashboarduser"), 1500);
         } catch (err) {
             console.error("❌ Error joining team:", err);
-            setError("Could not join team.");
+            if (err.response?.data?.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("Could not join the team. Please try again.");
+            }
         }
     }
 
@@ -96,10 +110,10 @@ function JoinTeamForm() {
                     </select>
                 </div>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {success && <p style={{ color: 'green' }}>{success}</p>}
+                {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+                {success && <p style={{ color: "green", marginTop: "0.5rem" }}>{success}</p>}
 
-                <Button type="submit" children="Join a team now" />
+                <Button type="submit">Join a team now</Button>
             </form>
         </section>
     );

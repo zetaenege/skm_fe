@@ -1,6 +1,7 @@
 import styles from './Dashboard.module.css';
 import ProfileArea from "../../components/features/dashElements/profileArea/ProfileArea.jsx";
-import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
+import TournamentProfileInfo
+    from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
 import NextMatch from "../../components/features/statsvieuw/NextMatch.jsx";
 import NewTeam from "../../components/features/management/NewTeam.jsx";
 import JoinTeam from "../../components/features/management/JoinTeam.jsx";
@@ -13,33 +14,34 @@ import {useContext} from "react";
 import {AuthContext} from "../../assets/context/AuthContext.jsx";
 
 
-
-
 function DashboardUser() {
-    const { user } = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     return (
-        <div >
+        <div>
             <div className="boxGlobal">
                 <div className={styles.info_area}>
                     <ProfileArea/>
                     <div>
-                        <TournamentProfileInfo />
+                        <TournamentProfileInfo/>
                         <NextMatch/>
                     </div>
                 </div>
             </div>
-            {user?.isCoach && <NewMember />}
+            {user?.isCoach && <NewMember/>}
             {!user?.isCoach && !user?.teamId && (
                 <>
-                    <NewTeam />
-                    <JoinTeam />
+                    <NewTeam/>
+                    <JoinTeam/>
                 </>
             )}
-            <PositionTable/>
-            <TeamSquad/>
-            <UpcomingMatches/>
-            <PastMatches/>
-
+            {user?.teamId && (
+                <>
+                    <PositionTable/>
+                    <TeamSquad/>
+                    <UpcomingMatches/>
+                    <PastMatches/>
+                </>
+            )}
 
 
         </div>

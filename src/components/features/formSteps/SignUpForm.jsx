@@ -2,13 +2,8 @@ import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useState } from "react";
 import axios from "axios";
-import {API} from "../../../Api.jsx";
-import {useNavigate} from "react-router-dom";
-
-
-
-
-
+import { API } from "../../../Api.jsx";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
     const [name, setName] = useState('');
@@ -20,7 +15,6 @@ function SignUp() {
 
     const navigate = useNavigate();
 
-
     async function handleSubmit(e) {
         e.preventDefault();
         setError(null);
@@ -31,27 +25,23 @@ function SignUp() {
             return;
         }
 
-        console.log("Enviando registro con:", { name, email, password });
-
         try {
             const response = await axios.post(`${API}/users`, {
                 name,
                 email,
-                password
+                password,
             });
 
             console.log("✅ Usuario creado:", response.data);
             setSuccess("User created successfully!");
 
-            // Redirige al login después de un pequeño delay
+            // Redirige al login después de un delay
             setTimeout(() => {
                 navigate("/");
             }, 1500);
-
         } catch (err) {
-            console.error( "Error al crear usuario:", err);
+            console.error("❌ Error al crear usuario:", err);
             if (err.response) {
-                console.error(" Respuesta del servidor con error:", err.response.data);
                 setError(err.response.data.message || "Registration failed");
             } else {
                 setError("Registration failed");
@@ -66,57 +56,53 @@ function SignUp() {
                 <p>Fill your information below</p>
 
                 <div className={styles.form__input__wrapper}>
-                    <label className={styles.form__label} htmlFor="name">Name</label>
+                    <label htmlFor="name" className={styles.form__label}>Name</label>
                     <input
-                        type="text"
                         id="name"
-                        name="name"
+                        type="text"
                         placeholder="Enter your name"
-                        className={styles.form__input}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        className={styles.form__input}
                         required
                     />
                 </div>
 
                 <div className={styles.form__input__wrapper}>
-                    <label className={styles.form__label} htmlFor="email">Email</label>
+                    <label htmlFor="email" className={styles.form__label}>Email</label>
                     <input
-                        type="email"
                         id="email"
-                        name="email"
+                        type="email"
                         placeholder="Enter your email"
-                        className={styles.form__input}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className={styles.form__input}
                         required
                     />
                 </div>
 
                 <div className={styles.form__input__wrapper}>
-                    <label className={styles.form__label} htmlFor="new-password">New Password</label>
+                    <label htmlFor="new-password" className={styles.form__label}>New Password</label>
                     <input
-                        type="password"
                         id="new-password"
-                        name="new-password"
+                        type="password"
                         placeholder="Enter password"
-                        className={styles.form__input}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className={styles.form__input}
                         required
                     />
                 </div>
 
                 <div className={styles.form__input__wrapper}>
-                    <label className={styles.form__label} htmlFor="confirm-password">Confirm Password</label>
+                    <label htmlFor="confirm-password" className={styles.form__label}>Confirm Password</label>
                     <input
-                        type="password"
                         id="confirm-password"
-                        name="confirm-password"
+                        type="password"
                         placeholder="Repeat password"
-                        className={styles.form__input}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        className={styles.form__input}
                         required
                     />
                 </div>
@@ -129,15 +115,16 @@ function SignUp() {
                             required
                             className={styles.custom__checkbox}
                         />
-                        <span className="info__text">By creating an account or signing you agree
-                            to our <a href="#">Terms and Conditions</a></span>
+                        <span className="info__text">
+                            By signing up you agree to our <a href="#">Terms and Conditions</a>
+                        </span>
                     </label>
                 </div>
 
-                {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
-                {success && <p style={{ color: 'green', marginTop: '0.5rem' }}>{success}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {success && <p style={{ color: 'green' }}>{success}</p>}
 
-                <Button type="submit">Save</Button>
+                <Button type="submit">Sign Up</Button>
             </form>
         </section>
     );

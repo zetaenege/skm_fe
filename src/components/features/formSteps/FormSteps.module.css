@@ -1,10 +1,10 @@
 .centered__container {
-    height: 100vh;
     display: flex;
-    justify-content: center; /* centra horizontal */
-    align-items: center;     /* centra vertical */
+    justify-content: center;
+    align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    height: 100vh;
 }
 
 .login__form {
@@ -12,7 +12,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    text-align: left; /* ← mantiene la alineación de textos e inputs a la izquierda */
+    text-align: left;
 }
 
 .form__input {

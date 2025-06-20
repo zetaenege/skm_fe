@@ -27,6 +27,8 @@
     gap: 20px;
 }
 
+
+
 @media only screen and (min-width: 769px) {
 
     .request__wrapper {
@@ -35,6 +37,8 @@
         justify-content: space-between;
         gap: 20px;
     }
+
+
 
 
 

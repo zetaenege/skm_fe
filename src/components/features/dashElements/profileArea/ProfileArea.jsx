@@ -4,6 +4,7 @@ import {AuthContext} from "../../../../assets/context/AuthContext.jsx";
 import {useEffect} from "react";
 import axios from "axios";
 import {API} from "../../../../Api.jsx";
+import profileImg from "../../../../assets/icons/img_profile.svg"
 
 function ProfileArea() {
 
@@ -11,7 +12,9 @@ function ProfileArea() {
 
     const { user } = useContext(AuthContext);
     const [teams, setTeams] = useState([]);
-    console.log("👤 Usuario logeado:", user);
+
+
+    // console.log("👤 Usuario logeado:", user);
 
     useEffect(() => {
         async function fetchTeams() {
@@ -35,18 +38,22 @@ function ProfileArea() {
         city = "Ciudad desconocida",
         imgProfile,
         teamId,
-        admin,
+        isAdmin,
     } = user;
+    const role = isAdmin ? "ADMIN" : "USER";
 
-    const role = admin ? "ADMIN" : "USER";
+
     const userTeamName = teams.find(team => team.id === user.teamId)?.name || "Sin equipo";
 
 
     return (
         <div className={styles.profile_wrapper}>
+
             <div className={styles.img__profile}>
-                <img src={imgProfile || "/default-avatar.png"} alt={`${name || "User"}'s profile`}/>
+                 <img src={profileImg || "/default-avatar.png"} alt={`${name || "User"}'s profile`}/>
             </div>
+
+
             <div className={styles.profile__info}>
                 <p className="name__text">{name}</p>
                 {role === "USER" && (
@@ -62,7 +69,7 @@ function ProfileArea() {
 
 
                 {role === "ADMIN" && (
-                    <p className="info__text">Admin access</p>
+                    <p className="info__text">Admin environment</p>
                 )}
             </div>
         </div>

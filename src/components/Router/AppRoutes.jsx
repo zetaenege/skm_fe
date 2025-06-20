@@ -16,6 +16,7 @@ const AppRoutes = () => {
 
 
     return (
+        <>
         <Routes>
             {/* Públicas */}
             <Route path="/" element={<Login />} />
@@ -77,6 +78,8 @@ const AppRoutes = () => {
                 }
             />
         </Routes>
+
+    </>
     );
 };
 

@@ -18,7 +18,7 @@ function AuthContextProvider({children}) {
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        if (token) {
+        if (token) {console.log("🔍 Verificando token:", token);
             try {
                 const decoded = jwtDecode(token);
                 void fetchUserData(token);
@@ -31,6 +31,8 @@ function AuthContextProvider({children}) {
             setAuthState({isAuth: false, user: null, status: "done"});
         }
     }, []);
+
+
 
     function login(JWT) {
         localStorage.setItem("token", JWT);
@@ -65,8 +67,7 @@ function AuthContextProvider({children}) {
                 position: response.data.position,
                 teamId: response.data.teamId,
                 tournamentId: response.data.tournamentId,
-                roles: response.data.admin ? ["ADMIN"] : ["USER"],
-
+                token: response.data.token,
             };
 
 

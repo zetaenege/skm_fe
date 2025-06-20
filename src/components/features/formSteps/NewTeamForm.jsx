@@ -1,24 +1,16 @@
 import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API } from "../../../Api.jsx";
-import { useContext } from "react";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 
-
-
-
-
-
 function NewTeamForm() {
-
-
-    const [position, setPosition] = useState("");
     const [name, setName] = useState('');
     const [imgProfile, setImgProfile] = useState('');
     const [city, setCity] = useState('');
+    const [position, setPosition] = useState('');
     const [tournamentId, setTournamentId] = useState('');
     const [tournaments, setTournaments] = useState([]);
 
@@ -27,23 +19,14 @@ function NewTeamForm() {
 
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
-
-
-
-
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         async function fetchTournaments() {
             try {
-                const token = localStorage.getItem("token");
-
                 const response = await axios.get(`${API}/tournaments`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-
-                console.log("📦 Torneos recibidos:", response.data); // Opcional para debug
                 setTournaments(response.data);
             } catch (err) {
                 console.error("❌ Error al cargar torneos:", err);
@@ -52,55 +35,39 @@ function NewTeamForm() {
         }
 
         void fetchTournaments();
-    }, []);
-
-
-
-
+    }, [token]);
 
     async function handleSubmit(e) {
         e.preventDefault();
         setError(null);
         setSuccess(null);
 
-        if (!name || !city || !tournamentId || (!user?.isAdmin && !position)) {
+        const missingFields = !name || !city || !tournamentId || (!user?.isAdmin && !position);
+        if (missingFields) {
             setError("Please fill in all required fields");
             return;
         }
+
         try {
             const response = await axios.post(`${API}/teams`, {
                 name,
                 imgProfile: imgProfile || null,
                 city,
                 tournamentId: parseInt(tournamentId),
+            }, {
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const createdTeam = response.data;
             console.log("✅ Equipo creado:", createdTeam);
             setSuccess("Team created successfully!");
 
-
-            //esto es lo nuevo que ando agregando
-            if (!user?.isAdmin) {
-                await axios.put(`${API}/users/${user.id}`, {
-                    name: user.name,
-                    email: user.email,
-                    teamId: createdTeam.id,
-                    isCoach: true,
-                    position: position,
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    }
-                });
-
-                console.log("👨‍🏫 Usuario actualizado como coach y asignado al equipo");
-            }
-            // hasta aqui
+            // Si quisieras enviar la posición y marcar como coach manualmente, puedes hacerlo aquí
+            // (aunque tu backend ya lo hace automáticamente si no es admin).
 
             setTimeout(() => {
                 navigate("/dashboard");
-            }, 1500);
+            }, 1000);
         } catch (err) {
             console.error("❌ Error al crear equipo:", err);
             if (err.response) {
@@ -117,6 +84,7 @@ function NewTeamForm() {
                 <h2 className={styles.form__title}>Create Team</h2>
                 <p>Fill in the team details below</p>
 
+                {/* Nombre del equipo */}
                 <div className={styles.form__input__wrapper}>
                     <label className={styles.form__label} htmlFor="name">Team Name</label>
                     <input
@@ -131,6 +99,7 @@ function NewTeamForm() {
                     />
                 </div>
 
+                {/* Posición del usuario (si no es admin) */}
                 {!user?.isAdmin && (
                     <div className={styles.form__input__wrapper}>
                         <label className={styles.form__label} htmlFor="position">Position</label>
@@ -147,6 +116,7 @@ function NewTeamForm() {
                     </div>
                 )}
 
+                {/* Imagen */}
                 <div className={styles.form__input__wrapper}>
                     <label className={styles.form__label} htmlFor="imgProfile">Image URL (optional)</label>
                     <input
@@ -160,6 +130,7 @@ function NewTeamForm() {
                     />
                 </div>
 
+                {/* Ciudad */}
                 <div className={styles.form__input__wrapper}>
                     <label className={styles.form__label} htmlFor="city">City</label>
                     <input
@@ -174,6 +145,7 @@ function NewTeamForm() {
                     />
                 </div>
 
+                {/* Torneo */}
                 <div className={styles.form__input__wrapper}>
                     <label className={styles.form__label} htmlFor="tournamentId">Tournament</label>
                     <select
@@ -193,6 +165,7 @@ function NewTeamForm() {
                     </select>
                 </div>
 
+                {/* Errores y éxito */}
                 {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
                 {success && <p style={{ color: 'green', marginTop: '0.5rem' }}>{success}</p>}
 

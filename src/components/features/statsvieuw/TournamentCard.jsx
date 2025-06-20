@@ -1,10 +1,10 @@
-import style from "./StatsVieuw.module.css"
+import style from "./StatsVieuw.module.css";
 import Button from "../../common/button/Button.jsx";
-import {useEffect, useState} from "react";
-import {API} from "../../../Api.jsx";
+import { useEffect, useState } from "react";
+import { API } from "../../../Api.jsx";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import imgTournament from "../../../assets/icons/organisatoricon.svg"
 
 function TournamentCard() {
     const [tournaments, setTournaments] = useState([]);
@@ -14,7 +14,12 @@ function TournamentCard() {
     useEffect(() => {
         async function fetchTournaments() {
             try {
-                const response = await axios.get(`${API}/tournaments`);
+                const token = localStorage.getItem("token");
+                const response = await axios.get(`${API}/tournaments`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setTournaments(response.data);
             } catch (err) {
                 console.error("❌ Error al obtener torneos:", err);
@@ -25,6 +30,15 @@ function TournamentCard() {
         fetchTournaments();
     }, []);
 
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "TBD";
+        const date = new Date(dateStr);
+        return isNaN(date) ? "TBD" : date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short"
+        });
+    };
+
     if (error) return <p style={{ color: "red" }}>{error}</p>;
     if (!Array.isArray(tournaments)) return <p>Invalid tournament data.</p>;
     if (!tournaments.length) return <p>Loading tournaments...</p>;
@@ -32,10 +46,8 @@ function TournamentCard() {
     return (
         <>
             {tournaments.map((tournament) => (
-            <div className="boxGlobal" key={tournament.id}>
-
-
-                    <section  className={style.tournament__card}>
+                <div className="boxGlobal" key={tournament.id}>
+                    <section className={style.tournament__card}>
                         <article className={style.next__match_header}>
                             <div>
                                 <p className="text__display_tittle_mini">
@@ -44,12 +56,7 @@ function TournamentCard() {
                             </div>
                             <div>
                                 <p className="info__text">
-                                    Start: {tournament.startDate
-                                    ? new Date(tournament.startDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })
-                                    : "TBD"}{" "}
-                                    | End: {tournament.endDate
-                                    ? new Date(tournament.endDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })
-                                    : "TBD"}
+                                    Start: {formatDate(tournament.startDate)} | End: {formatDate(tournament.endDate)}
                                 </p>
                             </div>
                         </article>
@@ -57,15 +64,24 @@ function TournamentCard() {
                         <article>
                             <div className={style.profile_wrapper}>
                                 <div className={style.img__profile}>
+
                                     {tournament.imgProfile ? (
-                                        <img src={tournament.imgProfile} alt={tournament.name || "Tournament image"} />
-                                    ) : (
-                                        <div className={style.img__placeholder}>No image</div>
-                                    )}
+                                    <img
+                                        src={tournament.imgProfile}
+                                        alt={tournament.name || "Tournament image"}
+                                        className={style.img__tournament_list}
+                                    />
+                                ) : (
+                                    <img
+                                        src={imgTournament}
+                                        alt="Default tournament image"
+                                        className={style.img__tournament_list}
+                                    />
+                                )}
+
                                 </div>
                                 <div className={style.profile__info}>
                                     <p className="name__text">{tournament.name || "Unnamed Tournament"}</p>
-                                    <p className="info__text">{tournament.location || "Unknown location"}</p>
                                 </div>
                             </div>
                         </article>
@@ -77,12 +93,10 @@ function TournamentCard() {
                             Manage Tournament
                         </Button>
                     </section>
-
-
-            </div>
+                </div>
             ))}
         </>
-    )
+    );
 }
 
 export default TournamentCard;

@@ -1,9 +1,10 @@
 import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {API} from "../../../Api.jsx";
+import { API } from "../../../Api.jsx";
+import { AuthContext } from "../../../assets/context/AuthContext.jsx"; // asegúrate de que esté bien la ruta
 
 function NewTournamentForm() {
     const [name, setName] = useState('');
@@ -14,11 +15,17 @@ function NewTournamentForm() {
     const [success, setSuccess] = useState(null);
 
     const navigate = useNavigate();
+    const { user, isAuth } = useContext(AuthContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
         setError(null);
         setSuccess(null);
+
+        if (!isAuth) {
+            setError("You must be logged in to create a tournament.");
+            return;
+        }
 
         if (!name || !startDate || !endDate) {
             setError("Please fill in all required fields");
@@ -26,18 +33,24 @@ function NewTournamentForm() {
         }
 
         try {
+            const token = localStorage.getItem("token");
+
             const response = await axios.post(`${API}/tournaments`, {
                 name,
                 imgProfile: imgProfile || null,
                 startDate,
                 endDate,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             console.log("✅ Torneo creado:", response.data);
             setSuccess("Tournament created successfully!");
 
             setTimeout(() => {
-                navigate("/dashboard"); // o donde quieras volver
+                navigate("/dashboard");
             }, 1500);
 
         } catch (err) {

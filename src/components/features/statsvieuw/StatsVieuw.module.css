@@ -21,6 +21,21 @@
     margin-top: 30px;
 }
 
+
+.img__tournament_list {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.match__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .match__state {
   display: flex;
   flex-direction: column;
@@ -164,4 +179,16 @@
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+@media only screen and (min-width: 769px) {
+
+
+
+    .match__grid > div {
+        width: calc(50% - 14px); /* espacio con margen */
+    }
+
+
+
 }
