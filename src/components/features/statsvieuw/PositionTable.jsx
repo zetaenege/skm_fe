@@ -1,7 +1,14 @@
 import style from "./StatsVieuw.module.css"
 
 
-function PositionTable() {
+function PositionTable({teams = []}) {
+
+    const sortedTeams = [...teams].sort((a, b) => {
+        if (b.points !== a.points) {
+            return b.points - a.points;
+        }
+        return b.goalDifference - a.goalDifference;
+    });
 
     return (
 
@@ -31,24 +38,33 @@ function PositionTable() {
                     </tr>
                     </thead>
                     <tbody>
-
-
-                    <tr>
-                        <td className={style.teamInfo_table}>
-                            <p className={style.position}>1</p>
-                            <div className={style.image_team}>
-                                <img src="url"/>
-                            </div>
-                            <span className="info__text">St.Rosa FC</span>
-                        </td>
-                        <td className="info__text">0</td>
-                        <td className="info__text">0</td>
-                        <td className="info__text">0</td>
-                        <td className="info__text">0</td>
-                        <td className="info__text">0</td>
-                    </tr>
-
-
+                    {sortedTeams.length > 0 ? (
+                        sortedTeams.map((team, index) => (
+                            <tr key={team.id || index}>
+                                <td className={style.teamInfo_table}>
+                                    <p className={style.position}>{index + 1}</p>
+                                    <div className={style.image_team}>
+                                        <img
+                                            src={team.imgProfile || "/default-team.png"}
+                                            alt={team.name}
+                                        />
+                                    </div>
+                                    <span className="info__text">{team.name}</span>
+                                </td>
+                                <td className="info__text">{team.matchesPlayed || 0}</td>
+                                <td className="info__text">{team.won || 0}</td>
+                                <td className="info__text">{team.drawn || 0}</td>
+                                <td className="info__text">{team.lost || 0}</td>
+                                <td className="info__text"><strong>{team.points || 0}</strong></td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="6" className="info__text" style={{textAlign: "center", padding: "1rem"}}>
+                                No teams registered in this tournament yet.
+                            </td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
             </div>

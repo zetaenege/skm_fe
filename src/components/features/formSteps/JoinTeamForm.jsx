@@ -1,9 +1,9 @@
 import styles from "./FormSteps.module.css";
-import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../assets/context/AuthContext.jsx";
+import {useState, useEffect, useContext} from "react";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../../../assets/context/AuthContext.jsx";
 import axios from "axios";
-import { API } from "../../../Api.jsx";
+import {API} from "../../../Api.jsx";
 import Button from "../../common/button/Button.jsx";
 
 function JoinTeamForm() {
@@ -12,17 +12,23 @@ function JoinTeamForm() {
     const [teams, setTeams] = useState([]);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    const { user } = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchTeams() {
             try {
-                const response = await axios.get(`${API}/teams`);
-                setTeams(response.data);
+                const token = localStorage.getItem("token");
+                const response = await axios.get(`${API}/teams`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                setTeams(Array.isArray(response.data) ? response.data : []);
             } catch (err) {
-                console.error("❌ Error loading teams:", err);
-                setError("Error loading teams.");
+                console.error("Error loading teams:", err);
+                setError("Error loading teams list.");
             }
         }
 
@@ -34,26 +40,37 @@ function JoinTeamForm() {
         setError(null);
         setSuccess(null);
 
-        try {
-            const token = localStorage.getItem("token");
-            console.log("Team seleccionado:", selectedTeam);
-            console.log("Posición:", position);
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setError("Session expired. Please log in.");
+            return;
+        }
 
+        try {
 
             const response = await axios.put(`${API}/users/me`, {
-                name: user.name,
+                ...user,
                 teamId: Number(selectedTeam),
                 position: position,
+                isCoach: false
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             });
+
+            console.log("✅ Joined team:", response.data);
             setSuccess("You've joined the team successfully!");
             setTimeout(() => navigate("/dashboarduser"), 1500);
+
         } catch (err) {
-            console.error("❌ Error joining team:", err);
-            setError("Could not join team.");
+            console.error("Error joining team:", err);
+            if (err.response && err.response.status === 403) {
+                setError("Permission denied (403). Your role might not allow this update.");
+            } else {
+                setError("Could not join team.");
+            }
         }
     }
 
@@ -96,10 +113,10 @@ function JoinTeamForm() {
                     </select>
                 </div>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {success && <p style={{ color: 'green' }}>{success}</p>}
+                {error && <p style={{color: 'red'}}>{error}</p>}
+                {success && <p style={{color: 'green'}}>{success}</p>}
 
-                <Button type="submit" children="Join a team now" />
+                <Button type="submit" children="Join a team now"/>
             </form>
         </section>
     );

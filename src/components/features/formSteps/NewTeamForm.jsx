@@ -15,7 +15,6 @@ import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 function NewTeamForm() {
 
 
-    const [position, setPosition] = useState("");
     const [name, setName] = useState('');
     const [imgProfile, setImgProfile] = useState('');
     const [city, setCity] = useState('');
@@ -26,7 +25,7 @@ function NewTeamForm() {
     const [success, setSuccess] = useState(null);
 
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user, refreshUser } = useContext(AuthContext);
 
 
 
@@ -46,7 +45,7 @@ function NewTeamForm() {
                 console.log("📦 Torneos recibidos:", response.data); // Opcional para debug
                 setTournaments(response.data);
             } catch (err) {
-                console.error("❌ Error al cargar torneos:", err);
+                console.error("Error al cargar torneos:", err);
                 setError("Error loading tournaments.");
             }
         }
@@ -63,50 +62,66 @@ function NewTeamForm() {
         setError(null);
         setSuccess(null);
 
-        if (!name || !city || !tournamentId || (!user?.isAdmin && !position)) {
+        if (!name || !city || !tournamentId ) {
             setError("Please fill in all required fields");
             return;
         }
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setError("No authentication token found. Please log in.");
+            return;
+        }
+
         try {
             const response = await axios.post(`${API}/teams`, {
                 name,
                 imgProfile: imgProfile || null,
                 city,
                 tournamentId: parseInt(tournamentId),
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             });
 
             const createdTeam = response.data;
-            console.log("✅ Equipo creado:", createdTeam);
+            console.log("Team created:", createdTeam);
             setSuccess("Team created successfully!");
 
 
             //esto es lo nuevo que ando agregando
-            if (!user?.isAdmin) {
-                await axios.put(`${API}/users/${user.id}`, {
-                    name: user.name,
-                    email: user.email,
+            if (!user?.isAdmin && user?.id) {
+
+                await axios.put(`${API}/users/me`, {
+                    ...user,
                     teamId: createdTeam.id,
                     isCoach: true,
-                    position: position,
                 }, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
                     }
                 });
 
-                console.log("👨‍🏫 Usuario actualizado como coach y asignado al equipo");
+                if (refreshUser) {
+                    await refreshUser();
+                }
+
+                console.log("User updated as coach");
             }
-            // hasta aqui
+
 
             setTimeout(() => {
-                navigate("/dashboard");
-            }, 1500);
+                navigate(user?.isAdmin ? "/dashboard" : "/dashboarduser");
+            }, 1200);
+
         } catch (err) {
-            console.error("❌ Error al crear equipo:", err);
+            console.error("Error in team creation process:", err);
             if (err.response) {
-                setError(err.response.data.message || "Error creating team");
+                const msg = err.response.data.message || "Error processing request";
+                setError(err.response.status === 403 ? "Access denied: Missing permissions." : msg);
             } else {
-                setError("Error creating team");
+                setError("Connection error. Please try again.");
             }
         }
     }
@@ -131,21 +146,6 @@ function NewTeamForm() {
                     />
                 </div>
 
-                {!user?.isAdmin && (
-                    <div className={styles.form__input__wrapper}>
-                        <label className={styles.form__label} htmlFor="position">Position</label>
-                        <input
-                            type="text"
-                            id="position"
-                            name="position"
-                            placeholder="Enter your position"
-                            className={styles.form__input}
-                            value={position}
-                            onChange={(e) => setPosition(e.target.value)}
-                            required
-                        />
-                    </div>
-                )}
 
                 <div className={styles.form__input__wrapper}>
                     <label className={styles.form__label} htmlFor="imgProfile">Image URL (optional)</label>

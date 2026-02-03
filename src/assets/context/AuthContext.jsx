@@ -23,7 +23,7 @@ function AuthContextProvider({children}) {
                 const decoded = jwtDecode(token);
                 void fetchUserData(token);
             } catch (err) {
-                console.error("❌ Token inválido:", err);
+                console.error("Token inválido:", err);
                 logout();
             }
         } else {
@@ -31,6 +31,7 @@ function AuthContextProvider({children}) {
             setAuthState({isAuth: false, user: null, status: "done"});
         }
     }, []);
+
 
     function login(JWT) {
         localStorage.setItem("token", JWT);
@@ -60,8 +61,8 @@ function AuthContextProvider({children}) {
                 id: response.data.id,
                 name: response.data.name,
                 email: response.data.email,
-                isAdmin: response.data.admin,
-                isCoach: response.data.coach,
+                isAdmin: response.data.isAdmin || response.data.admin,
+                isCoach: response.data.isCoach || response.data.coach,
                 position: response.data.position,
                 teamId: response.data.teamId,
                 tournamentId: response.data.tournamentId,
@@ -86,16 +87,26 @@ function AuthContextProvider({children}) {
             }
 
         } catch (error) {
-            console.error("❌ Error al obtener usuario:", error);
+            console.error("Error al obtener usuario:", error);
             logout();
         }
     }
+
+    const refreshUserData = async () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            await fetchUserData(token);
+        }
+    };
 
     const contextData = {
         ...authState,
         login,
         logout,
+        refreshUserData,
     };
+
+
 
     return (
         <AuthContext.Provider value={contextData}>

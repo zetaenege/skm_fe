@@ -10,6 +10,7 @@ function NewTournamentForm() {
     const [imgProfile, setImgProfile] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [city, setCity] = useState('null');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
@@ -20,8 +21,19 @@ function NewTournamentForm() {
         setError(null);
         setSuccess(null);
 
-        if (!name || !startDate || !endDate) {
+        if (new Date(startDate) > new Date(endDate)) {
+            setError("Start date cannot be later than end date");
+            return;
+        }
+
+        if (!name || !startDate || !endDate || !city) {
             setError("Please fill in all required fields");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setError("You must be logged in to create a tournament");
             return;
         }
 
@@ -31,21 +43,34 @@ function NewTournamentForm() {
                 imgProfile: imgProfile || null,
                 startDate,
                 endDate,
+                city,
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
 
-            console.log("✅ Torneo creado:", response.data);
+            console.log("Tournament created:", response.data);
             setSuccess("Tournament created successfully!");
 
             setTimeout(() => {
-                navigate("/dashboard"); // o donde quieras volver
+                navigate("/dashboard");
             }, 1500);
 
         } catch (err) {
-            console.error("❌ Error al crear torneo:", err);
+            console.error("Error creating tournament", err);
             if (err.response) {
-                setError(err.response.data.message || "Error creating tournament");
+                const status = err.response.status;
+                if (status === 403) {
+                    setError("Forbidden: Only ADMINs can create tournaments.");
+                } else if (status === 401) {
+                    setError("Unauthorized: Please log in again.");
+                } else {
+
+                    setError(err.response.data.message || "Error creating tournament");
+                }
             } else {
-                setError("Error creating tournament");
+                setError("Network error: Cannot reach the server.");
             }
         }
     }
@@ -109,8 +134,22 @@ function NewTournamentForm() {
                     />
                 </div>
 
-                {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
-                {success && <p style={{ color: 'green', marginTop: '0.5rem' }}>{success}</p>}
+                <div className={styles.form__input__wrapper}>
+                    <label className={styles.form__label} htmlFor="city">City</label>
+                    <input
+                        type="text"
+                        id="city"
+                        name="endDate"
+                        placeholder="e.g. Leeuwarden"
+                        className={styles.form__input}
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                    />
+                </div>
+
+                {error && <p style={{color: 'red', marginTop: '0.5rem'}}>{error}</p>}
+                {success && <p style={{color: 'green', marginTop: '0.5rem'}}>{success}</p>}
 
                 <Button type="submit">Save</Button>
             </form>

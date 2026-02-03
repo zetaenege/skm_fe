@@ -1,13 +1,13 @@
 import Button from "../../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../assets/context/AuthContext.jsx";
+import {useContext, useState} from "react";
+import {AuthContext} from "../../../assets/context/AuthContext.jsx";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { API } from "../../../Api.jsx";
+import {Link} from "react-router-dom";
+import {API} from "../../../Api.jsx";
 
 function LoginForm() {
-    const { login } = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,28 +18,25 @@ function LoginForm() {
         setError(null);
 
         try {
-            const response = await axios.post(`${API}/login`, { email, password });
+            const response = await axios.post(`${API}/auth/login`, {email, password});
+            const token = response.data.jwt;
 
-            if (response.data?.accessToken) {
-                console.log("✅ Login successful");
+            if (token) {
+                console.log("Login successful");
                 if (typeof login === "function") {
-                    login(response.data.accessToken);
+                    login(token);
                 } else {
-                    console.error("❌ 'login' is not a function", login);
+                    console.error("'login' is not a function", login);
                     setError("Internal error: login function missing.");
                 }
             } else {
-                console.warn("⚠️ No token received");
+                console.warn("No token received");
                 setError("Login failed: No token received.");
             }
 
         } catch (e) {
-            console.error("❌ Login error:", e);
-            if (e.response?.data?.message) {
-                setError(e.response.data.message);
-            } else {
-                setError("Login failed. Please try again.");
-            }
+            console.error("Login error:", e);
+           setError("Network error: Cannot connect to server.");
         }
     }
 
@@ -80,7 +77,7 @@ function LoginForm() {
                     </Link>
                 </p>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{color: 'red'}}>{error}</p>}
 
                 <Button type="submit">Sign in</Button>
 

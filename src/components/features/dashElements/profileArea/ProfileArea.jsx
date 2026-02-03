@@ -1,68 +1,96 @@
 import styles from "./ProfileArea.module.css";
-import {useContext, useState} from "react";
-import {AuthContext} from "../../../../assets/context/AuthContext.jsx";
-import {useEffect} from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../../../../assets/context/AuthContext.jsx";
 import axios from "axios";
-import {API} from "../../../../Api.jsx";
+import { API } from "../../../../Api.jsx";
 
-function ProfileArea() {
-
-
-
+function ProfileArea({ mode = "user", tournamentId = null }) {
     const { user } = useContext(AuthContext);
     const [teams, setTeams] = useState([]);
-    console.log("👤 Usuario logeado:", user);
+    const [tournamentData, setTournamentData] = useState(null);
 
     useEffect(() => {
-        async function fetchTeams() {
+        if (!user) return;
+
+        async function loadData() {
             try {
-                const response = await axios.get(`${API}/teams`);
-                setTeams(response.data);
+                const token = localStorage.getItem("token");
+                const config = { headers: { Authorization: `Bearer ${token}` } };
+
+                // Carga de equipos para obtener nombres
+                const resTeams = await axios.get(`${API}/teams`, config);
+                setTeams(resTeams.data);
+
+                // Carga de datos del torneo si estamos en ese modo
+                const tId = tournamentId || user?.tournamentId;
+                if (mode === "tournament" && tId) {
+                    const resTour = await axios.get(`${API}/tournaments/${tId}`, config);
+                    setTournamentData(resTour.data);
+                }
             } catch (err) {
-                console.error("❌ Error al cargar equipos:", err);
+                console.error("Error loading ProfileArea data:", err);
             }
         }
 
-        fetchTeams();
-    }, []);
+        loadData();
+    }, [user, tournamentId, mode]);
 
     if (!user) return <p>Cargando perfil...</p>;
 
-
-    const {
-        name = "Usuario",
-        position = "Sin posición",
-        city = "Ciudad desconocida",
-        imgProfile,
-        teamId,
-        admin,
-    } = user;
-
-    const role = admin ? "ADMIN" : "USER";
-    const userTeamName = teams.find(team => team.id === user.teamId)?.name || "Sin equipo";
-
+    // Lógica para decidir qué mostrar
+    const isTournamentView = mode === "tournament" && tournamentData;
 
     return (
         <div className={styles.profile_wrapper}>
             <div className={styles.img__profile}>
-                <img src={imgProfile || "/default-avatar.png"} alt={`${name || "User"}'s profile`}/>
+                {/* Cambia la imagen según la vista */}
+                <img
+                    src={isTournamentView ? (tournamentData.imgProfile || "/default-tournament.png") : (user.imgProfile || "/default-avatar.png")}
+                    alt="Profile"
+                />
             </div>
+
             <div className={styles.profile__info}>
-                <p className="name__text">{name}</p>
-                {role === "USER" && (
-                    <div>
+                {isTournamentView ? (
+                    /* INFO DEL TORNEO */
+                    <>
+                        <p className="name__text">{tournamentData.name}</p>
                         <p className="info__text">
-                            {userTeamName}
+                            Start: {tournamentData.startDate
+                            ? new Date(tournamentData.startDate).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short"
+                            })
+                            : "TBD"}{" "}
+                            | End: {tournamentData.endDate
+                            ? new Date(tournamentData.endDate).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short"
+                            })
+                            : "TBD"}
                         </p>
                         <p className="info__text">
-                             {position || "Aguador"}
-                        </p>
-                    </div>
-                )}
-
-
-                {role === "ADMIN" && (
-                    <p className="info__text">Admin access</p>
+                            <strong>{tournamentData.city || tournamentData.location || "Leeuwarden"}</strong></p>
+                    </>
+                ) : (
+                    /* INFO  / ADMIN */
+                    <>
+                        <p className="name__text">{user.name || "User"}</p>
+                        {user.isAdmin ? (
+                            <p className="info__text">Admin access</p>
+                        ) : (
+                            <div>
+                                {teams?.find(t => t.id === user?.teamId)?.name && (
+                                    <p className="info__text">
+                                        {teams.find(t => t.id === user?.teamId).name}
+                                    </p>
+                                )}
+                                <p className="info__text">
+                                    {user.position || "Waterboy"}
+                                </p>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

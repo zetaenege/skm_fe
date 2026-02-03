@@ -9,39 +9,83 @@ import TeamSquad from "../../components/features/statsvieuw/TeamSquad.jsx";
 import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
 import NewMember from "../../components/features/management/NewMember.jsx";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../assets/context/AuthContext.jsx";
+import {API} from "../../Api.jsx";
+import axios from "axios";
 
 
 
 
 function DashboardUser() {
     const { user } = useContext(AuthContext);
+    const [tournament, setTournament] = useState(null);
+    const myTournamentId = user?.tournamentId || 1;
+    const myTeamId = user?.teamId || user?.team?.id;
+    console.log("👤 Dashboard User - TeamID detectado:", myTeamId);
+
+
+    useEffect(() => {
+
+        const searchId = user?.tournamentId || 1;
+
+        const fetchMyTournament = async () => {
+
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API}/tournaments/${searchId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log("DEBUG - Torneo cargado con éxito:", res.data);
+                setTournament(res.data);
+            } catch (err) {
+                console.error("Error loading user tournament:", err);
+            }
+        };
+
+        if (user) {
+            fetchMyTournament();
+        }
+    }, [user, myTournamentId]); // Pasamos 'user' como única dependencia estable
+
     return (
-        <div >
+        <div>
             <div className="boxGlobal">
                 <div className={styles.info_area}>
-                    <ProfileArea/>
+                    <ProfileArea mode="user"/>
                     <div>
-                        <TournamentProfileInfo />
-                        <NextMatch/>
+                        <TournamentProfileInfo
+                            type="user"
+                            tournamentId={user?.tournamentId || 1}
+                        />
+                        <NextMatch tournamentId={myTournamentId}
+                                   teamId={myTeamId}/>
                     </div>
                 </div>
             </div>
+
             {user?.isCoach && <NewMember />}
+
             {!user?.isCoach && !user?.teamId && (
                 <>
                     <NewTeam />
                     <JoinTeam />
                 </>
             )}
-            <PositionTable/>
-            <TeamSquad/>
-            <UpcomingMatches/>
-            <PastMatches/>
 
+            <PositionTable teams={tournament?.teams || []}/>
 
-
+            <TeamSquad teamId={myTeamId}/>
+            <UpcomingMatches
+                tournamentId={myTournamentId}
+                teamId={myTeamId}
+            />
+            <PastMatches
+                tournamentId={myTournamentId}
+                teamId={myTeamId}
+            />
         </div>
     );
 }
