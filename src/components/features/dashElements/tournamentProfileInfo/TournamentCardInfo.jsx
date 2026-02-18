@@ -7,7 +7,7 @@ import axios from "axios";
 import teamImg from "../../../../assets/image/Icons/team.svg"
 
 
-function TournamentProfileInfo({type = "global", variant = 'dark', tournamentId = null}) {
+function TournamentCardInfo({type = "global", variant = 'dark', tournamentId = null}) {
     const {user} = useContext(AuthContext);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -168,4 +168,4 @@ function TournamentProfileInfo({type = "global", variant = 'dark', tournamentId 
     );
 }
 
-export default TournamentProfileInfo;
+export default TournamentCardInfo;

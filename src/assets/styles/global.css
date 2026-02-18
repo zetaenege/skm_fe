@@ -2,7 +2,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
-margin: 0;
+    margin: 0;
     padding: 0;
 }
 
@@ -11,7 +11,33 @@ html, body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    margin: 20px auto;
+}
+
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    padding: 0;
+}
+
+
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+footer {
+    margin-top: auto;
 }
 
 img, picture, video, canvas, svg {
@@ -28,7 +54,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
 }
 
@@ -45,10 +71,18 @@ p {
     --color-white: #ffffff;
     --color-gray: #f2f2f2;
     --color-gray2: #D9D9D9;
-    --color-gray3: #7D7D7D;
+    --color-gray3: #fcfcfc;
+    --color-aqua: #8DEBD2;
+    --color-lemon: #EBFFA1;
+    --color-rosa: #FF94D7;
+    --color-violet: #A093FF;
+    --color-matchday: #35CE8D;
+    --color-upcoming: #F4D35E;
+    --color-finnished: #E83151;
 
-    --font-primary: "Inter", sans-serif;
-    --font-secondary: "Bagel Fat One", system-ui;
+
+    --font-primary: "Work Sans", Arial, sans-serif;
+    --font-secondary: "Bagel Fat One", system-ui, sans-serif;
 
     --container-width: 768px;
 
@@ -58,15 +92,6 @@ p {
     --border-radius-base: 6px;
 }
 
-/* ========== BASE STYLES ========== */
-body {
-    font-family: var(--font-primary);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--color-text);
-    margin: 0 10px;
-    padding: 0;
-}
 
 .container {
     max-width: var(--container-width);
@@ -74,26 +99,68 @@ body {
     padding: 0 20px;
 
 }
+.mono {
+    font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+    font-size: 10px;
+    padding: 4px 18px;
+}
 
-.name__text{
+.name__text {
     font-family: var(--font-primary);
     font-size: 16px;
     font-weight: 700;
-    color: var(--color-black);
 }
 
-.info__text{
+.name__text_ti {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.info__text {
     font-family: var(--font-primary);
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--color-black);
 }
 
-.info__text_mini{
+.info__text_state {
     font-family: var(--font-primary);
     font-size: 8px;
-    font-weight: 300;
+    font-weight: 500;
     color: var(--color-black);
+}
+
+.info__text_mini {
+    font-family: var(--font-primary);
+    font-size: 8px;
+    font-weight: 400;
+
+}
+
+.info__text_mini_ti {
+    font-family: var(--font-primary);
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.info__tittle_profile {
+    font-family: var(--font-primary);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 12px;
+}
+
+
+.info__name_profile {
+    font-family: var(--font-primary);
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin-bottom: 12px;
 }
 
 h1, h2, h3 {
@@ -103,9 +170,15 @@ h1, h2, h3 {
 
 .text__display_tittle {
     font-size: 18px;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
     line-height: 1.2;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+    font-weight: 800;
+}
+
+.section__tittle {
+    margin-top: 24px;
+    margin-left: 18px;
 }
 
 .text__display_tittle_mini {
@@ -121,12 +194,13 @@ h1, h2, h3 {
 }
 
 .boxGlobal {
-    background-color: var(--color-gray);
+    background-color: var(--color-gray3);
     border-radius: var(--border-radius-base);
-    padding: 30px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    padding: 25px 18px;
+    margin-bottom: 12px;
+
 }
+
 
 
 

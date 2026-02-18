@@ -4,7 +4,8 @@ import {useEffect, useState} from "react";
 import {API} from "../../../Api.jsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-
+import tournamentCup from "../../../assets/image/Icons/tournament.svg"
+import TournamentCardInfo from "../dashElements/tournamentProfileInfo/TournamentCardInfo.jsx";
 
 function TournamentCard() {
 
@@ -56,66 +57,87 @@ function TournamentCard() {
 
     if (error) return <p style={{color: "red"}}>{error}</p>;
     if (loading) return <p>Loading tournaments...</p>;
-    if (!tournaments.length === 0) return <p>No tournament available</p>;
+    if (tournaments.length === 0) {
+        return (
+            <div className="boxGlobal">
+                <p className="info__text">No tournaments available yet.</p>
+            </div>
+        );
+    }
+
 
     return (
         <>
-            {tournaments.map((tournament) => (
-                <div className="boxGlobal" key={tournament.id}>
+            <p className="text__display_tittle section__tittle">Tournament</p>
+            <div className={style.tournament__card_container}>
+                {tournaments.map((tournament) => (
+                    <div className="boxGlobal" key={tournament.id}>
+                        <section className={style.tournament__card}>
 
+                            <article className={style.next__match_header}>
 
-                    <section className={style.tournament__card}>
-                        <article className={style.next__match_header}>
-                            <div>
-                                <p className="text__display_tittle_mini">
-                                    Tournament #{tournament.id || "N/A"}
-                                </p>
-                            </div>
-                            <div>
-                                <p className="info__text">
-                                    Start: {tournament.startDate
-                                    ? new Date(tournament.startDate).toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "short"
-                                    })
-                                    : "TBD"}{" "}
-                                    | End: {tournament.endDate
-                                    ? new Date(tournament.endDate).toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "short"
-                                    })
-                                    : "TBD"}
-                                </p>
-                            </div>
-                        </article>
-
-                        <article>
-                            <div className={style.profile_wrapper}>
                                 <div className={style.img__profile}>
-                                    {tournament.imgProfile ? (
-                                        <img src={tournament.imgProfile} alt={tournament.name || "Tournament image"}/>
-                                    ) : (
-                                        <div className={style.img__placeholder}>No image</div>
-                                    )}
+                                    <img
+                                        src={tournament.imgProfile || tournamentCup}
+                                        alt={tournament.name || "Tournament image"}/>
                                 </div>
-                                <div className={style.profile__info}>
-                                    <p className="name__text">{tournament.name || "Unnamed Tournament"}</p>
-                                    <p className="info__text">{tournament.city || "Unknown location"}</p>
+
+                                <div>
+                                    <p className="info__text">
+                                        TRM{tournament.id || "N/A"}
+                                    </p>
                                 </div>
-                            </div>
-                        </article>
 
-                        <Button
-                            type="button"
-                            onClick={() => navigate(`/dashboard/tournament/${tournament.id}`)}
-                        >
-                            Manage Tournament
-                        </Button>
-                    </section>
+                            </article>
+
+                            <article>
+                                <div className={style.profile_wrapper}>
+
+                                    <div className={style.profile__info}>
+                                        <p className="name__text">{tournament.name || "Unnamed Tournament"}</p>
+                                        <p className="info__text">
+                                            <strong>City:</strong> {tournament.city || "Unknown location"}</p>
+                                        <div>
+                                            <p className="info__text">
+                                                <strong>Start:</strong> {tournament.startDate
+                                                ? new Date(tournament.startDate).toLocaleDateString("en-GB", {
+                                                    day: "2-digit",
+                                                    month: "short"
+                                                })
+                                                : "TBD"}{" "}
+                                                - <strong>End:</strong> {tournament.endDate
+                                                ? new Date(tournament.endDate).toLocaleDateString("en-GB", {
+                                                    day: "2-digit",
+                                                    month: "short"
+                                                })
+                                                : "TBD"}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article>
+                                {/* Llamamos al componente nuevo y le pasamos el objeto del torneo */}
+                                <TournamentCardInfo
+                                    variant="light"
+                                    tournamentData={tournament}
+                                />
+                            </article>
+
+                            <Button
+                                type="button"
+                                variant="primary" // Usamos tu variante standard
+                                onClick={() => navigate(`/dashboard/tournament/${tournament.id}`)}
+                            >
+                                Manage Tournament
+                            </Button>
+
+                        </section>
 
 
-                </div>
-            ))}
+                    </div>
+                ))}
+            </div>
         </>
     )
 }

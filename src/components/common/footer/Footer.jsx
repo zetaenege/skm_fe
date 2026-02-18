@@ -7,10 +7,10 @@ function Footer() {
 
     return (
 
-       <div>
-           <p class="">© 2026 Wuap. All rights reserved.</p>
+       <footer className={style.footer}>
+           <p className={style.text}>© 2026 wtrlmn All rights reserved.</p>
 
-       </div>
+       </footer>
     );
 
 }

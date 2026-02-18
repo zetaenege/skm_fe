@@ -9,6 +9,44 @@
     height: 100%;
 }
 
+.menu__close_button {
+    background-color:transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.menu__close_icon {
+    height: 25px;
+
+}
+
+.new__create {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.new__generate {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    align-items: stretch;
+}
+
+.table__team_squad {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+
 
 @media only screen and (min-width: 769px) {
     .info_area {
@@ -18,6 +56,11 @@
         justify-content: space-around;
         width: 100%;
         height: 100%;
+    }
+
+    .new_create {
+        grid-template-columns: 1fr;
+        width: 100%;
     }
 }
 

@@ -1,9 +1,8 @@
-
 import style from "./StatsVieuw.module.css"
 import {useEffect, useState} from "react";
 import {API} from "../../../Api.jsx";
 import axios from "axios";
-
+import styles from "../../common/navBAr/navbar.module.css";
 
 
 function TeamSquad({teamId}) {
@@ -42,76 +41,82 @@ function TeamSquad({teamId}) {
 
     if (!teamId) return null;
 
-  return (
-      <div className="boxGlobal">
-          <div className={style.section_heading}>
-              <p className="text__display_tittle">Team Squad</p>
-          </div>
+    return (
+        <>
+            <div>
+                <p className="text__display_tittle section__tittle">Team Squad</p>
+                <div  className={`${style.team__squad_style} boxGlobal`}>
 
-          <div className={style.position_table}>
-              <table>
-                  <colgroup>
-                      <col style={{width: "67%"}}/>
-                      <col style={{width: "11%"}}/>
-                      <col style={{width: "11%"}}/>
-                      <col style={{width: "11%"}}/>
-                  </colgroup>
-                  <thead>
-                  <tr>
-                      <th className="info__text">Player</th>
-                      <th className="info__text">M</th>
-                      <th className="info__text">G</th>
-                      <th className="info__text">C</th>
 
-                  </tr>
-                  </thead>
-                  <tbody>
+                    <div className={style.position_table}>
+                        <table>
+                            <colgroup>
+                                <col style={{width: "67%"}}/>
+                                <col style={{width: "11%"}}/>
 
-                  {loading ? (
-                      <tr>
-                          <td colSpan="4" className="info__text">Loading...</td>
-                      </tr>
-                  ) : squad.length > 0 ? (
-                      // Mapeamos la lista 'squad' descargada
-                      squad.map((player) => (
-                          <tr key={player.id}>
-                              <td className={style.teamInfo_table}>
-                                  <div className={style.image_team}>
-                                      <img
-                                          src={player.imgProfile || "/default-user.png"}
-                                          alt={player.name}
-                                          onError={(e) => {
-                                              e.target.src = "/default-user.png"
-                                          }} // Fallback si la imagen falla
-                                      />
-                                  </div>
-                                  <span className="info__text">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th className="info__text">Player</th>
+                                <th className="info__text">M</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="4" className="info__text">Loading...</td>
+                                </tr>
+                            ) : squad.length > 0 ? (
+                                // Mapeamos la lista 'squad' descargada
+                                squad.map((player) => (
+                                    <tr key={player.id}>
+                                        <td className={style.teamInfo_table}>
+                                            <div className={style.image__squad}>
+                                                {player.imgProfile ? (
+                                                    // Si el usuario tiene foto real, usamos <img>
+                                                    <img src={player.imgProfile} alt="User Profile"/>
+                                                ) : (
+                                                    // Si no tiene foto, usamos el SVG como máscara para darle color
+                                                    <div className={styles.user__svg_icon}></div>
+                                                )}
+                                            </div>
+                                            <span className={style.info__name_profile}>
                                       {player.name}
-                                      {/* Opcional: mostrar posición si existe */}
-                                      {player.position &&
-                                          <small style={{color: '#888', marginLeft: '5px'}}>({player.position})</small>}
+                                                {/* Opcional: mostrar posición si existe */}
+                                                {player.position &&
+                                                    <small style={{
+                                                        color: '#888',
+                                                        marginLeft: '5px'
+                                                    }}>({player.position})</small>}
                                   </span>
-                              </td>
-                              <td className="info__text">0</td>
-                              <td className="info__text">0</td>
-                              <td className="info__text">0</td>
-                          </tr>
-                      ))
-                  ) : (
-                      // Mensaje si la lista está vacía
-                      <tr>
-                          <td colSpan="4" className="info__text" style={{textAlign: 'center'}}>
-                              No players in this team.
-                          </td>
-                      </tr>
-                  )}
+                                        </td>
 
-                  </tbody>
-              </table>
-          </div>
+                                        <td className="info__name_profile">0</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                // Mensaje si la lista está vacía
+                                <tr>
+                                    <td colSpan="4" className="info__text" style={{textAlign: 'center'}}>
+                                        No players in this team.
+                                    </td>
+                                </tr>
+                            )}
 
-      </div>
-  );
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <p className="mono">
+                    <strong>MP:</strong> Matches played
+                </p>
+            </div>
+        </>
+    );
 }
 
 export default TeamSquad;

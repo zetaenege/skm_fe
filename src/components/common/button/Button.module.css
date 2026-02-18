@@ -1,18 +1,18 @@
 .primary{
 
-    height: 50px;
+    height: 40px;
     border-radius: var(--border-radius-base);
     color: var(--color-white);
     line-height: 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     background-color: var(--color-black);
     border: none;
-    min-width: 250px;
     align-self: flex-start;
+    padding: 0 20px;
 }
 
 .requestaccept{
@@ -50,16 +50,33 @@
 
 .button__start{
 
-    height: 50px;
+    height: 40px;
+    border-radius: var(--border-radius-base);
+    color: var(--color-black);
+    line-height: 40px;
+    text-align: center;
+
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: var(--color-white);
+    border: none;
+    padding: 0 30px;
+}
+
+.violet {
+    height: 40px;
     border-radius: var(--border-radius-base);
     color: var(--color-black);
     line-height: 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    font-weight: 400;
-    background-color: var(--color-white);
+    font-size: 14px;
+    font-weight: 500;
+    background-color: var(--color-violet);
     border: none;
-    min-width: 150px;
+    align-self: flex-start;
+    padding: 0 20px;
 }

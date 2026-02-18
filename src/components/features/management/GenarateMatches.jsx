@@ -1,11 +1,13 @@
-import style from "../statsvieuw/StatsVieuw.module.css";
+import style from "./management.module.css";
 import Button from "../../common/button/Button.jsx";
 import axios from "axios";
 import {API} from "../../../Api.jsx";
 import {useState} from "react";
+import clsx from "clsx";
+import styles from "./management.module.css";
 
 
-function GenerateMatches({tournamentId,onMatchesGenerated}) {
+function GenerateMatches({tournamentId, onMatchesGenerated}) {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -17,7 +19,7 @@ function GenerateMatches({tournamentId,onMatchesGenerated}) {
         setLoading(true);
         setMessage(null);
 
-        try{
+        try {
             const token = localStorage.getItem("token");
 
             await axios.post(`${API}/tournaments/${tournamentId}/generate-matches`, {}, {
@@ -25,40 +27,48 @@ function GenerateMatches({tournamentId,onMatchesGenerated}) {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setMessage({ type: 'success', text: 'Matches generated successfully!' });
+            setMessage({type: 'success', text: 'Matches generated successfully!'});
 
             if (onMatchesGenerated) {
                 onMatchesGenerated();
             }
 
-        }catch(error){
+        } catch (error) {
             console.error("Error generating matches:", error);
             setMessage({
                 type: 'error',
                 text: error.response?.data || 'Failed to generate matches.'
             });
-        }finally {
+        } finally {
             setLoading(false);
         }
     };
 
 
-  return (
-      <div className="boxGlobal">
+    return (
+        <div className={clsx("boxGlobal", styles.new__create_gnrt)}>
 
-          <p className="text__display_tittle">Tournament Fixture</p>
-          <p className={style.content__text}>Generate the match schedule for all teams in this tournament.</p>
-          {message && (
-              <p style={{ color: message.type === 'success' ? '#4caf50' : '#e94560', fontWeight: 'bold', margin: '10px 0' }}>
-                  {message.text}
-              </p>
-          )}
+            <p className="text__display_tittle">Tournament Fixture</p>
+            <p className={style.content__text}>Click Start to generate the full match schedule and bring the tournament
+                to life. All matches for every team will be created, setting the stage for the competition to begin.</p>
+            {message && (
+                <p style={{
+                    color: message.type === 'success' ? '#4caf50' : '#e94560',
+                    fontWeight: 'bold',
+                    margin: '10px 0'
+                }}>
+                    {message.text}
+                </p>
+            )}
 
-          <Button
-              type="submit"
-              children={loading ? "Generating..." : "Generate Matches"}
-              onClick={handleGenerateMatches}/>
-      </div>
-  );
+            <Button
+                type="submit"
+                children={loading ? "Generating..." : "Generate Matches"}
+                onClick={handleGenerateMatches}/>
+
+
+        </div>
+    );
 }
+
 export default GenerateMatches;

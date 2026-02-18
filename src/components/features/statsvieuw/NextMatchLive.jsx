@@ -3,6 +3,10 @@ import ButtonStart from "../../common/button/ButtonStart.jsx";
 import {useEffect, useState} from "react";
 import {API} from "../../../Api.jsx";
 import axios from "axios";
+import teamImg from "../../../assets/image/Icons/team.svg";
+import Button from "../../common/button/Button.jsx";
+import plusIcon from "../../../assets/image/Icons/plus.svg";
+import minusIcon from "../../../assets/image/Icons/minus.svg";
 
 
 const formatDate = (dateString) => {
@@ -12,19 +16,28 @@ const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.toLocaleDateString('en-GB', {weekday: 'short', day: 'numeric'}).toUpperCase();
     const time = date.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'});
-    return `${day} ~ ${time} h`;
+    return (
+        <>
+            <span className={style.day__strong}>{day}</span> ~ {time} h
+        </>
+    );
 }
 
 
-function NextMatchLive({ tournamentId, onMatchFinished }){
+function NextMatchLive({tournamentId, onMatchFinished}) {
 
     const [match, setMatch] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const [gameStatus, setGameStatus] = useState("PRE");
-
+    const [tournamentName, setTournamentName] = useState("");
     const [homeScore, setHomeScore] = useState(0);
     const [awayScore, setAwayScore] = useState(0);
+    const BRAND_COLORS = [
+        'var(--color-aqua)',
+        'var(--color-lemon)',
+        'var(--color-rosa)',
+        'var(--color-violet)'];
 
     useEffect(() => {
         if (!tournamentId) {
@@ -35,12 +48,15 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
         const fetchNextMatch = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get(`${API}/matches/tournament/${tournamentId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const config = {headers: {Authorization: `Bearer ${token}`}};
 
-                const next = res.data.find(m => m.status === "SCHEDULED");
+                const [matchesRes, tournamentRes] = await Promise.all([
+                    axios.get(`${API}/matches/tournament/${tournamentId}`, config),
+                    axios.get(`${API}/tournaments/${tournamentId}`, config)
+                ]);
 
+                const next = matchesRes.data.find(m =>
+                    m.status === "SCHEDULED");
                 if (next) {
                     setMatch(next);
                     setHomeScore(next.homeScore || 0);
@@ -48,7 +64,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
                 } else {
                     setMatch(null);
                 }
-
+                setTournamentName(tournamentRes.data.name || "Tournament");
 
             } catch (error) {
                 console.error("Error fetching next match:", error);
@@ -61,12 +77,11 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
     }, [tournamentId]);
 
 
-
-    const handleStart = ()=>{
+    const handleStart = () => {
         setGameStatus("LIVE");
     };
 
-    const handleStop = ()=>{
+    const handleStop = () => {
         setGameStatus("EDIT");
     };
 
@@ -84,7 +99,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
             };
 
             await axios.put(`${API}/matches/${match.id}`, updatedMatch, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: {Authorization: `Bearer ${token}`}
             });
 
             alert("Match finished successfully!");
@@ -117,14 +132,14 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
             <article className={style.next__match_header}>
 
                 <div>
-                    <p className="text__display_tittle">Next Match</p>
+                    <p className={style.section__tittle_next}>Next Match</p>
                     <p className="info__text">{formatDate(match.matchDate)}</p>
                 </div>
 
                 <div>
                     <div className={style.match__state}>
-                        <span className="info__text_mini">
-                            {gameStatus === 'LIVE' ? '🔴 LIVE' : 'Upcoming'}
+                        <span className={style.match__text_state}>
+                            {gameStatus === 'LIVE' ? 'LIVE' : 'Matchday'}
                         </span>
                     </div>
                 </div>
@@ -136,66 +151,115 @@ function NextMatchLive({ tournamentId, onMatchFinished }){
                 {/*Local Team*/}
                 <div className={style.team__card}>
                     <div className={style.team__img_name}>
-                        <div className={style.team__img}>
-                            <img src={match.homeTeam?.imgProfile || "https://via.placeholder.com/50"} alt=""/>
+
+                        <div className={style.team__img}
+                             style={{
+                                 backgroundColor: !match.homeTeam?.imgProfile
+                                     ? BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)]
+                                     : 'transparent'
+                             }}
+                        >
+                            <img src={match.homeTeam?.imgProfile || teamImg} alt=""/>
                         </div>
-                        <p className="text_name_small">{match.homeTeam?.name}</p>
+
+                        <p className="text_name_small">
+                            {match.homeTeam?.name}</p>
+
+                        {gameStatus === 'EDIT' && (
+                            <div className={style.score__controls_panel}>
+                                {/* Controles LOCAL */}
+                                <div className={style.control__group}>
+                                    <div className={style.buttons__row}>
+                                        <button
+                                            className={style.btn__score}
+                                            onClick={() => setHomeScore(Math.max(0, homeScore - 1))}
+                                        >
+                                            <img src={minusIcon} alt="Plus" className={style.icon__svg}/>
+                                        </button>
+
+                                        <button
+                                            className={style.btn__score}
+                                            onClick={() => setHomeScore(homeScore + 1)}
+                                        ><img src={plusIcon} alt="Plus" className={style.icon__svg}/></button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                     </div>
 
-                    {/* ZONA DE GOLES CAMBIANTE */}
                     <div className={style.match__result}>
-                        {gameStatus === 'EDIT' ? (
-                            // MODO EDICIÓN: Botones + y -
-                            <div style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
-                                <button type="button" onClick={() => setHomeScore(Math.max(0, homeScore - 1))}>-
-                                </button>
-                                <p className="name__text">{homeScore}</p>
-                                <button type="button" onClick={() => setHomeScore(homeScore + 1)}>+</button>
-                            </div>
-                        ) : (
-                            // MODO VISUALIZACIÓN
-                            <p className="name__text">{homeScore}</p>
-                        )}
+                        <p className="name__text">{homeScore}</p>
                     </div>
                 </div>
-
+                <p className="name__text"> - </p>
 
                 {/*Away Team*/}
                 <div className={style.team__card}>
+
                     <div className={style.match__result}>
-                        {gameStatus === 'EDIT' ? (
-                            <div style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
-                                <button type="button" onClick={() => setAwayScore(Math.max(0, awayScore - 1))}>-
-                                </button>
-                                <p className="name__text">{awayScore}</p>
-                                <button type="button" onClick={() => setAwayScore(awayScore + 1)}>+</button>
-                            </div>
-                        ) : (
-                            <p className="name__text">{awayScore}</p>
-                        )}
+                        <p className="name__text">{awayScore}</p>
                     </div>
+
                     <div className={style.team__img_name}>
-                        <div className={style.team__img}>
-                            <img src={match.awayTeam?.imgProfile || "https://via.placeholder.com/50"} alt=""/>
+                        <div className={style.team__img}
+                             style={{
+                                 backgroundColor: !match.awayTeam?.imgProfile
+                                     ? BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)]
+                                     : 'transparent'
+                             }}
+                        >
+                            <img src={match.awayTeam?.imgProfile || teamImg} alt=""/>
                         </div>
                         <p className="text_name_small">{match.awayTeam?.name}</p>
+                        {gameStatus === 'EDIT' && (
+                            <div className={style.score__controls_panel}>
+
+                                {/* Controles Visitor */}
+                                <div className={style.control__group}>
+                                    <div className={style.buttons__row}>
+                                        <button
+                                            className={style.btn__score}
+                                            onClick={() => setAwayScore(Math.max(0, awayScore - 1))}
+                                        >
+                                            <img src={minusIcon} alt="Plus" className={style.icon__svg}/>
+                                        </button>
+
+                                        <button
+                                            className={style.btn__score}
+                                            onClick={() => setAwayScore(awayScore + 1)}
+                                        ><img src={plusIcon} alt="Plus" className={style.icon__svg}/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </article>
 
             <div className={style.button__start}>
                 {gameStatus === 'PRE' && (
-                    <ButtonStart onClick={handleStart}>Start</ButtonStart>
+                    <Button
+                        type="submit"
+                        variant="violet"
+                        children="Start Match"
+                        onClick={handleStart}
+                    />
+
                 )}
 
                 {gameStatus === 'LIVE' && (
                     // Aquí podrías usar un botón rojo o cambiar el estilo
-                    <ButtonStart onClick={handleStop} style={{backgroundColor: 'red'}}>Stop</ButtonStart>
+                    <ButtonStart onClick={handleStop} style={{backgroundColor: 'red'}}>Stop Match</ButtonStart>
                 )}
 
                 {gameStatus === 'EDIT' && (
                     <ButtonStart onClick={handleSaveResult}>Add Result</ButtonStart>
                 )}
+            </div>
+            <div className={style.name__tournament}>
+                <p className="text_name_small">{tournamentName}</p>
             </div>
 
         </section>

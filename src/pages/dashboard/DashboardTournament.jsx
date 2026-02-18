@@ -7,14 +7,18 @@ import PositionTable from "../../components/features/statsvieuw/PositionTable.js
 import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
 import NextMatchLive from "../../components/features/statsvieuw/NextMatchLive.jsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {API} from "../../Api.jsx";
 import axios from "axios";
+import menuClose from "../../assets/image/Icons/menu_profile_close.svg";
 
 function DashboardTournament() {
-    const { id } = useParams();
-    const [tournament, setTournament] = useState(null);;
+    const {id} = useParams();
+    const [tournament, setTournament] = useState(null);
+    const navigate = useNavigate();
+
+
     useEffect(() => {
         const fetchTournamentData = async () => {
             try {
@@ -40,21 +44,31 @@ function DashboardTournament() {
         }
     }, [id]);
 
+    function handleMenuUser() {
+        navigate('/');
+    }
+
     return (
         <div>
             <div className="boxGlobal">
+                <button className={styles.menu__close_button} onClick={handleMenuUser} title="Logout">
+                    <img src={menuClose} className={styles.menu__close_icon} alt="LogOut"/>
+                </button>
                 <div className={styles.info_area}>
-                    <ProfileArea mode="tournament" tournamentId={id} />
-                    <TournamentProfileInfo type="tournament" tournamentId={id} />
+                    <ProfileArea mode="tournament" tournamentId={id}/>
+                    <TournamentProfileInfo type="tournament" tournamentId={id}/>
                 </div>
             </div>
-            <GenerateMatches tournamentId={id}
-                             onMatchesGenerated={() => window.location.reload()}
-                                 />
-            <NextMatchLive tournamentId={id} />
+            <div className={styles.new__generate}>
+                <GenerateMatches tournamentId={id}
+                                 onMatchesGenerated={() => window.location.reload()}
+
+                />
+            </div>
+            <NextMatchLive tournamentId={id}/>
             <PositionTable teams={tournament?.teams || []}/>
             <UpcomingMatches tournamentId={id}/>
-            <PastMatches  tournamentId={id}/>
+            <PastMatches tournamentId={id}/>
         </div>
     );
 }

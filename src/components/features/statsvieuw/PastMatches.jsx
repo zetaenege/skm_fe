@@ -4,7 +4,9 @@ import style from "./StatsVieuw.module.css"
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {API} from "../../../Api.jsx";
-
+import teamImg from "../../../assets/image/Icons/team.svg";
+import matchEnd from "../../../assets/icons/matchEnd.svg";
+import Button from "../../common/button/Button.jsx";
 
 const formatDate = (dateString) => {
     if (!dateString) return "-";
@@ -14,12 +16,20 @@ const formatDate = (dateString) => {
 
     return `${day} ~ ${time} h`;
 
+
+
 };
 
 
 function PastMatches({ tournamentId, teamId }) {
     const [matches, setMatches] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(2);
+    const BRAND_COLORS = [
+        'var(--color-aqua)',
+        'var(--color-lemon)',
+        'var(--color-rosa)',
+        'var(--color-violet)'];
 
     useEffect(() => {
 
@@ -58,6 +68,12 @@ function PastMatches({ tournamentId, teamId }) {
         fetchMatches();
 
     }, [tournamentId, teamId]);
+
+
+    const handleLoadMore = () => {
+        setVisibleCount((prevCount) => prevCount + 2);
+    };
+
     if (loading) {
         return <p>Loading upcoming matches...</p>;
     }
@@ -71,69 +87,93 @@ function PastMatches({ tournamentId, teamId }) {
             </div>
         );
     }
+
+    const matchesToShow = matches.slice(0, visibleCount);
     return (
         <>
-            <p className="text__display_tittle">Past Matches</p>
 
             <section>
-                {matches.map((match) => (
-                    // Usamos boxGlobal aquí dentro para separar cada tarjeta
-                    <div key={match.id} className="boxGlobal" style={{ marginBottom: '20px' }}>
+                <p className="text__display_tittle section__tittle">Past Matches</p>
+                <div className={style.tournament__card_container}>
+                    {matchesToShow.map((match) => (
+                        // Usamos boxGlobal aquí dentro para separar cada tarjeta
+                        <div key={match.id} className="boxGlobal" style={{marginBottom: '20px'}}>
 
-                        <article className={style.next__match_header}>
-                            <div>
-                                <p className="info__text">{formatDate(match.matchDate)}</p>
-                            </div>
-                            <div>
-                                <div className={style.match__state}>
-                                    {/* Cambiamos el texto a Finished */}
-                                    <p className="info__text_mini" style={{color: '#aaa'}}>Finished</p>
+                            <article className={style.next__match_header}>
+                                <div>
+                                    <p className="info__text">{formatDate(match.matchDate)}</p>
                                 </div>
-                            </div>
-                        </article>
-
-                        <article className={style.next__match_content}>
-
-                            {/* Equipo Local */}
-                            <div className={style.team__card}>
-                                <div className={style.team__img_name}>
-                                    <div className={style.team__img}>
-                                        <img
-                                            src={match.homeTeam?.imgProfile || "https://via.placeholder.com/50"}
-                                            alt={match.homeTeam?.name}
-                                        />
+                                <div>
+                                    <div className={style.match__state}>
+                                        <img src={matchEnd}></img>
                                     </div>
-                                    <p className="text_name_small">{match.homeTeam?.name}</p>
                                 </div>
-                                <div className={style.match__result}>
-                                    {/* Mostramos el GOL real */}
-                                    <p className="name__text">{match.homeScore ?? match.teamHomeScore ?? 0}</p>
-                                </div>
-                            </div>
+                            </article>
 
-                            {/* Equipo Visitante */}
-                            <div className={style.team__card}>
-                                <div className={style.match__result}>
-                                    {/* Mostramos el GOL real */}
-                                    <p className="name__text">{match.awayScore ?? match.teamAwayScore ?? 0}</p>
-                                </div>
-                                <div className={style.team__img_name}>
-                                    <div className={style.team__img}>
-                                        <img
-                                            src={match.awayTeam?.imgProfile || "https://via.placeholder.com/50"}
-                                            alt={match.awayTeam?.name}
-                                        />
+                            <article className={style.next__match_content}>
+
+                                {/* Equipo Local */}
+                                <div className={style.team__card}>
+                                    <div className={style.team__img_name}>
+                                        <div className={style.team__img}
+                                             style={{
+                                                 backgroundColor: !match.homeTeam?.imgProfile
+                                                     ? BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)]
+                                                     : 'transparent'
+                                             }}
+                                        >
+                                            <img
+                                                src={match.homeTeam?.imgProfile || teamImg}
+                                                alt={match.homeTeam?.name}
+                                            />
+                                        </div>
+                                        <p className="text_name_small">{match.homeTeam?.name}</p>
                                     </div>
-                                    <p className="text_name_small">{match.awayTeam?.name}</p>
+                                    <div className={style.match__result}>
+                                        {/* Mostramos el GOL real */}
+                                        <p className="name__text">{match.homeScore ?? match.teamHomeScore ?? 0}</p>
+                                    </div>
                                 </div>
-                            </div>
+                                <p className="text_name_small">-</p>
+                                {/* Equipo Visitante */}
+                                <div className={style.team__card}>
+                                    <div className={style.match__result}>
+                                        {/* Mostramos el GOL real */}
+                                        <p className="name__text">{match.awayScore ?? match.teamAwayScore ?? 0}</p>
+                                    </div>
+                                    <div className={style.team__img_name}>
+                                        <div className={style.team__img}
+                                             style={{
+                                                 backgroundColor: !match.homeTeam?.imgProfile
+                                                     ? BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)]
+                                                     : 'transparent'
+                                             }}
+                                        >
+                                            <img
+                                                src={match.awayTeam?.imgProfile || teamImg}
+                                                alt={match.awayTeam?.name}
+                                            />
+                                        </div>
+                                        <p className="text_name_small">{match.awayTeam?.name}</p>
+                                    </div>
+                                </div>
 
-                        </article>
-                    </div>
-                ))}
+                            </article>
+                        </div>
+                    ))}
+                </div>
             </section>
+            {visibleCount < matches.length && (
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Button
+                        onClick={handleLoadMore}
+                        variant="primary" >
+                        View More ({matches.length - visibleCount})
+                    </Button>
+                </div>
+            )}
         </>
-    );
+);
 }
 
 export default PastMatches;

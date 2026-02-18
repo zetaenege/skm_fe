@@ -5,8 +5,7 @@
 }
 
 
-.info__tournament_section article{
-    background-color: var(--color-gray2);
+.info_article{
     aspect-ratio: 1 / 1;
     width: 70px;
     border-radius: var(--border-radius-base);
@@ -18,3 +17,34 @@
     text-align: center;
 }
 
+
+
+.light {
+    background-color: var(--color-gray);
+    color: var(--color-black);
+
+}
+
+
+.dark {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+
+.img__team{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--color-white);
+}
+
+.img__team img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+}
