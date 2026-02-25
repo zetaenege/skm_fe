@@ -1,339 +1,313 @@
 .next__match {
-    margin-top: 40px;
+  width: 100%;
 }
 
 .next__match_live {
-    background-color: var(--color-black);
-    padding: 20px;
-    border-radius: var(--border-radius-base);
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: var(--color-black);
+  padding: 20px;
+  border-radius: var(--border-radius-base);
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .next__match_live p {
-    color: var(--color-white);
+  color: var(--color-white);
 }
-
 
 .button__start {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
-.section__tittle_next{
-    font-size: 18px;
-    font-family: var(--font-primary);
-    line-height: 1.2;
-    font-weight: 800;
+.section__tittle_next {
+  font-size: 18px;
+  font-family: var(--font-primary);
+  line-height: 1.2;
+  font-weight: 800;
 }
-
-
 
 .match__state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-gray);
-    padding: 6px 6px;
-    border-radius: var(--border-radius-base);
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-lemon);
+  padding: 6px 6px;
+  border-radius: var(--border-radius-base);
 }
 
-.match__state img{
-    width: 100%;
-    object-fit: cover;
+.match__state img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-
-
 
 .match__state_upcoming {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-upcoming);
-    max-width: 70px;
-    border-radius: var(--border-radius-base);
-    padding: 10px 10px;
-    min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-upcoming);
+  max-width: 70px;
+  border-radius: var(--border-radius-base);
+  padding: 10px 10px;
+  min-width: 80px;
 }
 
-.match__state_finnished{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-finnished);
-    max-width: 70px;
-    border-radius: var(--border-radius-base);
-    padding: 10px 10px;
-    min-width: 80px;
+.match__state_finnished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-finnished);
+  max-width: 70px;
+  border-radius: var(--border-radius-base);
+  padding: 10px 10px;
+  min-width: 80px;
 }
 
-.day__strong{
-    font-weight: 700;
-    font-size: 12px;
+.day__strong {
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .next__match_header {
-    display: flex;
-    justify-content: space-between;
-    align-items:start;
-    width: 100%;
-    gap: 1rem;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  gap: 1rem;
 }
-
 
 .next__match_content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 43px;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 43px;
+  gap: 20px;
 }
 
-
 .team__card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .team__img_name {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
 }
 
 .team__img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: var(--color-gray2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-gray2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
 }
 
-.img__profile img,
-.team__img img {
-
-    width: 70%;
-    height: 70%;
-    object-fit: cover;
-
+div.team__squad_style {
+  background-color: var(--color-gray);
 }
-
-div.team__squad_style{
-    background-color: var(--color-gray);
-}
-
 
 /*table position*/
 
-
 .position_table {
-    width: 100%;
-    overflow-x: auto;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .position_table table {
-    width: 100%;
-    max-width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .position_table th:first-child {
-    text-align: left;
+  text-align: left;
 }
-
 
 .position_table th,
 .position_table td {
-    text-align: center;
+  text-align: center;
 }
 
 .teamInfo_table {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* ← aquí lo alineamos a la izquierda */
-    gap: 12px;
-    text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* ← aquí lo alineamos a la izquierda */
+  gap: 12px;
+  text-align: left;
 }
 
 .position {
-    font-size: 10px;
-    padding-right: 5px;
+  font-size: 10px;
+  padding-right: 5px;
 }
 
-
-
 .position_table thead tr {
-    border-bottom: 20px solid transparent; /* simula margen sin romper la tabla */
+  border-bottom: 20px solid transparent; /* simula margen sin romper la tabla */
 }
 
 .position_table tbody tr:not(:last-child) {
-    border-bottom: 1px solid var(--color-white);
+  border-bottom: 1px solid var(--color-white);
 }
 
 .position_table td {
-    padding: 1rem 0.75rem;
+  padding: 1rem 0.75rem;
 }
 
 .teamInfo_table span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
 }
-
-
-
 
 /*tournaments*/
 
+.tournament__info {
+  width: 100%;
+}
+
 .tournament__card {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .tournament__card_container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    align-items: stretch;
-    gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  align-items: stretch;
+  gap: 12px;
 }
 
 .img__profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-lemon);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-lemon);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-
-.image_team{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.image_team {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-gray2);
+  overflow: hidden;
 }
 
 .image__squad {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--color-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-gray2);
 
-    flex-shrink: 0;
-    aspect-ratio: 1/1;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
 }
-.image__squad img,
-.image_team img{
-    width: 70%;
-    height: 70%;
-    object-fit: cover;
-}
-
-.image__squad .placeholder_icon {
-    width: 60%;
-    height: 60%;
-    object-fit: contain;
+.full__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Esto hace que la foto llene el espacio sin deformarse */
 }
 
+/* Estilo cuando es el ICONO (tournamentCup) */
+.icon__style {
+  width: 80%; /* El icono suele verse mejor si no ocupa el 100% */
+  height: auto;
+  object-fit: contain; /* Mantiene la forma del icono */
+}
 
 .profile_wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.profile__info>p:first-child{
-    margin-bottom: 15px;
+.profile__info > p:first-child {
+  margin-bottom: 15px;
 }
-
 
 .info__name_profile {
-    font-family: var(--font-primary);
-    font-size: 10px;
-    font-weight: 400;
-    color: var(--color-black);
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-black);
 }
 
-
-
-.tournament__card > article:nth-child(3){
-    margin-bottom: 40px;
+.tournament__card > article:nth-child(3) {
+  margin-bottom: 40px;
 }
 
-.name__tournament{
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 100%;
-
+.name__tournament {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
 }
-
 
 /*NEXT MATCHN LIVE*/
 
-.btn__score{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    width: 100%;
+.btn__score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
 }
 
-.icon__svg{
-    width: 14px;             /* Ajusta este tamaño a tu gusto */
-    height: 14px;
-    object-fit: contain;
-    pointer-events: none;
+.icon__svg {
+  width: 14px; /* Ajusta este tamaño a tu gusto */
+  height: 14px;
+  object-fit: contain;
+  pointer-events: none;
 }
 
-.buttons__row{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-direction: row;
+.buttons__row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row;
 }

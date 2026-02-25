@@ -1,0 +1,67 @@
+.menu__wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+}
+
+.menu__profile_edit {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.menu__profile_edit:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu__profile_active {
+  background-color: #2a2a35;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #2a2a35;
+  border-radius: 8px;
+  border-top-right-radius: 0; /* Para que parezca conectado al botón */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid #444;
+}
+
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.dropdown__item:hover {
+  background-color: #3f3f4e;
+  color: #4caf50;
+}
+
+.dropdown__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.menu__close_icon {
+  width: 25px;
+  height: 25px;
+}

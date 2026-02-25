@@ -1,206 +1,212 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
-    height: 100%;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-
 
 body {
-    font-family: var(--font-primary);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    padding: 0;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  padding: 0;
 }
 
-
 .app-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
 main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
 }
 
 footer {
-    margin-top: auto;
+  margin-top: auto;
 }
 
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button, textarea, select {
-    font: inherit;
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 p {
-    font-size: 14px;
-    font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 #root {
-    isolation: isolate;
+  isolation: isolate;
 }
-
 
 :root {
+  --color-black: #000000;
+  --color-blck2: #323232;
+  --color-white: #ffffff;
+  --color-gray: #f2f2f2;
+  --color-gray2: #d9d9d9;
+  --color-gray3: #f9f9f9;
+  --color-aqua: #8debd2;
+  --color-lemon: #ebffa1;
+  --color-rosa: #ff94d7;
+  --color-violet: #a093ff;
+  --color-matchday: #35ce8d;
+  --color-upcoming: #f4d35e;
+  --color-finnished: #e83151;
 
+  --font-primary: "Work Sans", Arial, sans-serif;
+  --font-secondary: "Bagel Fat One", system-ui, sans-serif;
 
-    --color-black: #000000;
-    --color-blck2: #323232;
-    --color-white: #ffffff;
-    --color-gray: #f2f2f2;
-    --color-gray2: #D9D9D9;
-    --color-gray3: #fcfcfc;
-    --color-aqua: #8DEBD2;
-    --color-lemon: #EBFFA1;
-    --color-rosa: #FF94D7;
-    --color-violet: #A093FF;
-    --color-matchday: #35CE8D;
-    --color-upcoming: #F4D35E;
-    --color-finnished: #E83151;
+  --container-width: 768px;
 
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
 
-    --font-primary: "Work Sans", Arial, sans-serif;
-    --font-secondary: "Bagel Fat One", system-ui, sans-serif;
-
-    --container-width: 768px;
-
-    --font-size-base: 16px;
-    --line-height-base: 1.5;
-
-    --border-radius-base: 6px;
+  --border-radius-base: 6px;
 }
-
 
 .container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 20px;
-
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .mono {
-    font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
-    font-size: 10px;
-    padding: 4px 18px;
+  font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+  font-size: 10px;
+  padding: 4px 18px;
 }
 
 .name__text {
-    font-family: var(--font-primary);
-    font-size: 16px;
-    font-weight: 700;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .name__text_ti {
-    font-family: var(--font-primary);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-white);
 }
 
 .info__text {
-    font-family: var(--font-primary);
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--color-black);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-black);
 }
 
 .info__text_state {
-    font-family: var(--font-primary);
-    font-size: 8px;
-    font-weight: 500;
-    color: var(--color-black);
+  font-family: var(--font-primary);
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--color-black);
 }
 
 .info__text_mini {
-    font-family: var(--font-primary);
-    font-size: 8px;
-    font-weight: 400;
-
+  font-family: var(--font-primary);
+  font-size: 8px;
+  font-weight: 400;
 }
 
 .info__text_mini_ti {
-    font-family: var(--font-primary);
-    font-size: 8px;
-    font-weight: 700;
-    color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--color-white);
 }
 
 .info__tittle_profile {
-    font-family: var(--font-primary);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--color-black);
-    margin-bottom: 12px;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 12px;
 }
-
 
 .info__name_profile {
-    font-family: var(--font-primary);
-    font-size: 10px;
-    font-weight: 400;
-    color: var(--color-black);
-    margin-bottom: 12px;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-black);
+  margin-bottom: 12px;
 }
 
-h1, h2, h3 {
-    font-family: var(--font-secondary);
-    font-weight: 300;
+h1,
+h2,
+h3 {
+  font-family: var(--font-secondary);
+  font-weight: 300;
 }
 
 .text__display_tittle {
-    font-size: 18px;
-    font-family: var(--font-primary);
-    line-height: 1.2;
-    margin-bottom: 18px;
-    font-weight: 800;
+  font-size: 18px;
+  font-family: var(--font-primary);
+  line-height: 1.2;
+  margin-bottom: 18px;
+  font-weight: 800;
 }
 
 .section__tittle {
-    margin-top: 24px;
-    margin-left: 18px;
+  margin-top: 24px;
+  margin-left: 18px;
 }
 
 .text__display_tittle_mini {
-    font-size: 14px;
-    font-family: var(--font-secondary);
-    line-height: 1.2;
+  font-size: 14px;
+  font-family: var(--font-secondary);
+  line-height: 1.2;
 }
 
 .text_name_small {
-    font-size: 10px;
-    line-height: 1.2;
-    font-weight: 500;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 500;
 }
 
 .boxGlobal {
-    background-color: var(--color-gray3);
-    border-radius: var(--border-radius-base);
-    padding: 25px 18px;
-    margin-bottom: 12px;
-
+  background-color: var(--color-gray3);
+  border-radius: var(--border-radius-base);
+  padding: 25px 18px;
+  margin-bottom: 12px;
+  position: relative;
 }
 
-
-
-
+.global__section_style {
+  margin-bottom: 50px;
+}
