@@ -1,0 +1,133 @@
+.menu__wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+}
+
+.menu__profile_edit {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.menu__profile_active {
+  opacity: 48%;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--color-lemon);
+  border-radius: var(--border-radius-base);
+  z-index: 888;
+  min-width: 180px;
+  padding: 8px 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+
+  cursor: pointer;
+}
+
+.dropdown__item p {
+  font-weight: 500;
+  color: var(--color-black);
+  font-size: 14px;
+}
+
+.dropdown__item:hover p {
+  font-weight: 600;
+}
+
+.dropdown__icon {
+  width: 25px;
+  height: 25px;
+}
+
+.menu__close_icon {
+  width: 25px;
+  height: 25px;
+}
+
+.form__title {
+  font-size: 18px;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+/* DROPDOWN FORM*/
+
+.dropdown__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+}
+.dropdown__form_inline {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background-color: var(--color-white);
+  padding: 24px;
+}
+
+.form__input__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 9px;
+}
+
+.input__group_upload {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.form__input {
+  height: 50px;
+  border-radius: var(--border-radius-base);
+  color: var(--color-blck2);
+  border: 2px solid var(--color-black);
+  line-height: 40px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 0 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  background-color: var(--color-white);
+}
+.upload__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-black);
+}
+
+.upload__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.form__input::placeholder {
+  color: var(--color-black);
+  opacity: 0.6;
+}

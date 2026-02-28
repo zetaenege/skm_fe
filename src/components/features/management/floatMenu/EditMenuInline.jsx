@@ -3,6 +3,8 @@ import axios from "axios";
 import { API } from "../../../../Api.jsx";
 import { convertToBase64 } from "../../../../helpers/ConvertToBase64.jsx";
 import uploadIcon from "../../../../assets/image/Icons/upload.svg";
+import styles from "./floatMenu.module.css";
+import Button from "../../../common/button/Button.jsx";
 
 function EditMenuInline({ type, item, onClose, onSuccess }) {
   const [editName, setEditName] = useState(item?.name || "");
@@ -52,46 +54,22 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "12px",
-        padding: "15px",
-        backgroundColor: "#2a2a35",
-        border: "1px solid #444",
-        borderRadius: "8px",
-        marginTop: "10px",
-        marginBottom: "10px",
-      }}
-    >
-      <h4 style={{ margin: 0, color: "#fff", fontSize: "14px" }}>
+    <form className={styles.dropdown__form_inline} onSubmit={handleSubmit}>
+      <h4 className={styles.form__title}>
         Edit {type.charAt(0).toUpperCase() + type.slice(1)}
       </h4>
 
       {/* UPLOAD IMAGE */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        <label style={{ fontSize: "12px", color: "#aaa" }}>
-          Image / Banner
-        </label>
-        <div style={{ display: "flex", position: "relative" }}>
+      <div className={styles.form__input__wrapper}>
+        <label className={styles.form__label}>Image</label>
+        <div className={styles.input__group_upload}>
           <input
             type="text"
             readOnly
             placeholder="Upload new image..."
             value={fileName}
             onClick={() => fileInputRef.current.click()}
-            style={{
-              width: "100%",
-              padding: "8px",
-              borderRadius: "4px",
-              border: "1px solid #444",
-              background: "#1e1e24",
-              color: "#fff",
-              cursor: "pointer",
-              paddingRight: "40px",
-            }}
+            className={styles.form__input}
           />
           <input
             type="file"
@@ -100,75 +78,46 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
             ref={fileInputRef}
             onChange={handleFileChange}
           />
-          <button
+          <Button
+            className={styles.upload__button}
             type="button"
+            variant="search"
             onClick={() => fileInputRef.current.click()}
-            style={{
-              position: "absolute",
-              right: "2px",
-              top: "2px",
-              bottom: "2px",
-              background: "#4caf50",
-              border: "none",
-              borderRadius: "4px",
-              padding: "0 10px",
-              cursor: "pointer",
-            }}
           >
-            <img src={uploadIcon} alt="Upload" style={{ width: "16px" }} />
-          </button>
+            <img
+              src={uploadIcon}
+              alt="Upload"
+              className={styles.upload__icon}
+            />
+          </Button>
         </div>
       </div>
 
       {/* NAME INPUT */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        <label style={{ fontSize: "12px", color: "#aaa" }}>Name</label>
+        <label className={styles.form__label}>Name</label>
         <input
           type="text"
           value={editName}
           onChange={(e) => setEditName(e.target.value)}
           required
-          style={{
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #444",
-            background: "#1e1e24",
-            color: "#fff",
-          }}
+          className={styles.form__input}
         />
       </div>
 
       {/* BUTTONS */}
       <div style={{ display: "flex", gap: "8px", marginTop: "5px" }}>
-        <button
-          type="submit"
-          style={{
-            flex: 1,
-            padding: "8px",
-            background: "#4caf50",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
+        <Button type="submit" children="save " variant="requestaccept">
           Save
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          onClick={onClose}
-          style={{
-            flex: 1,
-            padding: "8px",
-            background: "#444",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
+          onClick={() => setIsEditingMode(false)}
+          children="Decline "
+          variant="requestdecline"
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -16,13 +16,13 @@ function SignUp() {
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const fileInputRef = useRef(null); // Referencia para ocultar el input real
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfileImage(file);
-      setFileName(file.name); // Mostramos el nombre del archivo en el input falso
+      setFileName(file.name);
     }
   };
 
@@ -116,15 +116,14 @@ function SignUp() {
         <div className={styles.form__input__wrapper}>
           <label className={styles.form__label}>Profile Image (Optional)</label>
           <div className={styles.input__group_upload}>
-            {/* Input falso (Solo lectura, muestra el nombre) */}
             <input
               type="text"
               readOnly
               placeholder="Upload profile image..."
               className={styles.form__input}
               value={fileName}
-              onClick={() => fileInputRef.current.click()} // Al hacer clic, abre el explorador
-              style={{ cursor: "pointer", paddingRight: "55px" }} // Espacio para el botón
+              onClick={() => fileInputRef.current.click()}
+              style={{ cursor: "pointer", paddingRight: "55px" }}
             />
 
             {/* Input REAL pero oculto */}

@@ -3,7 +3,7 @@ import { API } from "../../../Api.jsx";
 import { useEffect, useState } from "react";
 import styles from "./Search.module.css";
 import TeamItem from "./TeamItem.jsx";
-import InlineEditForm from "../management/editMenu/EditMenuInline.jsx";
+import InlineEditForm from "../management/floatMenu/EditMenuInline.jsx";
 import tournamentCup from "../../../assets/image/Icons/tournament.svg";
 import isOpenIcon from "../../../assets/icons/open.svg";
 import isClosedIcon from "../../../assets/icons/close.svg";

@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API } from "../../Api.jsx";
 import axios from "axios";
-import EditMenu from "../../components/features/management/editMenu/EditMenu.jsx";
+import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 
 function DashboardTournament() {
   const { id } = useParams();

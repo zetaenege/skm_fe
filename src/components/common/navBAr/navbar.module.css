@@ -28,27 +28,34 @@ nav {
 }
 
 .menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
 }
 
 .icons__wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
 }
 
 .logout__button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 8px;
 }
 
 .logout__icon {
   height: 25px;
+}
+
+.logout__icon:focus {
+  opacity: 60%;
 }
 
 .user__section,

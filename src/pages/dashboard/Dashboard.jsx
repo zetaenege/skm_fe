@@ -10,7 +10,7 @@ import TournamentCard from "../../components/features/statsvieuw/TournamentCard.
 // 1. Nuevas importaciones necesarias para el Admin y el Menú
 import { useContext } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
-import EditMenu from "../../components/features/management/editMenu/EditMenu.jsx";
+import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 
 function Dashboard() {
   // 2. Extraemos los datos del Admin desde tu Contexto Global

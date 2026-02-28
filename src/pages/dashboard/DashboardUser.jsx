@@ -10,7 +10,7 @@ import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatche
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
 import NewMember from "../../components/features/management/NewMember.jsx";
 // Importamos el nuevo componente (Ajusta la ruta según dónde decidas guardarlo)
-import EditMenu from "../../components/features/management/editMenu/EditMenu.jsx";
+import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { API } from "../../Api.jsx";

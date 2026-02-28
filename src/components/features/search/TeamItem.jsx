@@ -10,7 +10,7 @@ import editIcon from "../../../assets/icons/edit.svg";
 import deleteIcon from "../../../assets/icons/delete.svg";
 
 // Importamos el formulario mágico
-import InlineEditForm from "../management/editMenu/EditMenuInline.jsx";
+import InlineEditForm from "../management/floatMenu/EditMenuInline.jsx";
 
 function TeamItem({ team, searchTerm = "" }) {
   // --- ESTADOS LOCALES ---
