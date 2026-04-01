@@ -1,6 +1,7 @@
 import styles from "./floatMenu.module.css";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom"; // <-- CAMBIO 1: Usamos useLocation en lugar de useParams
 import { API } from "../../../../Api.jsx";
 import { AuthContext } from "../../../../assets/context/AuthContext.jsx";
 import { convertToBase64 } from "../../../../helpers/ConvertToBase64.jsx";
@@ -8,14 +9,36 @@ import editIcon from "../../../../assets/icons/edit.svg";
 import uploadIcon from "../../../../assets/image/Icons/upload.svg";
 import Button from "../../../common/button/Button.jsx";
 
-function EditMenu({ type = "user", data, onUpdateSuccess }) {
+function EditMenuTour({ type = "tournament", data, onUpdateSuccess }) {
   const { refreshUser } = useContext(AuthContext);
-  // Eliminamos isMenuOpen, ya no lo necesitamos
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [editName, setEditName] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
+
+  // <-- CAMBIO 2: Extraemos el ID directamente del final de la URL
+  const location = useLocation();
+  const id = location.pathname.split("/").filter(Boolean).pop();
+
+  const [fetchedData, setFetchedData] = useState(null);
+
+  useEffect(() => {
+    const fetchTournamentInfo = async () => {
+      if (!id) return;
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API}/tournaments/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("Datos recibidos del backend:", response.data); // <-- Para confirmar en consola
+        setFetchedData(response.data);
+      } catch (err) {
+        console.error("Error obteniendo info del torneo:", err);
+      }
+    };
+    fetchTournamentInfo();
+  }, [id]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -26,7 +49,8 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
   };
 
   const openEditMode = () => {
-    setEditName(data?.name || "");
+    const currentData = fetchedData || data;
+    setEditName(currentData?.name || "");
     setFileName("");
     setProfileImage(null);
     setIsEditingMode(true);
@@ -37,21 +61,21 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
-      let base64Image = data?.imgProfile || null;
+
+      const currentData = fetchedData || data;
+      let base64Image = currentData?.imgProfile || null;
+
       if (profileImage) {
         base64Image = await convertToBase64(profileImage);
       }
 
       const updatePayload = {
-        ...data,
+        ...currentData,
         name: editName,
         imgProfile: base64Image,
       };
 
-      const endpoint =
-        type === "tournament"
-          ? `${API}/tournaments/${data.id}`
-          : `${API}/users/${data.id}`;
+      const endpoint = `${API}/tournaments/${id}`;
 
       await axios.put(endpoint, updatePayload, {
         headers: {
@@ -68,36 +92,25 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
         onUpdateSuccess();
       }
 
-      // Solo cerramos el modo edición al guardar
       setIsEditingMode(false);
+      setFetchedData(updatePayload);
     } catch (err) {
       console.error(`Error al actualizar el ${type}:`, err);
     }
   };
 
-  if (!data) return null;
-
   return (
     <>
       {!isEditingMode ? (
-        /* VISTA 1: ITEM DEL MENÚ (Se integra directo en el <ul> de NavDropdown) */
         <div className={styles.dropdown__item} onClick={openEditMode}>
           <img src={editIcon} className={styles.dropdown__icon} alt="Edit" />
-          <p>Edit Information</p>
+          <p>Edit League</p>
         </div>
       ) : (
-        /* VISTA 2: FORMULARIO BETA */
-        <form
-          className={` animate__dropdown_enter ${styles.dropdown__form}`}
-          onSubmit={handleEditSubmit}
-        >
-          <h4 className={styles.form__title}>
-            Edit {type === "tournament" ? "Tournament" : "Profile"}
-          </h4>
+        <form className={styles.dropdown__form} onSubmit={handleEditSubmit}>
+          <h4 className={styles.form__title}>Edit Tournament</h4>
           <div className={styles.form__input__wrapper}>
-            <label className={styles.form__label}>
-              {type === "tournament" ? "Tournament Banner" : "Profile Image"}
-            </label>
+            <label className={styles.form__label}>Tournament Banner</label>
 
             <div className={styles.input__group_upload}>
               <input
@@ -132,7 +145,6 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
             </div>
           </div>
 
-          {/* NAME INPUT */}
           <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
             <label className={styles.form__label}>Name</label>
             <input
@@ -144,7 +156,6 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
             />
           </div>
 
-          {/* ACTION BUTTONS */}
           <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
             <Button type="submit" children="save " variant="requestaccept">
               Save
@@ -164,4 +175,4 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
   );
 }
 
-export default EditMenu;
+export default EditMenuTour;

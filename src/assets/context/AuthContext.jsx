@@ -26,21 +26,18 @@ function AuthContextProvider({ children }) {
         logout();
       }
     } else {
-      console.log("ℹ️ No hay token. Usuario no autenticado.");
       setAuthState({ isAuth: false, user: null, status: "done" });
     }
   }, []);
 
   function login(JWT) {
     localStorage.setItem("token", JWT);
-    console.log("🔐 Login exitoso. Token guardado.");
     void fetchUserData(JWT, true);
   }
 
   function logout() {
     localStorage.removeItem("token");
     setAuthState({ isAuth: false, user: null, status: "done" });
-    console.log("🚪 Sesión cerrada.");
     navigate("/");
   }
 
@@ -52,8 +49,6 @@ function AuthContextProvider({ children }) {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log("🔍 Usuario recibido del backend:", response.data);
 
       const user = {
         id: response.data.id,
@@ -73,7 +68,6 @@ function AuthContextProvider({ children }) {
         user,
         status: "done",
       });
-      console.log("✅ Usuario autenticado:", user);
 
       if (redirect) {
         if (user.isAdmin) {

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Este es el codigo para conectar a API
 export const API = "http://localhost:8080/api";
 
 const api = axios.create({

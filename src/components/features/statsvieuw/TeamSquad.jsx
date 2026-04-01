@@ -2,7 +2,6 @@ import style from "./StatsVieuw.module.css";
 import { useEffect, useState } from "react";
 import { API } from "../../../Api.jsx";
 import axios from "axios";
-import styles from "../../common/navBAr/navbar.module.css";
 import TeamImg from "../../../assets/image/Icons/team.svg";
 
 function TeamSquad({ teamId }) {
@@ -11,22 +10,14 @@ function TeamSquad({ teamId }) {
 
   useEffect(() => {
     const fetchSquad = async () => {
-      // Si no hay ID de equipo, no hacemos la llamada
       if (!teamId) return;
 
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-
-        // Llamamos al endpoint del equipo.
-        // Gracias al cambio que hicimos en el Backend, 'res.data' ahora incluye la lista 'squad'
         const res = await axios.get(`${API}/teams/${teamId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-
-        // Guardamos la lista de jugadores en el estado
         setSquad(res.data.squad || []);
       } catch (error) {
         console.error("Error cargando la plantilla del equipo:", error);
@@ -38,11 +29,14 @@ function TeamSquad({ teamId }) {
     fetchSquad();
   }, [teamId]);
 
-  if (!teamId) return null;
+  // --- SORT DE UNA LÍNEA (Orden alfabético por nombre) ---
+  const sortedSquad = [...squad].sort((a, b) =>
+    (a.name || "").localeCompare(b.name || ""),
+  );
 
   return (
     <>
-      <div>
+      <div className="animate__item delay_2">
         <p className="text__display_tittle section__tittle">Team Squad</p>
         <div className={`${style.team__squad_style} boxGlobal`}>
           <div className={style.position_table}>
@@ -58,15 +52,30 @@ function TeamSquad({ teamId }) {
                 </tr>
               </thead>
               <tbody>
-                {loading ? (
+                {/* SI NO HAY TEAM ID, PEDIMOS QUE SELECCIONE UNO */}
+                {!teamId ? (
                   <tr>
-                    <td colSpan="4" className="info__text">
-                      Loading...
+                    <td
+                      colSpan="2" // <-- Corregido a 2 columnas
+                      className="info__text"
+                      style={{ textAlign: "center", padding: "1.5rem" }}
+                    >
+                      Select a team to view its squad.
                     </td>
                   </tr>
-                ) : squad.length > 0 ? (
-                  // Mapeamos la lista 'squad' descargada
-                  squad.map((player) => (
+                ) : loading ? (
+                  <tr>
+                    <td
+                      colSpan="2"
+                      className="info__text"
+                      style={{ textAlign: "center", padding: "1.5rem" }}
+                    >
+                      Loading squad...
+                    </td>
+                  </tr>
+                ) : sortedSquad.length > 0 ? (
+                  // MAPEO DE JUGADORES ORDENADOS
+                  sortedSquad.map((player) => (
                     <tr key={player.id}>
                       <td className={style.teamInfo_table}>
                         <div className={style.image__squad}>
@@ -82,32 +91,25 @@ function TeamSquad({ teamId }) {
                         </div>
                         <span className={style.info__name_profile}>
                           {player.name}
-                          {/* Opcional: mostrar posición si existe */}
                           {player.position && (
-                            <small
-                              style={{
-                                color: "#888",
-                                marginLeft: "5px",
-                              }}
-                            >
+                            <small style={{ color: "#888", marginLeft: "5px" }}>
                               ({player.position})
                             </small>
                           )}
                         </span>
                       </td>
-
-                      <td className="info__name_profile">0</td>
+                      <td className="info__text">0</td>
                     </tr>
                   ))
                 ) : (
-                  // Mensaje si la lista está vacía
+                  // MENSAJE DE EQUIPO VACÍO
                   <tr>
                     <td
-                      colSpan="4"
+                      colSpan="2" // <-- Corregido a 2 columnas
                       className="info__text"
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", padding: "1.5rem" }}
                     >
-                      No players in this team.
+                      No players registered in this team yet.
                     </td>
                   </tr>
                 )}

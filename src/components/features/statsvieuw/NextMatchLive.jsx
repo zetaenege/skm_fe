@@ -118,7 +118,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
   if (!match) return null;
 
   return (
-    <section className={style.next__match_live}>
+    <section className={`animate__page_enter ${style.next__match_live}`}>
       <article className={style.next__match_header}>
         <div>
           <p className={style.section__tittle_next}>Next Match</p>
@@ -157,15 +157,17 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
         </div>
       </article>
 
-      <article className={style.next__match_content}>
+      <article className={`2 ${style.next__match_content}`}>
         {/*Local Team*/}
         <div className={style.team__card}>
           <div className={style.team__img_name}>
-            <div className={style.team__img}>
+            <div className={` animate__item delay_1 ${style.team__img}`}>
               <img src={match.homeTeam?.imgProfile || teamImg} alt="" />
             </div>
 
-            <p className="text_name_small">{match.homeTeam?.name}</p>
+            <p className="text_name_small animate__item delay_2">
+              {match.homeTeam?.name}
+            </p>
 
             {gameStatus === "EDIT" && (
               <div className={style.score__controls_panel}>
@@ -212,7 +214,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
           </div>
 
           <div className={style.team__img_name}>
-            <div className={style.team__img}>
+            <div className={` animate__item delay_1 ${style.team__img}`}>
               <img
                 src={match.awayTeam?.imgProfile || teamImg}
                 alt=""
@@ -223,7 +225,9 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
                 }
               />
             </div>
-            <p className="text_name_small">{match.awayTeam?.name}</p>
+            <p className="text_name_small animate__item delay_2 ">
+              {match.awayTeam?.name}
+            </p>
             {gameStatus === "EDIT" && (
               <div className={style.score__controls_panel}>
                 {/* Controles Visitor */}
@@ -258,7 +262,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
         </div>
       </article>
 
-      <div className={style.button__start}>
+      <div className={`animate__item delay_3 ${style.button__start}`}>
         {gameStatus === "PRE" && (
           <Button
             type="submit"

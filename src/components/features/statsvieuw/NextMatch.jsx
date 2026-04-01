@@ -82,10 +82,8 @@ function NextMatch({ tournamentId, teamId, tournamentName }) {
     );
   }
 
-  console.log("ESTADO FINAL DE DATA:", match);
-
   return (
-    <section className={style.next__match}>
+    <section className={`${style.next__match} `}>
       <h4 className="info__tittle_profile">Next Match</h4>
 
       <article className={style.next__match_header}>

@@ -10,6 +10,7 @@ import isClosedIcon from "../../../assets/icons/close.svg";
 import editIcon from "../../../assets/icons/edit.svg";
 import deleteIcon from "../../../assets/icons/delete.svg";
 import style from "../statsvieuw/StatsVieuw.module.css";
+import Button from "../../common/button/Button.jsx";
 
 function TournamentItem({ tournament, searchTerm = "" }) {
   // --- ESTADOS LOCALES ---
@@ -176,59 +177,31 @@ function TournamentItem({ tournament, searchTerm = "" }) {
       {/* 2. NUEVO: CUADRO DE CONFIRMACIÓN DE BORRADO */}
       {isDeleting && (
         <div
-          style={{
-            padding: "12px 15px",
-            backgroundColor: "rgba(233, 69, 96, 0.1)",
-            border: "1px solid #e94560",
-            borderRadius: "8px",
-            margin: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "10px",
-          }}
+          className={`${style.dropdown__form_inline} animate__dropdown_enter`}
         >
-          <p
-            style={{
-              color: "#e94560",
-              margin: 0,
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            Are you sure you want to delete this tournament? This cannot be
-            undone.
+          <p className={style.form__text}>
+            Are you sure you want to delete this tournament? This action cannot
+            be undone.
           </p>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button
-              onClick={handleConfirmDelete}
-              style={{
-                background: "#e94560",
-                color: "#fff",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+          <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+            <Button
+              type="button"
+              onClick={
+                handleConfirmDelete
+              } /* 1. ¡Aquí disparamos el borrado! */
+              variant="requestaccept"
             >
-              Yes, Delete
-            </button>
-            <button
-              onClick={() => setIsDeleting(false)}
-              style={{
-                background: "#444",
-                color: "#fff",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              Delete
+            </Button>
+            <Button
+              type="button"
+              onClick={() =>
+                setIsDeleting(false)
+              } /* 2. ¡Cerramos el cuadro correctamente! */
+              variant="requestdecline"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       )}

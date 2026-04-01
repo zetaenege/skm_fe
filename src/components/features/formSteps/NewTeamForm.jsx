@@ -6,7 +6,6 @@ import { API } from "../../../Api.jsx";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import { convertToBase64 } from "../../../helpers/ConvertToBase64.jsx";
 import uploadIcon from "../../../assets/image/Icons/upload.svg";
-// Importamos tu componente de confirmación
 import Confirmation from "./confirmations/Confirmation.jsx";
 
 function NewTeamForm() {
@@ -14,14 +13,10 @@ function NewTeamForm() {
   const [city, setCity] = useState("");
   const [tournamentId, setTournamentId] = useState("");
   const [tournaments, setTournaments] = useState([]);
-
-  // Nuevos estados para la imagen del equipo
   const [profileImage, setProfileImage] = useState(null);
   const [fileName, setFileName] = useState("");
-
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false); // <-- Cambiado a booleano
-
   const { user, refreshUser } = useContext(AuthContext);
   const fileInputRef = useRef(null);
 

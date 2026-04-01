@@ -25,7 +25,6 @@ function LoginForm() {
       const token = response.data.jwt;
 
       if (token) {
-        console.log("Login successful");
         if (typeof login === "function") {
           login(token);
         } else {
@@ -43,7 +42,7 @@ function LoginForm() {
   }
 
   return (
-    <section className={styles.centered__container}>
+    <section className={`animate__page_enter ${styles.centered__container}`}>
       <form className={styles.login__form} onSubmit={handleSubmit}>
         <h2 className={styles.form__title}>Welcome!</h2>
 

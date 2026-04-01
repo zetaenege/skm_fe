@@ -64,86 +64,88 @@ function TournamentCard() {
 
   return (
     <>
-      <p className="text__display_tittle section__tittle">Tournament</p>
-      <div className={style.tournament__card_container}>
-        {tournaments.map((tournament) => (
-          <div className="boxGlobal" key={tournament.id}>
-            <section className={style.tournament__card}>
-              <article className={style.next__match_header}>
-                <div className={style.img__profile}>
-                  <img
-                    src={tournament.imgProfile || tournamentCup}
-                    alt={tournament.name || "Tournament image"}
-                    className={
-                      !tournament.imgProfile
-                        ? style.icon__style
-                        : style.full__img
-                    }
-                  />
-                </div>
+      <div className="animate__item delay_5">
+        <p className="text__display_tittle section__tittle ">Tournament</p>
+        <div className={style.tournament__card_container}>
+          {tournaments.map((tournament) => (
+            <div className="boxGlobal" key={tournament.id}>
+              <section className={style.tournament__card}>
+                <article className={style.next__match_header}>
+                  <div className={style.img__profile}>
+                    <img
+                      src={tournament.imgProfile || tournamentCup}
+                      alt={tournament.name || "Tournament image"}
+                      className={
+                        !tournament.imgProfile
+                          ? style.icon__style
+                          : style.full__img
+                      }
+                    />
+                  </div>
 
-                <div>
-                  <p className="info__text">TRM{tournament.id || "N/A"}</p>
-                </div>
-              </article>
+                  <div>
+                    <p className="info__text">TRM{tournament.id || "N/A"}</p>
+                  </div>
+                </article>
 
-              <article>
-                <div className={style.profile_wrapper}>
-                  <div className={style.profile__info}>
-                    <p className="name__text">
-                      {tournament.name || "Unnamed Tournament"}
-                    </p>
-                    <p className="info__text">
-                      <strong>City:</strong>{" "}
-                      {tournament.city || "Unknown location"}
-                    </p>
-                    <div>
-                      <p className="info__text">
-                        <strong>Start:</strong>{" "}
-                        {tournament.startDate
-                          ? new Date(tournament.startDate).toLocaleDateString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                              },
-                            )
-                          : "TBD"}{" "}
-                        - <strong>End:</strong>{" "}
-                        {tournament.endDate
-                          ? new Date(tournament.endDate).toLocaleDateString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                              },
-                            )
-                          : "TBD"}
+                <article>
+                  <div className={style.profile_wrapper}>
+                    <div className={style.profile__info}>
+                      <p className="name__text">
+                        {tournament.name || "Unnamed Tournament"}
                       </p>
+                      <p className="info__text">
+                        <strong>City:</strong>{" "}
+                        {tournament.city || "Unknown location"}
+                      </p>
+                      <div>
+                        <p className="info__text">
+                          <strong>Start:</strong>{" "}
+                          {tournament.startDate
+                            ? new Date(tournament.startDate).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                },
+                              )
+                            : "TBD"}{" "}
+                          - <strong>End:</strong>{" "}
+                          {tournament.endDate
+                            ? new Date(tournament.endDate).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                },
+                              )
+                            : "TBD"}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
-              <article>
-                <TournamentCardInfo
-                  variant="light"
-                  tournamentId={tournament.id} // <--- AÑADE ESTO
-                  tournamentData={tournament}
-                />
-              </article>
+                </article>
+                <article>
+                  <TournamentCardInfo
+                    variant="light"
+                    tournamentId={tournament.id} // <--- AÑADE ESTO
+                    tournamentData={tournament}
+                  />
+                </article>
 
-              <Button
-                type="button"
-                variant="primary" // Usamos tu variante standard
-                onClick={() =>
-                  navigate(`/dashboard/tournament/${tournament.id}`)
-                }
-              >
-                Manage Tournament
-              </Button>
-            </section>
-          </div>
-        ))}
+                <Button
+                  type="button"
+                  variant="primary" // Usamos tu variante standard
+                  onClick={() =>
+                    navigate(`/dashboard/tournament/${tournament.id}`)
+                  }
+                >
+                  Manage Tournament
+                </Button>
+              </section>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

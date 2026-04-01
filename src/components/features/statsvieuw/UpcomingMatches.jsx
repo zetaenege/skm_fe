@@ -74,7 +74,7 @@ function UpcomingMatches({ tournamentId, teamId }) {
   }
   if (matches.length === 0) {
     return (
-      <div className="boxGlobal">
+      <div className="boxGlobal animate__item delay_4">
         <p className="text__display_tittle">Upcoming Matches</p>
         <p
           className="info__text"

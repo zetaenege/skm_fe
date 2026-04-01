@@ -8,17 +8,19 @@ import PositionTable from "../../components/features/statsvieuw/PositionTable.js
 import TeamSquad from "../../components/features/statsvieuw/TeamSquad.jsx";
 import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
-import NewMember from "../../components/features/management/NewMember.jsx";
-// Importamos el nuevo componente (Ajusta la ruta según dónde decidas guardarlo)
-import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { API } from "../../Api.jsx";
 import axios from "axios";
+import Champion from "../../components/features/formSteps/confirmations/Champion/ChampionTeam.jsx";
 
 function DashboardUser() {
   const { user } = useContext(AuthContext);
   const [tournament, setTournament] = useState(null);
+
+  // Estados para manejar la lógica de torneo finalizado y campeón
+  const [isTournamentFinished, setIsTournamentFinished] = useState(false);
+  const [champion, setChampion] = useState(null);
 
   const myTournamentId = user?.tournamentId || 1;
   const myTeamId = user?.teamId || user?.team?.id;
@@ -29,12 +31,33 @@ function DashboardUser() {
     const fetchMyTournament = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API}/tournaments/${searchId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTournament(res.data);
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+
+        const [resTour, resMatches] = await Promise.all([
+          axios.get(`${API}/tournaments/${searchId}`, config),
+          axios.get(`${API}/matches/tournament/${searchId}`, config),
+        ]);
+
+        const tourData = resTour.data;
+        const matchesData = resMatches.data;
+
+        setTournament(tourData);
+
+        // --- LÓGICA PARA SABER SI HAY CAMPEÓN ---
+        const hasMatches = matchesData.length > 0;
+        const allFinished =
+          hasMatches && matchesData.every((m) => m.status === "FINISHED");
+
+        setIsTournamentFinished(allFinished);
+
+        if (allFinished && tourData.teams?.length > 0) {
+          const sortedTeams = [...tourData.teams].sort(
+            (a, b) =>
+              (b.points || 0) - (a.points || 0) ||
+              (b.goalDifference || 0) - (a.goalDifference || 0),
+          );
+          setChampion(sortedTeams[0]);
+        }
       } catch (err) {
         console.error("Error loading user tournament:", err);
       }
@@ -47,34 +70,33 @@ function DashboardUser() {
 
   return (
     <div>
-      <div className="boxGlobal">
-        {/* --- NUEVO MENÚ EXTRAÍDO --- */}
-        <div className={styles.header__actions}>
-          <EditMenu type="user" data={user} />
-        </div>
-        {/* --------------------------- */}
-
+      <div className="boxGlobal animate__page_enter block_first">
         <section className={styles.info_area}>
-          <article className={styles.half__article}>
+          <article className={`animate__item delay_1 ${styles.half__article}`}>
             <ProfileArea mode="user" />
           </article>
+
           <article
-            className={`${styles.half__article} ${styles.half__vertical}`}
+            className={` animate__item delay_2 ${styles.half__article} ${styles.half__vertical}`}
           >
             <TournamentProfileInfo
               type="user"
               tournamentId={user?.tournamentId || 1}
             />
-            <NextMatch
-              tournamentId={myTournamentId}
-              teamId={myTeamId}
-              tournamentName={tournament?.name}
-            />
+
+            {/* --- LÓGICA DE REEMPLAZO VISUAL --- */}
+            {isTournamentFinished && champion ? (
+              <Champion team={champion} tournament={tournament} />
+            ) : (
+              <NextMatch
+                tournamentId={myTournamentId}
+                teamId={myTeamId}
+                tournamentName={tournament?.name}
+              />
+            )}
           </article>
         </section>
       </div>
-
-      {user?.isCoach && <NewMember />}
 
       {!user?.isCoach && !user?.teamId && (
         <div className={styles.new__create}>

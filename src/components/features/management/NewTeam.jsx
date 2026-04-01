@@ -11,7 +11,7 @@ function NewTeam() {
   }
 
   return (
-    <div className={clsx("boxGlobal", styles.new__create_tm)}>
+    <div className={`boxGlobal animate__item delay_3 ${styles.new__create_tm}`}>
       <p className="text__display_tittle">Create New Team</p>
       <p className={styles.content__text}>
         Thinking of starting your own team? we’ll guide you through it!

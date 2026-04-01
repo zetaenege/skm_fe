@@ -10,7 +10,9 @@ function NewTournament() {
   }
 
   return (
-    <div className={`${styles.new__create_trn} boxGlobal`}>
+    <div
+      className={`${styles.new__create_trn} boxGlobal animate__item delay_2`}
+    >
       <p className="text__display_tittle">Create New Tournament</p>
       <p className={styles.content__text}>
         As an admin, you’re in charge we’ll guide you through it!

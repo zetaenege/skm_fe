@@ -103,6 +103,7 @@ function NavBar() {
                 <NavDropdown
                   onClose={() => setIsMenuOpen(false)}
                   onLogout={handleLogout}
+                  user={user} // Pasamos el usuario actual
                 />
               )}
             </li>

@@ -9,24 +9,20 @@ import isOpenIcon from "../../../assets/icons/open.svg";
 import editIcon from "../../../assets/icons/edit.svg";
 import deleteIcon from "../../../assets/icons/delete.svg";
 
-// Importamos el formulario mágico
+// 1. IMPORTAMOS LOS COMPONENTES MÁGICOS
 import InlineEditForm from "../management/floatMenu/EditMenuInline.jsx";
+import DeleteConfirmMenu from "../management/floatMenu/DeletenInline.jsx"; // <--- AQUÍ ESTÁ EL NUEVO
 
 function TeamItem({ team, searchTerm = "" }) {
-  // --- ESTADOS LOCALES ---
+  // ... (Todos tus estados locales y funciones se mantienen exactamente igual) ...
   const [localTeam, setLocalTeam] = useState(team);
   const [localPlayers, setLocalPlayers] = useState(
     team.squad || team.users || [],
   );
-
-  // --- ESTADOS PARA EDITAR ---
   const [isEditingTeam, setIsEditingTeam] = useState(false);
   const [editingPlayerId, setEditingPlayerId] = useState(null);
-
-  // --- NUEVOS ESTADOS PARA BORRAR ---
   const [isDeletingTeam, setIsDeletingTeam] = useState(false);
   const [deletingPlayerId, setDeletingPlayerId] = useState(null);
-
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -46,14 +42,12 @@ function TeamItem({ team, searchTerm = "" }) {
     }
   }, [searchTerm, localPlayers, localTeam.name]);
 
-  // --- FUNCIÓN PARA ACTUALIZAR JUGADOR AL EDITAR ---
   const handlePlayerUpdate = (updatedPlayer) => {
     setLocalPlayers((prevPlayers) =>
       prevPlayers.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p)),
     );
   };
 
-  // --- NUEVA FUNCIÓN: BORRAR EQUIPO ---
   const handleConfirmDeleteTeam = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -62,13 +56,12 @@ function TeamItem({ team, searchTerm = "" }) {
       });
       console.log("✅ Equipo eliminado con éxito");
       setIsDeletingTeam(false);
-      window.location.reload(); // Recarga para limpiar la lista
+      window.location.reload();
     } catch (err) {
       console.error("Error al eliminar el equipo:", err);
     }
   };
 
-  // --- NUEVA FUNCIÓN: BORRAR JUGADOR ---
   const handleConfirmDeletePlayer = async (playerId) => {
     try {
       const token = localStorage.getItem("token");
@@ -76,8 +69,6 @@ function TeamItem({ team, searchTerm = "" }) {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("✅ Jugador eliminado con éxito");
-
-      // Actualiza la lista al instante quitando al jugador borrado
       setLocalPlayers((prevPlayers) =>
         prevPlayers.filter((p) => p.id !== playerId),
       );
@@ -89,10 +80,9 @@ function TeamItem({ team, searchTerm = "" }) {
 
   return (
     <div className={styles.team__item}>
-      {/* ========================================= */}
-      {/* CABECERA DEL EQUIPO             */}
-      {/* ========================================= */}
+      {/* --- CABECERA DEL EQUIPO --- */}
       <div className={styles.team__header} onClick={() => setIsOpen(!isOpen)}>
+        {/* ... (código del header: icono, nombre, ciudad) ... */}
         <div className={styles.header__title}>
           <span className={styles.icon}>
             <div className={styles.img__profile}>
@@ -114,7 +104,6 @@ function TeamItem({ team, searchTerm = "" }) {
           </p>
         </div>
 
-        {/* --- BOTONES DE EDITAR Y BORRAR (EQUIPO) --- */}
         <div className={styles.control__edit}>
           <div className={styles.edit__delete_container}>
             <span
@@ -122,7 +111,7 @@ function TeamItem({ team, searchTerm = "" }) {
               onClick={(e) => {
                 e.stopPropagation();
                 setIsEditingTeam(!isEditingTeam);
-                setIsDeletingTeam(false); // Cierra borrar si estaba abierto
+                setIsDeletingTeam(false);
               }}
             >
               <img
@@ -136,8 +125,8 @@ function TeamItem({ team, searchTerm = "" }) {
               className={styles.arrow}
               onClick={(e) => {
                 e.stopPropagation();
-                setIsDeletingTeam(!isDeletingTeam); // Abre confirmación
-                setIsEditingTeam(false); // Cierra editar si estaba abierto
+                setIsDeletingTeam(!isDeletingTeam);
+                setIsEditingTeam(false);
               }}
             >
               <img
@@ -165,7 +154,7 @@ function TeamItem({ team, searchTerm = "" }) {
         </div>
       </div>
 
-      {/* --- FORMULARIO PARA EDITAR EL EQUIPO --- */}
+      {/* --- MENÚS DEL EQUIPO --- */}
       {isEditingTeam && (
         <InlineEditForm
           type="team"
@@ -175,68 +164,17 @@ function TeamItem({ team, searchTerm = "" }) {
         />
       )}
 
-      {/* --- NUEVO: CUADRO CONFIRMACIÓN BORRAR EQUIPO --- */}
+      {/* AQUÍ LLAMAMOS A TU NUEVO COMPONENTE SÚPER LIMPIO */}
       {isDeletingTeam && (
-        <div
-          style={{
-            padding: "12px 15px",
-            backgroundColor: "rgba(233, 69, 96, 0.1)",
-            border: "1px solid #e94560",
-            borderRadius: "8px",
-            margin: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "10px",
-          }}
-        >
-          <p
-            style={{
-              color: "#e94560",
-              margin: 0,
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            Are you sure you want to delete this team? This cannot be undone.
-          </p>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button
-              onClick={handleConfirmDeleteTeam}
-              style={{
-                background: "#e94560",
-                color: "#fff",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              Yes, Delete
-            </button>
-            <button
-              onClick={() => setIsDeletingTeam(false)}
-              style={{
-                background: "#444",
-                color: "#fff",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <DeleteConfirmMenu
+          title="Delete Team"
+          itemName={localTeam.name}
+          onConfirm={handleConfirmDeleteTeam}
+          onCancel={() => setIsDeletingTeam(false)}
+        />
       )}
 
-      {/* ========================================= */}
-      {/* LISTA DE JUGADORES              */}
-      {/* ========================================= */}
+      {/* --- LISTA DE JUGADORES --- */}
       {isOpen && (
         <div className={styles.player__list}>
           {localPlayers.length === 0 ? (
@@ -247,8 +185,8 @@ function TeamItem({ team, searchTerm = "" }) {
                 key={player.id || player.username}
                 style={{ display: "flex", flexDirection: "column" }}
               >
-                {/* --- FILA DEL JUGADOR --- */}
                 <div className={styles.player__row}>
+                  {/* ... (código de la fila del jugador: foto, nombre, posición) ... */}
                   <div className={styles.header__title}>
                     <span>
                       <div className={styles.img__profile}>
@@ -270,7 +208,6 @@ function TeamItem({ team, searchTerm = "" }) {
                     <strong>Position:</strong> {player.position}
                   </p>
 
-                  {/* --- BOTONES DE EDITAR Y BORRAR (JUGADOR) --- */}
                   <div className={styles.control__edit}>
                     <div className={styles.edit__delete_container}>
                       <span
@@ -280,7 +217,7 @@ function TeamItem({ team, searchTerm = "" }) {
                           setEditingPlayerId(
                             editingPlayerId === player.id ? null : player.id,
                           );
-                          setDeletingPlayerId(null); // Cierra borrar
+                          setDeletingPlayerId(null);
                         }}
                       >
                         <img
@@ -297,7 +234,7 @@ function TeamItem({ team, searchTerm = "" }) {
                           setDeletingPlayerId(
                             deletingPlayerId === player.id ? null : player.id,
                           );
-                          setEditingPlayerId(null); // Cierra editar
+                          setEditingPlayerId(null);
                         }}
                       >
                         <img
@@ -310,7 +247,7 @@ function TeamItem({ team, searchTerm = "" }) {
                   </div>
                 </div>
 
-                {/* --- FORMULARIO PARA EDITAR AL JUGADOR --- */}
+                {/* --- MENÚS DEL JUGADOR --- */}
                 {editingPlayerId === player.id && (
                   <InlineEditForm
                     type="user"
@@ -320,66 +257,14 @@ function TeamItem({ team, searchTerm = "" }) {
                   />
                 )}
 
-                {/* --- NUEVO: CUADRO CONFIRMACIÓN BORRAR JUGADOR --- */}
+                {/* Y AQUÍ REUTILIZAMOS EL MISMO COMPONENTE DE BORRAR */}
                 {deletingPlayerId === player.id && (
-                  <div
-                    style={{
-                      padding: "10px",
-                      backgroundColor: "rgba(233, 69, 96, 0.1)",
-                      border: "1px solid #e94560",
-                      borderRadius: "8px",
-                      marginTop: "5px",
-                      marginBottom: "10px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      flexWrap: "wrap",
-                      gap: "10px",
-                    }}
-                  >
-                    <p
-                      style={{
-                        color: "#e94560",
-                        margin: 0,
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Delete this player?
-                    </p>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <button
-                        onClick={() => handleConfirmDeletePlayer(player.id)}
-                        style={{
-                          background: "#e94560",
-                          color: "#fff",
-                          border: "none",
-                          padding: "4px 10px",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Yes
-                      </button>
-                      <button
-                        onClick={() => setDeletingPlayerId(null)}
-                        style={{
-                          background: "#444",
-                          color: "#fff",
-                          border: "none",
-                          padding: "4px 10px",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
+                  <DeleteConfirmMenu
+                    title="Delete Player"
+                    itemName={player.name}
+                    onConfirm={() => handleConfirmDeletePlayer(player.id)}
+                    onCancel={() => setDeletingPlayerId(null)}
+                  />
                 )}
               </div>
             ))

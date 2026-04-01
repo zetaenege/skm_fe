@@ -80,7 +80,9 @@ function GenerateMatches({ tournamentId, onMatchesGenerated }) {
   if (hasMatches) return null;
 
   return (
-    <div className={clsx("boxGlobal", styles.new__create_gnrt)}>
+    <div
+      className={`boxGlobal animate__item delay_2 ${styles.new__create_gnrt}`}
+    >
       <p className="text__display_tittle">Tournament Fixture</p>
       <p className={style.content__text}>
         Click Start to generate the full match schedule and bring the tournament

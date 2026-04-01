@@ -311,3 +311,23 @@ div.team__squad_style {
   gap: 10px;
   flex-direction: row;
 }
+
+.dropdown__form_inline {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background-color: var(--color-white);
+  padding: 24px;
+}
+
+.form__text {
+  margin-bottom: 12px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* Hacemos que la tarjeta del torneo ocupe el 100% del ancho */
+  .tournament__card_container {
+    grid-template-columns: 1fr;
+  }
+}

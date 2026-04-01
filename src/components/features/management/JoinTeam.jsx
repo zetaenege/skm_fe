@@ -10,7 +10,9 @@ function JoinTeam() {
   }
 
   return (
-    <div className={clsx("boxGlobal", styles.new__create_trn)}>
+    <div
+      className={`boxGlobal animate__item delay_3 ${styles.new__create_trn}`}
+    >
       <p className="text__display_tittle">Join a Team</p>
       <p className={styles.content__text}>
         Join an existing team by clicking here and following the steps.

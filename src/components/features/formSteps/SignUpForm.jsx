@@ -49,7 +49,6 @@ function SignUp() {
         imgProfile: base64Image,
       });
 
-      console.log("✅ Usuario creado:", response.data);
       setSuccess(true);
     } catch (err) {
       console.error("Error al crear usuario:", err);

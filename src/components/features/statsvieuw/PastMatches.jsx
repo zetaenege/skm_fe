@@ -99,7 +99,7 @@ function PastMatches({ tournamentId, teamId }) {
   const matchesToShow = matches.slice(0, visibleCount);
   return (
     <>
-      <div className="global__section_style">
+      <div className="global__section_style animate__item delay_2">
         <section>
           <p className="text__display_tittle section__tittle">Past Matches</p>
           <div className={style.tournament__card_container}>

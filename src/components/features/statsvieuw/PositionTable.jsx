@@ -2,22 +2,16 @@ import style from "./StatsVieuw.module.css";
 import TeamImg from "../../../assets/image/Icons/team.svg";
 
 function PositionTable({ teams = [] }) {
-  const sortedTeams = [...teams].sort((a, b) => {
-    if (b.points !== a.points) {
-      return b.points - a.points;
-    }
-    return b.goalDifference - a.goalDifference;
-  });
-  const BRAND_COLORS = [
-    "var(--color-aqua)",
-    "var(--color-lemon)",
-    "var(--color-rosa)",
-    "var(--color-violet)",
-  ];
+  // --- SORT REFACTORIZADO A UNA SOLA LÍNEA ---
+  const sortedTeams = [...teams].sort(
+    (a, b) =>
+      (b.points || 0) - (a.points || 0) ||
+      (b.goalDifference || 0) - (a.goalDifference || 0),
+  );
 
   return (
     <>
-      <div className="global__section_style">
+      <div className="global__section_style animate__item delay_3">
         <p className="text__display_tittle section__tittle">Position Table</p>
         <div className="boxGlobal">
           <div className={style.position_table}>
@@ -77,11 +71,12 @@ function PositionTable({ teams = [] }) {
                     );
                   })
                 ) : (
+                  // MENSAJE DE TABLA VACÍA
                   <tr>
                     <td
                       colSpan="6"
                       className="info__text"
-                      style={{ textAlign: "center", padding: "1rem" }}
+                      style={{ textAlign: "center", padding: "1.5rem" }}
                     >
                       No teams registered in this tournament yet.
                     </td>

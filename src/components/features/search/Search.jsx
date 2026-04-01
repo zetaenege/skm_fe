@@ -43,7 +43,9 @@ function Search() {
   };
 
   return (
-    <div className={`${styles.new__create_trn} boxGlobal`}>
+    <div
+      className={`${styles.new__create_trn} boxGlobal animate__item delay_4`}
+    >
       <p className="text__display_tittle">Search & Edit</p>
       <p className={styles.content__text}>
         Search for tournaments, teams, and players and edit their details or

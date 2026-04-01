@@ -23,7 +23,7 @@
   background-color: var(--color-lemon);
   border-radius: var(--border-radius-base);
   z-index: 888;
-  min-width: 180px;
+  min-width: 350px;
   padding: 8px 0;
   transition: all 0.2s ease-in-out;
 }
@@ -62,6 +62,18 @@
   margin-bottom: 18px;
   font-weight: 700;
 }
+.dropdown__form_inline {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background-color: var(--color-white);
+  padding: 24px;
+}
+
+.form__text {
+  margin-bottom: 12px;
+}
 
 /* DROPDOWN FORM*/
 
@@ -71,6 +83,7 @@
   width: 100%;
   max-width: 400px;
   text-align: left;
+  padding: 24px;
 }
 .dropdown__form_inline {
   display: flex;

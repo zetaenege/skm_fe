@@ -4,42 +4,24 @@ import NewTournament from "../../components/features/management/NewTournament.js
 import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
 import NewTeam from "../../components/features/management/NewTeam.jsx";
 import Search from "../../components/features/search/Search.jsx";
-import TournamentCardInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentCardInfo.jsx";
 import TournamentCard from "../../components/features/statsvieuw/TournamentCard.jsx";
-
-// 1. Nuevas importaciones necesarias para el Admin y el Menú
 import { useContext } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
-import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 
 function Dashboard() {
-  // 2. Extraemos los datos del Admin desde tu Contexto Global
   const { user } = useContext(AuthContext);
 
   return (
     <div>
-      <div className="boxGlobal">
-        {/* --- 3. REEMPLAZAMOS EL LOGOUT POR TU NUEVO MENÚ --- */}
-        <div className={styles.header__actions}>
-          <EditMenu
-            type="admin" // Le pasamos "admin" (el EditMenu lo enviará a la ruta de usuarios)
-            data={user} // Le pasamos la información actual del Admin
-          />
-        </div>
-        {/* --------------------------------------------------- */}
-
+      <div className="boxGlobal animate__page_enter block_first">
         <section className={styles.info_area}>
-          <article className={styles.half__article}>
-            {/* 4. EL TRUCO DE LA KEY:
-                Al usar el nombre y la imagen en la key, si alguno de los dos cambia
-                después de hacer 'Save', React redibujará esta sección al instante. */}
+          <article className={`animate__item delay_1 ${styles.half__article}`}>
             <ProfileArea
               key={`admin-profile-${user?.name}-${user?.imgProfile}`}
             />
           </article>
-
           <article
-            className={`${styles.half__article} ${styles.half__vertical}`}
+            className={` animate__item delay_2 ${styles.half__article} ${styles.half__vertical}`}
           >
             <TournamentProfileInfo />
           </article>
@@ -50,7 +32,6 @@ function Dashboard() {
         <NewTournament />
         <NewTeam />
       </div>
-
       <Search />
       <TournamentCard />
     </div>

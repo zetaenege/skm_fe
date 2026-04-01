@@ -1,21 +1,24 @@
 .info__tournament_section {
-  display: flex;
-  flex-direction: row;
+  display: grid; /* Cambiamos a Grid para proteger las proporciones */
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas exactas */
   gap: 10px;
   width: 100%;
   margin-bottom: 12px;
 }
 
 .info_article {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* El guardián del cuadrado perfecto */
   width: 100%;
   border-radius: var(--border-radius-base);
+
+  /* Flexbox aquí adentro solo para centrar el texto */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
   text-align: center;
+
+  /* Nota: Borré el height: 100% que deformaba el cuadrado */
 }
 
 .light {
