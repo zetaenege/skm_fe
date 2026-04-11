@@ -1,41 +1,73 @@
 .content__text {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .request__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .button__wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 .img__profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-gray2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-gray2);
 }
 
 .profile__wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+div .new__create_trn {
+  background-color: var(--color-aqua);
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+}
+
+div .new__create_tm {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+}
+div .new__create_gnrt {
+  background-color: var(--color-aqua);
+  color: var(--color-black);
+  display: flex;
+  flex-direction: column;
+}
+
+.new__create_tm :nth-child(2) {
+  margin-bottom: 40px;
+}
+.new__create_trn :nth-child(2) {
+  margin-bottom: 40px;
+}
+
+.new__create_tm :nth-child(3) {
+  margin-top: auto;
+}
+
+.new__create_trn :nth-child(3) {
+  margin-top: auto;
 }
 
 @media only screen and (min-width: 769px) {
-
-    .request__wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 20px;
-    }
-
-
-
+  .request__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+  }
 }

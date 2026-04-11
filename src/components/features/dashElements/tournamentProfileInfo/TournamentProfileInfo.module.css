@@ -1,20 +1,58 @@
 .info__tournament_section {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  display: grid; /* Cambiamos a Grid para proteger las proporciones */
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas exactas */
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 12px;
 }
 
+.info_article {
+  aspect-ratio: 1 / 1; /* El guardián del cuadrado perfecto */
+  width: 100%;
+  border-radius: var(--border-radius-base);
 
-.info__tournament_section article{
-    background-color: var(--color-gray2);
-    aspect-ratio: 1 / 1;
-    width: 70px;
-    border-radius: var(--border-radius-base);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
+  /* Flexbox aquí adentro solo para centrar el texto */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Nota: Borré el height: 100% que deformaba el cuadrado */
 }
 
+.light {
+  background-color: var(--color-gray2);
+  color: var(--color-black);
+}
+
+.dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.img__team {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-gray2);
+}
+
+.placeholder_icon {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.profile_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+  justify-content: center;
+}

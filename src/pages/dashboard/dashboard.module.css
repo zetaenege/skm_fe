@@ -1,23 +1,152 @@
-
-
 .info_area {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.half__article {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.half__vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.menu__close_button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.menu__close_icon {
+  height: 25px;
+}
+
+.new__create {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.new__generate {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  align-items: stretch;
+}
+
+.table__team_squad {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/*menu profile edit*/
+
+.menu__profile_edit {
+  background: transparent; /* Quita el fondo del sistema */
+  border: none; /* Quita el borde del sistema */
+  box-shadow: none; /* Quita la sombra del sistema */
+  padding: 6px; /* Un poco de espacio para que sea fácil hacer clic */
+  cursor: pointer;
+  border-radius: var(--border-radius-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.menu__profile_edit:hover {
+  background-color: var(--color-gray2);
+}
+
+.menu__profile_active {
+  /* ¡Ponle EXACTAMENTE el mismo color de fondo que tiene tu .dropdown__menu! */
+  background-color: var(--color-aqua);
+
+  /* Si quieres que parezca una sola pieza fusionada con el menú,
+     le quitamos los bordes redondeados de abajo */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.header__actions {
+  display: flex;
+  justify-content: flex-end; /* Todo lo que esté adentro se va a la derecha */
+  width: 100%;
+  margin-bottom: 8px; /* Un poco de aire antes del perfil */
+}
+
+.menu__wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 50;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background-color: var(--color-aqua);
+  border-radius: 8px;
+  border-top-right-radius: 0;
+  padding: 8px 0; /* Padding vertical, sin horizontal */
+  margin: 0;
+  list-style: none; /* Quitamos los puntos de la lista */
+  min-width: 180px;
+}
+
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--color-black);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Para que el iconito no sea gigante */
+.dropdown__icon {
+  width: 24px;
+  height: 24px;
+}
+
+/*END menu profile edit*/
+
+@media (max-width: 769px) {
+  .info_area {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 25px;
+    align-items: center;
     width: 100%;
-    height: 100%;
+    gap: 24px;
+  }
+
+  .new__create {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .table__team_squad {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+  }
 }
-
-
-@media only screen and (min-width: 769px) {
-    .info_area {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        width: 100%;
-        height: 100%;
-    }
-}
-

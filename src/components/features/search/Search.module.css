@@ -1,0 +1,147 @@
+.content__text {
+  margin-bottom: 20px;
+}
+
+.search__form_wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.input__group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.search__input {
+  width: 100%;
+  height: 48px; /* Altura estándar de tus formularios */
+  padding: 10px 15px;
+  padding-right: 55px; /* Espacio para que el texto no se meta debajo del botón */
+  border-radius: var(--border-radius-base);
+  border: 1px solid var(--border-color, #ccc);
+  background-color: var(--bg-input, #fff);
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.search__input:focus {
+  border-color: var(--color-aqua);
+}
+
+.search__icon {
+  width: 100%;
+
+  /*filter: brightness(0) invert(1);*/
+}
+
+.icons__search_bar {
+  width: 20px;
+  height: 20px;
+}
+
+.results__container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accordion__item {
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+  background-color: var(--color-lemon);
+}
+
+.accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.team__item {
+  overflow: hidden;
+  background-color: var(--color-violet);
+  border-bottom: 2px solid var(--color-white);
+}
+
+.team__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  color: #444;
+  border-radius: 4px;
+}
+
+.player__row {
+  background-color: var(--color-rosa);
+  font-size: 0.9rem;
+  padding: 15px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-white);
+}
+
+.header__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.img__profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.full__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Esto hace que la foto llene el espacio sin deformarse */
+}
+
+/* Estilo cuando es el ICONO (tournamentCup) */
+.icon__style {
+  width: 80%; /* El icono suele verse mejor si no ocupa el 100% */
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.name__text {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.edit__delete_container {
+  display: flex;
+  gap: 4px;
+  flex-direction: row;
+}
+
+.control__edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 18px;
+}

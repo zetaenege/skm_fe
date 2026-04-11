@@ -1,25 +1,18 @@
-import './App.css'
+import React from "react";
 import AppRoutes from "./components/Router/AppRoutes.jsx";
-import {AuthContext} from "./assets/context/AuthContext.jsx";
-import {useContext} from "react";
 import Navbar from "./components/common/navBar/NavBar.jsx";
-
-
-
+import Footer from "./components/common/footer/Footer.jsx";
 
 function App() {
-
-    const { user } = useContext(AuthContext);
-
-    return (
-
-            <div className="container">
-                {user && <Navbar />}
-                <AppRoutes/>
-            </div>
-    );
-
-
+  return (
+    <div className="container app-wrapper">
+      <Navbar />
+      <main className="main-content">
+        <AppRoutes />
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

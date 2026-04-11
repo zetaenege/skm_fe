@@ -1,0 +1,60 @@
+.champion__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background-color: var(--color-lemon);
+  border-radius: var(--border-radius-base);
+}
+
+.champion__wrapper h2 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.team__champ_wrapper {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.info__champ_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.info__champ_wrapper p {
+  text-align: center;
+}
+
+.team__img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-gray2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.full__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Esto hace que la foto llene el espacio sin deformarse */
+}
+
+.team__name {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 18px;
+}

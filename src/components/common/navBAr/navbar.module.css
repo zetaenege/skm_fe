@@ -1,55 +1,115 @@
+.nav__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-gray2);
+  height: 70px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-
-nav{
-    background-color: var(--color-gray);
-    border-radius: var(--border-radius-base);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px;
-    margin-bottom: 15px;
+nav {
+  border-radius: var(--border-radius-base);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
 }
 
 .logo {
-    height: 25px;
+  height: 20px;
 }
-
 
 .desktop {
-    display: none;
+  display: none;
 }
-
 
 .menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.logout__wrapper {
-    display: flex;
-    align-items: center;
+.icons__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
 }
 
 .logout__button {
-    background-color:transparent;
-    border: none;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
 }
 
 .logout__icon {
-    height: 30px;
-
+  height: 25px;
 }
 
+.logout__icon:focus {
+  opacity: 60%;
+}
+
+.user__section,
+.actions__section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.actions__section {
+  justify-content: flex-end;
+}
+.navbar__logo_wrapper {
+  cursor: pointer;
+}
+
+.profile_block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.img__profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-black);
+}
+
+.user__svg_icon {
+  width: 30px; /* Ajusta el tamaño del icono dentro del círculo */
+  height: 30px;
+  background-color: var(--color-white); /* CAMBIA ESTO PARA EL COLOR DEL SVG */
+
+  -webkit-mask-image: url("../../../assets/image/Profile/user_nav.svg");
+  mask-image: url("../../../assets/image/Profile/user_nav.svg");
+
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-position: center;
+  -webkit-mask-position: center;
+}
 
 @media only screen and (min-width: 769px) {
-    .desktop {
-        display: block;
-    }
-    .mobile {
-        display: none;
-    }
+  .desktop {
+    display: block;
+  }
+  .mobile {
+    display: none;
+  }
 }
