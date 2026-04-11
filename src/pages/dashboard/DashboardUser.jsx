@@ -13,15 +13,14 @@ import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { API } from "../../Api.jsx";
 import axios from "axios";
 import Champion from "../../components/features/formSteps/confirmations/Champion/ChampionTeam.jsx";
+import DownloadReport from "../../helpers/DownloadReport.jsx";
 
 function DashboardUser() {
   const { user } = useContext(AuthContext);
   const [tournament, setTournament] = useState(null);
-
-  // Estados para manejar la lógica de torneo finalizado y campeón
   const [isTournamentFinished, setIsTournamentFinished] = useState(false);
   const [champion, setChampion] = useState(null);
-
+  const [matches, setMatches] = useState([]);
   const myTournamentId = user?.tournamentId || 1;
   const myTeamId = user?.teamId || user?.team?.id;
 
@@ -42,8 +41,8 @@ function DashboardUser() {
         const matchesData = resMatches.data;
 
         setTournament(tourData);
+        setMatches(matchesData);
 
-        // --- LÓGICA PARA SABER SI HAY CAMPEÓN ---
         const hasMatches = matchesData.length > 0;
         const allFinished =
           hasMatches && matchesData.every((m) => m.status === "FINISHED");
@@ -84,9 +83,17 @@ function DashboardUser() {
               tournamentId={user?.tournamentId || 1}
             />
 
-            {/* --- LÓGICA DE REEMPLAZO VISUAL --- */}
             {isTournamentFinished && champion ? (
-              <Champion team={champion} tournament={tournament} />
+              <div className="champion__report">
+                <Champion team={champion} tournament={tournament} />
+                <DownloadReport
+                  tournament={tournament}
+                  champion={champion}
+                  userTeamId={myTeamId}
+                  matches={matches}
+                  className="download__report"
+                />
+              </div>
             ) : (
               <NextMatch
                 tournamentId={myTournamentId}

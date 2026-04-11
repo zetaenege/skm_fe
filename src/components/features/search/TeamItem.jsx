@@ -8,13 +8,10 @@ import isClosedIcon from "../../../assets/icons/close.svg";
 import isOpenIcon from "../../../assets/icons/open.svg";
 import editIcon from "../../../assets/icons/edit.svg";
 import deleteIcon from "../../../assets/icons/delete.svg";
-
-// 1. IMPORTAMOS LOS COMPONENTES MÁGICOS
 import InlineEditForm from "../management/floatMenu/EditMenuInline.jsx";
-import DeleteConfirmMenu from "../management/floatMenu/DeletenInline.jsx"; // <--- AQUÍ ESTÁ EL NUEVO
+import DeleteConfirmMenu from "../management/floatMenu/DeletenInline.jsx";
 
 function TeamItem({ team, searchTerm = "" }) {
-  // ... (Todos tus estados locales y funciones se mantienen exactamente igual) ...
   const [localTeam, setLocalTeam] = useState(team);
   const [localPlayers, setLocalPlayers] = useState(
     team.squad || team.users || [],
@@ -154,7 +151,6 @@ function TeamItem({ team, searchTerm = "" }) {
         </div>
       </div>
 
-      {/* --- MENÚS DEL EQUIPO --- */}
       {isEditingTeam && (
         <InlineEditForm
           type="team"
@@ -164,7 +160,6 @@ function TeamItem({ team, searchTerm = "" }) {
         />
       )}
 
-      {/* AQUÍ LLAMAMOS A TU NUEVO COMPONENTE SÚPER LIMPIO */}
       {isDeletingTeam && (
         <DeleteConfirmMenu
           title="Delete Team"
@@ -174,7 +169,6 @@ function TeamItem({ team, searchTerm = "" }) {
         />
       )}
 
-      {/* --- LISTA DE JUGADORES --- */}
       {isOpen && (
         <div className={styles.player__list}>
           {localPlayers.length === 0 ? (
@@ -186,7 +180,6 @@ function TeamItem({ team, searchTerm = "" }) {
                 style={{ display: "flex", flexDirection: "column" }}
               >
                 <div className={styles.player__row}>
-                  {/* ... (código de la fila del jugador: foto, nombre, posición) ... */}
                   <div className={styles.header__title}>
                     <span>
                       <div className={styles.img__profile}>
@@ -247,7 +240,6 @@ function TeamItem({ team, searchTerm = "" }) {
                   </div>
                 </div>
 
-                {/* --- MENÚS DEL JUGADOR --- */}
                 {editingPlayerId === player.id && (
                   <InlineEditForm
                     type="user"
@@ -257,7 +249,6 @@ function TeamItem({ team, searchTerm = "" }) {
                   />
                 )}
 
-                {/* Y AQUÍ REUTILIZAMOS EL MISMO COMPONENTE DE BORRAR */}
                 {deletingPlayerId === player.id && (
                   <DeleteConfirmMenu
                     title="Delete Player"

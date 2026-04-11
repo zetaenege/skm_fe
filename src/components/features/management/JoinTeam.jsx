@@ -1,7 +1,6 @@
 import Button from "../../common/button/Button.jsx";
 import styles from "./management.module.css";
 import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
 
 function JoinTeam() {
   const navigate = useNavigate();

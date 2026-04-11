@@ -17,7 +17,6 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
       setLoading(true);
 
       try {
-        // Pedimos el torneo (para Teams/Players) y los partidos (para Games/Goals)
         const [resTour, resMatches] = await Promise.all([
           axios.get(`${API}/tournaments/${tournamentId}`, config),
           axios.get(`${API}/matches/tournament/${tournamentId}`, config),
@@ -26,7 +25,6 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
         const tour = resTour.data;
         const matches = resMatches.data;
 
-        // 1. Cálculo de Goles
         const totalGoals = matches.reduce((acc, m) => {
           if (m.status === "FINISHED") {
             return acc + (m.homeScore || 0) + (m.awayScore || 0);
@@ -38,8 +36,6 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
           (m) => m.status === "FINISHED",
         ).length;
 
-        // 2. Cálculo de Jugadores
-        // Si el backend no tiene 'totalPlayers', sumamos los jugadores de cada equipo
         const playersCount =
           tour.totalPlayers ||
           tour.teams?.reduce(
@@ -52,7 +48,7 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
           title1: "Teams",
           val1: tour.teams?.length || 0,
           title2: "Players",
-          val2: playersCount, // <--- Aquí ya recoge los jugadores
+          val2: playersCount,
           title3: "Games",
           val3: `${finishedGames}/${matches.length}`,
           title4: "Goals",
@@ -81,13 +77,11 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
           <p className="info__text_mini">{data.title1}</p>
         </article>
 
-        {/* Caja Players (Corregida) */}
         <article className={`${styles.info_article} ${variantSt}`}>
           <p className="name__text">{data.val2}</p>
           <p className="info__text_mini">{data.title2}</p>
         </article>
 
-        {/* Caja Games */}
         <article className={`${styles.info_article} ${variantSt}`}>
           <p className="name__text">{data.val3}</p>
           <p className="info__text_mini">{data.title3}</p>

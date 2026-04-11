@@ -10,7 +10,7 @@ function TournamentProfileInfo({
   type = "global",
   variant = "dark",
   tournamentId = null,
-  tournamentData = null,
+  tournamentData = null, // <-- CAMBIO 1: Recibe la data
 }) {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState(null);
@@ -23,29 +23,38 @@ function TournamentProfileInfo({
       return;
     }
 
-    if (type === "user" && tournamentData) {
-      setData({
-        val1: tournamentData.name || "TBA",
-        title1: "League",
-        val2: tournamentData.startDate || "-",
-        title2: "Start",
-        val3: tournamentData.endDate || "-",
-        title3: "End",
-        val4: tournamentData.city || "-",
-        title4: "City",
-      });
-      setLoading(false);
-      return;
-    }
-
     async function fetchData() {
       const token = localStorage.getItem("token");
       const config = { headers: { Authorization: `Bearer ${token}` } };
       setLoading(true);
 
+      if (type === "user" && tournamentData) {
+        setData({
+          val1: tournamentData.name || "TBA",
+          title1: "League",
+          val2: tournamentData.startDate
+            ? new Date(tournamentData.startDate).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+              })
+            : "-",
+          title2: "Start",
+          val3: tournamentData.endDate
+            ? new Date(tournamentData.endDate).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+              })
+            : "-",
+          title3: "End",
+          val4: tournamentData.city || "-",
+          title4: "City",
+        });
+        setLoading(false);
+        return;
+      }
+
       try {
         const tId = tournamentId || user?.tournamentId;
-
         if (type === "tournament" && tId) {
           const [resTour, resMatches] = await Promise.all([
             axios.get(`${API}/tournaments/${tId}`, config),
@@ -118,6 +127,37 @@ function TournamentProfileInfo({
             title4: "Total Goals",
             val4: totalSystemGoals,
           });
+        } else if (user?.teamId) {
+          const searchTourId = tournamentId || user.tournamentId || 1;
+          const resTour = await axios.get(
+            `${API}/tournaments/${searchTourId}`,
+            config,
+          );
+          const allTeams = resTour.data.teams || [];
+
+          allTeams.sort(
+            (a, b) =>
+              (b.points || 0) - (a.points || 0) ||
+              (b.goalDifference || 0) - (a.goalDifference || 0),
+          );
+
+          const myRankIndex = allTeams.findIndex(
+            (t) => String(t.id) === String(user.teamId),
+          );
+          const myTeamData = myRankIndex !== -1 ? allTeams[myRankIndex] : {};
+          const positionDisplay =
+            myRankIndex !== -1 ? `${myRankIndex + 1}º` : "-";
+
+          setData({
+            val1: myTeamData.imgProfile || teamImg,
+            title1: "Logo",
+            val2: positionDisplay,
+            title2: "Position",
+            val3: myTeamData.goalsFor || 0,
+            title3: "Goals",
+            val4: myTeamData.matchesPlayed || 0,
+            title4: "Games",
+          });
         } else {
           setData(null);
         }
@@ -129,7 +169,7 @@ function TournamentProfileInfo({
     }
 
     fetchData();
-  }, [user, type, tournamentId, tournamentData]);
+  }, [user, type, tournamentId, tournamentData]); // <-- CAMBIO 3: Añadido aquí
 
   if (loading) return <div className={styles.loading}>Loading...</div>;
   if (!data) return null;

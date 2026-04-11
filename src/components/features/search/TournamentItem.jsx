@@ -13,13 +13,9 @@ import style from "../statsvieuw/StatsVieuw.module.css";
 import Button from "../../common/button/Button.jsx";
 
 function TournamentItem({ tournament, searchTerm = "" }) {
-  // --- ESTADOS LOCALES ---
   const [localTournament, setLocalTournament] = useState(tournament);
   const [isEditing, setIsEditing] = useState(false);
-
-  // NUEVO: Estado para controlar el cuadro de confirmación de borrado
   const [isDeleting, setIsDeleting] = useState(false);
-
   const [isOpen, setIsOpen] = useState(false);
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,7 +47,6 @@ function TournamentItem({ tournament, searchTerm = "" }) {
     setIsOpen(!isOpen);
   };
 
-  // --- NUEVA FUNCIÓN: CONFIRMAR Y BORRAR EL TORNEO ---
   const handleConfirmDelete = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -59,9 +54,8 @@ function TournamentItem({ tournament, searchTerm = "" }) {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("✅ Torneo eliminado con éxito");
       setIsDeleting(false);
-      window.location.reload(); // Refresca la página para actualizar la lista
+      window.location.reload();
     } catch (err) {
       console.error("Error al eliminar el torneo:", err);
     }
@@ -69,7 +63,6 @@ function TournamentItem({ tournament, searchTerm = "" }) {
 
   return (
     <div className={styles.accordion__item}>
-      {/* --- CABECERA DEL TORNEO --- */}
       <div className={styles.accordion__header} onClick={handleToggle}>
         <div className={styles.header__title}>
           <span className={styles.icon}>
@@ -107,16 +100,14 @@ function TournamentItem({ tournament, searchTerm = "" }) {
           </p>
         </div>
 
-        {/* --- BOTONES DE EDITAR Y BORRAR --- */}
         <div className={styles.control__edit}>
           <div className={styles.edit__delete_container}>
-            {/* BOTÓN EDITAR */}
             <span
               className={styles.arrow}
               onClick={(e) => {
                 e.stopPropagation();
                 setIsEditing(!isEditing);
-                setIsDeleting(false); // Cierra el de borrar si estaba abierto
+                setIsDeleting(false);
               }}
             >
               <img
@@ -126,13 +117,12 @@ function TournamentItem({ tournament, searchTerm = "" }) {
               />
             </span>
 
-            {/* BOTÓN BORRAR */}
             <span
               className={styles.arrow}
               onClick={(e) => {
                 e.stopPropagation();
-                setIsDeleting(!isDeleting); // Abre el cuadro de confirmación
-                setIsEditing(false); // Cierra el de editar si estaba abierto
+                setIsDeleting(!isDeleting);
+                setIsEditing(false);
               }}
             >
               <img
@@ -174,7 +164,6 @@ function TournamentItem({ tournament, searchTerm = "" }) {
         />
       )}
 
-      {/* 2. NUEVO: CUADRO DE CONFIRMACIÓN DE BORRADO */}
       {isDeleting && (
         <div
           className={`${style.dropdown__form_inline} animate__dropdown_enter`}
@@ -186,18 +175,14 @@ function TournamentItem({ tournament, searchTerm = "" }) {
           <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
             <Button
               type="button"
-              onClick={
-                handleConfirmDelete
-              } /* 1. ¡Aquí disparamos el borrado! */
+              onClick={handleConfirmDelete}
               variant="requestaccept"
             >
               Delete
             </Button>
             <Button
               type="button"
-              onClick={() =>
-                setIsDeleting(false)
-              } /* 2. ¡Cerramos el cuadro correctamente! */
+              onClick={() => setIsDeleting(false)}
               variant="requestdecline"
             >
               Cancel
@@ -206,7 +191,6 @@ function TournamentItem({ tournament, searchTerm = "" }) {
         </div>
       )}
 
-      {/* --- LISTA DE EQUIPOS ADENTRO DEL ACORDEÓN --- */}
       {isOpen && (
         <div className={styles.accordion__body}>
           {loading && <p className={styles.status_text}>Loading teams...</p>}

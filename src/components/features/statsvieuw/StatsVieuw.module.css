@@ -158,7 +158,7 @@ div.team__squad_style {
 .teamInfo_table {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* ← aquí lo alineamos a la izquierda */
+  justify-content: flex-start;
   gap: 12px;
   text-align: left;
 }
@@ -169,7 +169,7 @@ div.team__squad_style {
 }
 
 .position_table thead tr {
-  border-bottom: 20px solid transparent; /* simula margen sin romper la tabla */
+  border-bottom: 20px solid transparent;
 }
 
 .position_table tbody tr:not(:last-child) {
@@ -248,14 +248,13 @@ div.team__squad_style {
 .full__img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Esto hace que la foto llene el espacio sin deformarse */
+  object-fit: cover;
 }
 
-/* Estilo cuando es el ICONO (tournamentCup) */
 .icon__style {
-  width: 80%; /* El icono suele verse mejor si no ocupa el 100% */
+  width: 80%;
   height: auto;
-  object-fit: contain; /* Mantiene la forma del icono */
+  object-fit: contain;
 }
 
 .profile_wrapper {
@@ -298,7 +297,7 @@ div.team__squad_style {
 }
 
 .icon__svg {
-  width: 14px; /* Ajusta este tamaño a tu gusto */
+  width: 14px;
   height: 14px;
   object-fit: contain;
   pointer-events: none;
@@ -326,7 +325,6 @@ div.team__squad_style {
 }
 
 @media only screen and (max-width: 768px) {
-  /* Hacemos que la tarjeta del torneo ocupe el 100% del ancho */
   .tournament__card_container {
     grid-template-columns: 1fr;
   }

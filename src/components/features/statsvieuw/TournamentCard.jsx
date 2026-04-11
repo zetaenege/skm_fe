@@ -128,14 +128,14 @@ function TournamentCard() {
                 <article>
                   <TournamentCardInfo
                     variant="light"
-                    tournamentId={tournament.id} // <--- AÑADE ESTO
+                    tournamentId={tournament.id}
                     tournamentData={tournament}
                   />
                 </article>
 
                 <Button
                   type="button"
-                  variant="primary" // Usamos tu variante standard
+                  variant="primary"
                   onClick={() =>
                     navigate(`/dashboard/tournament/${tournament.id}`)
                   }

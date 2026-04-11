@@ -10,7 +10,6 @@ import Button from "../../../common/button/Button.jsx";
 
 function EditMenu({ type = "user", data, onUpdateSuccess }) {
   const { refreshUser } = useContext(AuthContext);
-  // Eliminamos isMenuOpen, ya no lo necesitamos
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [editName, setEditName] = useState("");
   const [profileImage, setProfileImage] = useState(null);
@@ -60,15 +59,12 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
         },
       });
 
-      console.log(`✅ ${type} actualizado con éxito`);
-
       if (type === "user" || type === "admin") {
         if (refreshUser) await refreshUser();
       } else if (onUpdateSuccess) {
         onUpdateSuccess();
       }
 
-      // Solo cerramos el modo edición al guardar
       setIsEditingMode(false);
     } catch (err) {
       console.error(`Error al actualizar el ${type}:`, err);
@@ -80,13 +76,11 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
   return (
     <>
       {!isEditingMode ? (
-        /* VISTA 1: ITEM DEL MENÚ (Se integra directo en el <ul> de NavDropdown) */
         <div className={styles.dropdown__item} onClick={openEditMode}>
           <img src={editIcon} className={styles.dropdown__icon} alt="Edit" />
           <p>Edit Information</p>
         </div>
       ) : (
-        /* VISTA 2: FORMULARIO BETA */
         <form
           className={` animate__dropdown_enter ${styles.dropdown__form}`}
           onSubmit={handleEditSubmit}
@@ -132,7 +126,6 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
             </div>
           </div>
 
-          {/* NAME INPUT */}
           <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
             <label className={styles.form__label}>Name</label>
             <input
@@ -144,7 +137,6 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
             />
           </div>
 
-          {/* ACTION BUTTONS */}
           <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
             <Button type="submit" children="save " variant="requestaccept">
               Save

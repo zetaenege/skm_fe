@@ -3,7 +3,7 @@ import logo from "../../../assets/image/Logos/SKM.svg";
 import home from "../../../assets/image/Icons/home.svg";
 import setting from "../../../assets/image/Icons/setting.svg";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react"; // <-- AÑADIMOS useState AQUÍ
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import NavDropdown from "../../features/management/floatMenu/NavDropdown.jsx";
 
@@ -32,7 +32,6 @@ function NavBar() {
 
   return (
     <nav>
-      {/* ART -  01 - FOTO EN NAAM */}
       <div
         className={styles.user__section}
         onClick={handleHome}
@@ -54,8 +53,6 @@ function NavBar() {
         )}
       </div>
 
-      {/* ART - 02 - LOGO */}
-
       <div
         className={styles.navbar__logo_wrapper}
         onClick={handleHome}
@@ -68,12 +65,9 @@ function NavBar() {
         />
       </div>
 
-      {/* ART - 03 - MENU CONTROL */}
-
       <div className={styles.actions__section}>
         {user && (
           <ul className={styles.menu}>
-            {/* ICON HOME */}
             <li className={styles.icons__wrapper}>
               <button
                 className={styles.logout__button}
@@ -84,7 +78,6 @@ function NavBar() {
               </button>
             </li>
 
-            {/* ICON CONFIG */}
             <li className={styles.icons__wrapper}>
               <button
                 className={styles.logout__button}
@@ -98,12 +91,11 @@ function NavBar() {
                 />
               </button>
 
-              {/* FLOAT MENU" */}
               {isMenuOpen && (
                 <NavDropdown
                   onClose={() => setIsMenuOpen(false)}
                   onLogout={handleLogout}
-                  user={user} // Pasamos el usuario actual
+                  user={user}
                 />
               )}
             </li>

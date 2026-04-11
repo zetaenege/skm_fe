@@ -29,7 +29,6 @@ function TeamSquad({ teamId }) {
     fetchSquad();
   }, [teamId]);
 
-  // --- SORT DE UNA LÍNEA (Orden alfabético por nombre) ---
   const sortedSquad = [...squad].sort((a, b) =>
     (a.name || "").localeCompare(b.name || ""),
   );
@@ -52,11 +51,10 @@ function TeamSquad({ teamId }) {
                 </tr>
               </thead>
               <tbody>
-                {/* SI NO HAY TEAM ID, PEDIMOS QUE SELECCIONE UNO */}
                 {!teamId ? (
                   <tr>
                     <td
-                      colSpan="2" // <-- Corregido a 2 columnas
+                      colSpan="2"
                       className="info__text"
                       style={{ textAlign: "center", padding: "1.5rem" }}
                     >
@@ -74,7 +72,6 @@ function TeamSquad({ teamId }) {
                     </td>
                   </tr>
                 ) : sortedSquad.length > 0 ? (
-                  // MAPEO DE JUGADORES ORDENADOS
                   sortedSquad.map((player) => (
                     <tr key={player.id}>
                       <td className={style.teamInfo_table}>
@@ -102,10 +99,9 @@ function TeamSquad({ teamId }) {
                     </tr>
                   ))
                 ) : (
-                  // MENSAJE DE EQUIPO VACÍO
                   <tr>
                     <td
-                      colSpan="2" // <-- Corregido a 2 columnas
+                      colSpan="2"
                       className="info__text"
                       style={{ textAlign: "center", padding: "1.5rem" }}
                     >

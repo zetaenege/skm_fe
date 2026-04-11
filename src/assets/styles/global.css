@@ -24,7 +24,7 @@ body {
 .app-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ocupa toda la altura de la ventana */
+  min-height: 100vh;
 }
 
 main {
@@ -221,6 +221,13 @@ h3 {
 
 .global__section_style {
   margin-bottom: 50px;
+}
+
+.champion__report {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
 }
 
 /* ANIMATIONS */

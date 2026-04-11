@@ -110,8 +110,6 @@ function SignUp() {
           />
         </div>
 
-        {/* --- NUEVO CAMPO: UPLOAD IMAGE --- */}
-
         <div className={styles.form__input__wrapper}>
           <label className={styles.form__label}>Profile Image (Optional)</label>
           <div className={styles.input__group_upload}>
@@ -125,7 +123,6 @@ function SignUp() {
               style={{ cursor: "pointer", paddingRight: "55px" }}
             />
 
-            {/* Input REAL pero oculto */}
             <input
               type="file"
               accept="image/*"
@@ -134,7 +131,6 @@ function SignUp() {
               onChange={handleFileChange}
             />
 
-            {/* Botón visual idéntico al de Search */}
             <Button
               className={styles.upload__button}
               type="button"
@@ -149,7 +145,6 @@ function SignUp() {
             </Button>
           </div>
         </div>
-        {/* --------------------------------- */}
 
         <div className={styles.form__input__wrapper}>
           <label className={styles.form__label} htmlFor="new-password">

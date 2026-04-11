@@ -30,8 +30,6 @@ function NewTeamForm() {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log("📦 Torneos recibidos:", response.data);
         setTournaments(response.data);
       } catch (err) {
         console.error("Error al cargar torneos:", err);
@@ -65,13 +63,6 @@ function NewTeamForm() {
       return;
     }
 
-    if (!user?.isAdmin) {
-      const confirmRole = window.confirm(
-        "Al crear este equipo, te convertirás automáticamente en su Coach. ¿Deseas continuar?",
-      );
-      if (!confirmRole) return;
-    }
-
     try {
       let base64Image = null;
       if (profileImage) {
@@ -96,29 +87,23 @@ function NewTeamForm() {
       const createdTeam = response.data;
       console.log("Team created:", createdTeam);
 
-      // --- LÓGICA CORREGIDA PARA ACTUALIZAR AL COACH ---
       if (!user?.isAdmin && user?.id) {
-        // Payload limpio para evitar la trampa de Jackson
         const userUpdatePayload = {
           name: user.name,
           email: user.email,
           position: user.position,
           imgProfile: user.imgProfile,
           teamId: createdTeam.id,
-          isCoach: true, // ¡Ahora sí lo leerá Java!
+          isCoach: true,
           isAdmin: user.isAdmin,
         };
 
-        await axios.put(
-          `${API}/users/${user.id}`, // Usamos el endpoint directo con ID
-          userUpdatePayload,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
+        await axios.put(`${API}/users/${user.id}`, userUpdatePayload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
-        );
+        });
 
         if (refreshUser) {
           await refreshUser();
@@ -127,7 +112,6 @@ function NewTeamForm() {
         console.log("User updated as coach");
       }
 
-      // Activamos la pantalla de éxito
       setSuccess(true);
     } catch (err) {
       console.error("Error in team creation process:", err);
@@ -144,7 +128,6 @@ function NewTeamForm() {
     }
   }
 
-  // --- RENDERIZADO CONDICIONAL: PANTALLA DE ÉXITO ---
   if (success) {
     return (
       <Confirmation
@@ -160,7 +143,6 @@ function NewTeamForm() {
       />
     );
   }
-  // --------------------------------------------------
 
   return (
     <section className={styles.centered__container}>
@@ -258,8 +240,6 @@ function NewTeamForm() {
         </div>
 
         {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
-        {/* Eliminamos el mensaje de éxito viejo */}
-
         <Button type="submit">Save</Button>
       </form>
     </section>

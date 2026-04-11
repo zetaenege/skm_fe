@@ -12,14 +12,10 @@ function NewTournamentForm() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [city, setCity] = useState("");
-
-  // Nuevos estados para la imagen del torneo
   const [profileImage, setProfileImage] = useState(null);
   const [fileName, setFileName] = useState("");
-
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false); // <-- Cambiado a booleano
-
+  const [success, setSuccess] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -73,12 +69,7 @@ function NewTournamentForm() {
         },
       );
 
-      console.log("Tournament created:", response.data);
-
-      // Activamos la pantalla de éxito
       setSuccess(true);
-
-      // Eliminamos el setTimeout para que el usuario controle la navegación
     } catch (err) {
       console.error("Error creating tournament", err);
       if (err.response) {
@@ -96,7 +87,6 @@ function NewTournamentForm() {
     }
   }
 
-  // --- RENDERIZADO CONDICIONAL: PANTALLA DE ÉXITO ---
   if (success) {
     return (
       <Confirmation
@@ -108,7 +98,6 @@ function NewTournamentForm() {
       />
     );
   }
-  // --------------------------------------------------
 
   return (
     <section className={styles.centered__container}>
@@ -217,7 +206,6 @@ function NewTournamentForm() {
         </div>
 
         {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
-        {/* Eliminamos el texto verde de éxito porque ahora sale la nueva pantalla */}
 
         <Button type="submit">Save</Button>
       </form>

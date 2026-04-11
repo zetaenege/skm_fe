@@ -17,7 +17,6 @@ function EditMenuTour({ type = "tournament", data, onUpdateSuccess }) {
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
 
-  // <-- CAMBIO 2: Extraemos el ID directamente del final de la URL
   const location = useLocation();
   const id = location.pathname.split("/").filter(Boolean).pop();
 
@@ -84,7 +83,7 @@ function EditMenuTour({ type = "tournament", data, onUpdateSuccess }) {
         },
       });
 
-      console.log(`✅ ${type} actualizado con éxito`);
+      window.dispatchEvent(new Event("torneoActualizado"));
 
       if (type === "user" || type === "admin") {
         if (refreshUser) await refreshUser();

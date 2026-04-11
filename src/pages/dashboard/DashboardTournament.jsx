@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API } from "../../Api.jsx";
-
 import ProfileArea from "../../components/features/dashElements/profileArea/ProfileArea.jsx";
 import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
 import GenerateMatches from "../../components/features/management/GenarateMatches.jsx";
@@ -11,7 +10,6 @@ import PositionTable from "../../components/features/statsvieuw/PositionTable.js
 import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
 import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
 import NextMatchLive from "../../components/features/statsvieuw/NextMatchLive.jsx";
-import EditMenu from "../../components/features/management/floatMenu/EditMenu.jsx";
 import Champion from "../../components/features/formSteps/confirmations/Champion/ChampionTeam.jsx";
 
 function DashboardTournament() {
@@ -39,7 +37,6 @@ function DashboardTournament() {
       const hasMatches = matchesData.length > 0;
       const allFinished =
         hasMatches && matchesData.every((m) => m.status === "FINISHED");
-
       setIsTournamentFinished(allFinished);
 
       if (allFinished && tourData.teams?.length > 0) {
@@ -72,6 +69,7 @@ function DashboardTournament() {
               key={`profile-${updateTrigger}`}
               mode="tournament"
               tournamentId={id}
+              onUpdate={fetchTournamentData}
             />
           </article>
           <article
@@ -94,16 +92,16 @@ function DashboardTournament() {
           <div className={styles.new__generate}>
             <GenerateMatches
               tournamentId={id}
-              onMatchesGenerated={() => window.location.reload()}
+              onMatchesGenerated={() => fetchTournamentData()}
             />
           </div>
-          <NextMatchLive tournamentId={id} />
+          <NextMatchLive tournamentId={id} key={`nextLive-${updateTrigger}`} />
         </>
       )}
 
       <PositionTable teams={tournament?.teams || []} />
-      <UpcomingMatches tournamentId={id} />
-      <PastMatches tournamentId={id} />
+      <UpcomingMatches tournamentId={id} key={`upcoming-${updateTrigger}`} />
+      <PastMatches tournamentId={id} key={`past-${updateTrigger}`} />
     </div>
   );
 }

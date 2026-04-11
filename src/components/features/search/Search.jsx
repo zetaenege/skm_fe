@@ -12,22 +12,21 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Para saber si mostrar el mensaje de "No encontrado"
 
-  // Función que se ejecuta al darle al botón de buscar o presionar Enter
   const handleSearch = async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault();
 
     if (searchTerm.trim() === "") {
-      setTournaments([]); // Limpiamos la lista si el input está vacío
+      setTournaments([]);
       setHasSearched(false);
       return;
     }
 
     setLoading(true);
     setHasSearched(true);
+
     const token = localStorage.getItem("token");
 
     try {
-      // Conectamos con el nuevo endpoint del backend
       const res = await axios.get(
         `${API}/tournaments/search?query=${searchTerm}`,
         {
@@ -52,7 +51,6 @@ function Search() {
         delete it.
       </p>
       <div className={styles.search__form_wrapper}>
-        {/* Envolvemos el input y el botón en un <form> para que funcione el Enter */}
         <form className={styles.input__group} onSubmit={handleSearch}>
           <input
             type="text"
@@ -80,7 +78,6 @@ function Search() {
         {/* Mensaje de carga */}
         {loading && <p className={styles.content__text}>Searching...</p>}
 
-        {/* Resultados encontrados */}
         {!loading &&
           tournaments.length > 0 &&
           tournaments.map((tournament) => (
@@ -91,7 +88,6 @@ function Search() {
             />
           ))}
 
-        {/* Mensaje de "No hay resultados" */}
         {!loading && hasSearched && tournaments.length === 0 && (
           <p className={styles.content__text} style={{ color: "red" }}>
             No results found for "{searchTerm}".

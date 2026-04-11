@@ -2,7 +2,6 @@ import style from "./StatsVieuw.module.css";
 import TeamImg from "../../../assets/image/Icons/team.svg";
 
 function PositionTable({ teams = [] }) {
-  // --- SORT REFACTORIZADO A UNA SOLA LÍNEA ---
   const sortedTeams = [...teams].sort(
     (a, b) =>
       (b.points || 0) - (a.points || 0) ||
@@ -71,7 +70,6 @@ function PositionTable({ teams = [] }) {
                     );
                   })
                 ) : (
-                  // MENSAJE DE TABLA VACÍA
                   <tr>
                     <td
                       colSpan="6"

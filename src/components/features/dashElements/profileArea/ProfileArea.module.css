@@ -11,20 +11,17 @@
   position: relative;
 }
 
-/* --- VARIANTES DE COLOR --- */
 .variant_admin {
   background-color: var(--color-black);
 }
 
 .variant_user {
-  background-color: var(--color-aqua); /* Elige el color fijo que prefieras */
+  background-color: var(--color-aqua);
 }
 
 .variant_tournament {
-  background-color: var(--color-rosa); /* Elige el color fijo que prefieras */
+  background-color: var(--color-rosa);
 }
-
-/* --- ESTILOS DE IMAGEN --- */
 
 .placeholder_icon {
   width: 60%;
@@ -50,7 +47,7 @@
 .user__svg_icon {
   width: 50px;
   height: 50px;
-  background-color: var(--color-black); /* Color del SVG */
+  background-color: var(--color-black);
 
   -webkit-mask-image: url("../../../../assets/image/Profile/user_nav.svg");
   mask-image: url("../../../../assets/image/Profile/user_nav.svg");

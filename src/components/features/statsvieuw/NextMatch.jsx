@@ -50,7 +50,7 @@ function NextMatch({ tournamentId, teamId, tournamentName }) {
           const isMyTeam = teamId
             ? String(m.homeTeam?.id) === String(teamId) ||
               String(m.awayTeam?.id) === String(teamId)
-            : true; // Si no hay teamId, muestra el primero cualquiera del torneo
+            : true;
 
           return isScheduled && isMyTeam;
         });
@@ -66,7 +66,6 @@ function NextMatch({ tournamentId, teamId, tournamentName }) {
     fetchNextMatch();
   }, [tournamentId, teamId]);
 
-  // Si está cargando o no hay partido próximo, mostramos un mensaje o nada
   if (loading) return <p className="info__text">Loading...</p>;
 
   if (!match) {
@@ -99,7 +98,6 @@ function NextMatch({ tournamentId, teamId, tournamentName }) {
       </article>
 
       <article className={style.next__match_content}>
-        {/* Equipo Local */}
         <div className={style.team__card}>
           <div className={style.team__img_name}>
             <div className={style.team__img}>
@@ -120,7 +118,6 @@ function NextMatch({ tournamentId, teamId, tournamentName }) {
           </div>
         </div>
         <p className="name__text">-</p>
-        {/* Equipo Visitante */}
         <div className={style.team__card}>
           <div className={style.match__result}>
             <p className="name__text">0</p>

@@ -36,16 +36,11 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
         imgProfile: base64Image,
       };
 
-      // El truco de la "s": funciona para tournaments, teams y users
       const endpoint = `${API}/${type}s/${item.id}`;
 
       await axios.put(endpoint, updatePayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log(`✅ ${type} actualizado con éxito`);
-
-      // Enviamos los datos actualizados al componente padre para que se refresque visualmente
       onSuccess(updatePayload);
       onClose();
     } catch (err) {
@@ -59,7 +54,6 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
         Edit {type.charAt(0).toUpperCase() + type.slice(1)}
       </h4>
 
-      {/* UPLOAD IMAGE */}
       <div className={styles.form__input__wrapper}>
         <label className={styles.form__label}>Image</label>
         <div className={styles.input__group_upload}>
@@ -93,7 +87,6 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
         </div>
       </div>
 
-      {/* NAME INPUT */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
         <label className={styles.form__label}>Name</label>
         <input
@@ -105,7 +98,6 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
         />
       </div>
 
-      {/* BUTTONS */}
       <div style={{ display: "flex", gap: "8px", marginTop: "5px" }}>
         <Button type="submit" children="save " variant="requestaccept">
           Save

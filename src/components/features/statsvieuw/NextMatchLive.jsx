@@ -127,7 +127,6 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
 
         <div>
           <div className={style.match__state}>
-            {/* Si está en PRE, mostramos el icono de Matchday */}
             {gameStatus === "PRE" && (
               <img
                 src={nextMatchIcon}
@@ -136,7 +135,6 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
               />
             )}
 
-            {/* Si está en LIVE, mostramos el icono de En Vivo */}
             {gameStatus === "LIVE" && (
               <img
                 src={matchPlayingIcon}
@@ -145,7 +143,6 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
               />
             )}
 
-            {/* Si está en EDIT (antes de guardar), mostramos el icono de Finalizado/Editando */}
             {gameStatus === "EDIT" && (
               <img
                 src={matchFinishedIcon}
@@ -273,7 +270,6 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
         )}
 
         {gameStatus === "LIVE" && (
-          // Aquí podrías usar un botón rojo o cambiar el estilo
           <ButtonStart onClick={handleStop} style={{ backgroundColor: "red" }}>
             Stop Match
           </ButtonStart>

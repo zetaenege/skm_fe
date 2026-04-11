@@ -1,6 +1,5 @@
 import styles from "./FormSteps.module.css";
 import { useState, useEffect, useContext } from "react";
-// Importamos tu componente de confirmación
 import Confirmation from "./confirmations/Confirmation.jsx";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import axios from "axios";
@@ -12,9 +11,7 @@ function JoinTeamForm() {
   const [selectedTeam, setSelectedTeam] = useState("");
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false); // Cambiado a booleano
-
-  // Extraemos también refreshUser para actualizar la app globalmente
+  const [success, setSuccess] = useState(false);
   const { user, refreshUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -49,18 +46,16 @@ function JoinTeamForm() {
     }
 
     try {
-      // 1. Creamos el payload exacto para evitar errores de DTO en Spring Boot
       const userUpdatePayload = {
         name: user.name,
         email: user.email,
-        position: position, // La posición que acaba de escribir
+        position: position,
         imgProfile: user.imgProfile,
-        teamId: Number(selectedTeam), // El equipo al que se une
-        isCoach: false, // Al unirse NO es coach
-        isAdmin: user.isAdmin, // Mantenemos su rol original
+        teamId: Number(selectedTeam),
+        isCoach: false,
+        isAdmin: user.isAdmin,
       };
 
-      // 2. Usamos la ruta con el ID exacto, igual que en NewTeamForm
       const response = await axios.put(
         `${API}/users/${user.id}`,
         userUpdatePayload,
@@ -72,14 +67,9 @@ function JoinTeamForm() {
         },
       );
 
-      console.log("✅ Joined team:", response.data);
-
-      // 3. Actualizamos el usuario global en React para que el ProfileArea se entere
       if (refreshUser) {
         await refreshUser();
       }
-
-      // 4. Activamos la pantalla de confirmación
       setSuccess(true);
     } catch (err) {
       console.error("Error joining team:", err);
@@ -93,9 +83,7 @@ function JoinTeamForm() {
     }
   }
 
-  // --- RENDERIZADO CONDICIONAL: LA PANTALLA DE ÉXITO ---
   if (success) {
-    // Buscamos el nombre del equipo para hacerlo más personalizado
     const joinedTeamName =
       teams.find((t) => t.id === Number(selectedTeam))?.name || "your new team";
 
@@ -109,7 +97,6 @@ function JoinTeamForm() {
       />
     );
   }
-  // -----------------------------------------------------
 
   return (
     <section className={styles.centered__container}>
@@ -155,9 +142,6 @@ function JoinTeamForm() {
         </div>
 
         {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
-        {/* Eliminamos el mensaje de texto verde porque ahora usamos el componente Confirmation */}
-
-        {/* Pequeña corrección de sintaxis en el botón */}
         <Button type="submit">Join a team now</Button>
       </form>
     </section>

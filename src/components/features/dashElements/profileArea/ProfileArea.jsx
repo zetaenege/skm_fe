@@ -3,8 +3,6 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../assets/context/AuthContext.jsx";
 import axios from "axios";
 import { API } from "../../../../Api.jsx";
-
-// Importamos los iconos para el Plan B
 import tournamentCup from "../../../../assets/icons/img_tournament.svg";
 import userProfile from "../../../../assets/image/Profile/user_Profile.svg";
 import style from "../../statsvieuw/StatsVieuw.module.css";
@@ -17,13 +15,10 @@ function ProfileArea({ mode = "user", tournamentId = null }) {
   const isAdmin = user?.isAdmin === true;
   const isTournament = mode === "tournament" && tournamentData;
   const hasPhoto = isTournament ? tournamentData?.imgProfile : user?.imgProfile;
-
   const displayImage = isTournament
     ? tournamentData?.imgProfile || tournamentCup
     : user?.imgProfile || userProfile;
-
   const isIcon = isTournament ? !tournamentData?.imgProfile : !user?.imgProfile;
-
   const imgClassName = isIcon ? styles.placeholder_icon : styles.real_image;
 
   useEffect(() => {
@@ -48,17 +43,21 @@ function ProfileArea({ mode = "user", tournamentId = null }) {
     }
 
     loadData();
+    window.addEventListener("torneoActualizado", loadData);
+    return () => {
+      window.removeEventListener("torneoActualizado", loadData);
+    };
   }, [user, tournamentId, mode]);
+
   if (!user) return <p>Cargando perfil...</p>;
 
   return (
     <div className={styles.profile_wrapper}>
-      {/* El div circular ahora recibe su color por una clase CSS de variante */}
       <div className={styles.img__profile}>
         <img
           src={displayImage}
           alt="Profile/Tournament"
-          className={imgClassName} // <-- Aquí aplicas la clase dinámica
+          className={imgClassName}
         />
       </div>
 

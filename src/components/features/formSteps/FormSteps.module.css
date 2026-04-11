@@ -14,7 +14,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 400px;
-  text-align: left; /* ← mantiene la alineación de textos e inputs a la izquierda */
+  text-align: left;
 }
 
 .form__input {
@@ -122,8 +122,6 @@ h2 {
   flex-direction: row;
   gap: 12px;
 }
-
-/*Corfirmaiton */
 
 .text__confirmation {
   display: flex;

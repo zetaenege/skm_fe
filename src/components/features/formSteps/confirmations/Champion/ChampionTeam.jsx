@@ -4,7 +4,6 @@ import style from "./Champion.module.css";
 function Champion({ team, tournament }) {
   if (!team || !tournament) return null;
 
-  // Formateamos la fecha de finalización (Ej: "18 July 2026")
   const formattedDate = tournament.endDate
     ? new Date(tournament.endDate).toLocaleDateString("en-GB", {
         day: "2-digit",
