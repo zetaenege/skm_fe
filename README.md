@@ -1,12 +1,28 @@
-# React + Vite
+# SKM Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend van de SKM-applicatie, ontwikkeld met React en Context API voor authenticatiebeheer.
 
-Currently, two official plugins are available:
+## Vereisten
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (aanbevolen v18 of hoger)
+- npm (v9 of hoger)
 
-## Expanding the ESLint configuration
+Controleer via de terminal:
+```bash
+node -v
+npm -v
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installatie
+
+Navigeer naar de projectmap en installeer de afhankelijkheden:
+
+```bash
+npm install
+```
+
+## Applicatie uitvoeren
+
+```bash
+npm run dev
+```

@@ -92,7 +92,7 @@ function DownloadReport({ tournament, champion, userTeamId, matches }) {
 
   return (
     <Button
-      type="submit"
+      type="button"
       children=" Download Final Report"
       variant="primary"
       onClick={handleDownload}

@@ -1,4 +1,4 @@
-import SignUp from "../components/features/formSteps/SignUpForm.jsx";
+import SignUp from "../components/formSteps/SignUpForm.jsx";
 
 function Register() {
   return (

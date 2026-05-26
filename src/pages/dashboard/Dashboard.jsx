@@ -1,10 +1,10 @@
 import styles from "./Dashboard.module.css";
-import ProfileArea from "../../components/features/dashElements/profileArea/ProfileArea.jsx";
-import NewTournament from "../../components/features/management/NewTournament.jsx";
-import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
-import NewTeam from "../../components/features/management/NewTeam.jsx";
-import Search from "../../components/features/search/Search.jsx";
-import TournamentCard from "../../components/features/statsvieuw/TournamentCard.jsx";
+import ProfileArea from "../../components/dashElements/profileArea/ProfileArea.jsx";
+import NewTournament from "../management/NewTournament.jsx";
+import TournamentProfileInfo from "../../components/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
+import NewTeam from "../management/NewTeam.jsx";
+import Search from "../search/Search.jsx";
+import TournamentCard from "../../components/statsvieuw/TournamentCard.jsx";
 import { useContext } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 

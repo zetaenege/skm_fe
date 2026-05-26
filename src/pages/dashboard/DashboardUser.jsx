@@ -1,18 +1,18 @@
 import styles from "./Dashboard.module.css";
-import ProfileArea from "../../components/features/dashElements/profileArea/ProfileArea.jsx";
-import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
-import NextMatch from "../../components/features/statsvieuw/NextMatch.jsx";
-import NewTeam from "../../components/features/management/NewTeam.jsx";
-import JoinTeam from "../../components/features/management/JoinTeam.jsx";
-import PositionTable from "../../components/features/statsvieuw/PositionTable.jsx";
-import TeamSquad from "../../components/features/statsvieuw/TeamSquad.jsx";
-import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
-import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
+import ProfileArea from "../../components/dashElements/profileArea/ProfileArea.jsx";
+import TournamentProfileInfo from "../../components/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
+import NextMatch from "../../components/statsvieuw/NextMatch.jsx";
+import NewTeam from "../management/NewTeam.jsx";
+import JoinTeam from "../management/JoinTeam.jsx";
+import PositionTable from "../../components/statsvieuw/PositionTable.jsx";
+import TeamSquad from "../../components/statsvieuw/TeamSquad.jsx";
+import UpcomingMatches from "../../components/statsvieuw/UpcomingMatches.jsx";
+import PastMatches from "../../components/statsvieuw/PastMatches.jsx";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { API } from "../../Api.jsx";
 import axios from "axios";
-import Champion from "../../components/features/formSteps/confirmations/Champion/ChampionTeam.jsx";
+import Champion from "../../components/formSteps/confirmations/Champion/ChampionTeam.jsx";
 import DownloadReport from "../../helpers/DownloadReport.jsx";
 
 function DashboardUser() {

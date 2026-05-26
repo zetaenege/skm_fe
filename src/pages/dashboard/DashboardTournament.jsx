@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API } from "../../Api.jsx";
-import ProfileArea from "../../components/features/dashElements/profileArea/ProfileArea.jsx";
-import TournamentProfileInfo from "../../components/features/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
-import GenerateMatches from "../../components/features/management/GenarateMatches.jsx";
-import PositionTable from "../../components/features/statsvieuw/PositionTable.jsx";
-import UpcomingMatches from "../../components/features/statsvieuw/UpcomingMatches.jsx";
-import PastMatches from "../../components/features/statsvieuw/PastMatches.jsx";
-import NextMatchLive from "../../components/features/statsvieuw/NextMatchLive.jsx";
-import Champion from "../../components/features/formSteps/confirmations/Champion/ChampionTeam.jsx";
+import ProfileArea from "../../components/dashElements/profileArea/ProfileArea.jsx";
+import TournamentProfileInfo from "../../components/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
+import GenerateMatches from "../management/GenarateMatches.jsx";
+import PositionTable from "../../components/statsvieuw/PositionTable.jsx";
+import UpcomingMatches from "../../components/statsvieuw/UpcomingMatches.jsx";
+import PastMatches from "../../components/statsvieuw/PastMatches.jsx";
+import NextMatchLive from "../../components/statsvieuw/NextMatchLive.jsx";
+import Champion from "../../components/formSteps/confirmations/Champion/ChampionTeam.jsx";
 
 function DashboardTournament() {
   const { id } = useParams();

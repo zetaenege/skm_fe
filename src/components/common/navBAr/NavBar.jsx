@@ -5,7 +5,7 @@ import setting from "../../../assets/image/Icons/setting.svg";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
-import NavDropdown from "../../features/management/floatMenu/NavDropdown.jsx";
+import NavDropdown from "../../../pages/management/floatMenu/NavDropdown.jsx";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
