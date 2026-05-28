@@ -1,6 +1,5 @@
 import styles from "./Search.module.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import profileImage from "../../assets/image/Profile/user_Profile.svg";
 import profileTeamImage from "../../assets/image/Icons/team.svg";
@@ -48,7 +47,7 @@ function TeamItem({ team, searchTerm = "" }) {
   const handleConfirmDeleteTeam = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${API}/teams/${localTeam.id}`, {
+      await API.delete(`/teams/${localTeam.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIsDeletingTeam(false);
@@ -61,7 +60,7 @@ function TeamItem({ team, searchTerm = "" }) {
   const handleConfirmDeletePlayer = async (playerId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${API}/users/${playerId}`, {
+      await API.delete(`/users/${playerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLocalPlayers((prevPlayers) =>

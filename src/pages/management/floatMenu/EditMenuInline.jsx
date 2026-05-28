@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import { API } from "../../../Api.jsx";
 import { convertToBase64 } from "../../../helpers/ConvertToBase64.jsx";
 import uploadIcon from "../../../assets/image/Icons/upload.svg";
@@ -36,9 +35,9 @@ function EditMenuInline({ type, item, onClose, onSuccess }) {
         imgProfile: base64Image,
       };
 
-      const endpoint = `${API}/${type}s/${item.id}`;
+      const endpoint = `/${type}s/${item.id}`;
 
-      await axios.put(endpoint, updatePayload, {
+      await API.put(endpoint, updatePayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       onSuccess(updatePayload);

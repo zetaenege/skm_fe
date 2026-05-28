@@ -1,7 +1,6 @@
 import styles from "./dashboard.module.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import ProfileArea from "../../components/dashElements/profileArea/ProfileArea.jsx";
 import TournamentProfileInfo from "../../components/dashElements/tournamentProfileInfo/TournamentProfileInfo.jsx";
@@ -25,8 +24,8 @@ function DashboardTournament() {
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
       const [resTour, resMatches] = await Promise.all([
-        axios.get(`${API}/tournaments/${id}`, config),
-        axios.get(`${API}/matches/tournament/${id}`, config),
+        API.get(`/tournaments/${id}`, config),
+        API.get(`/matches/tournament/${id}`, config),
       ]);
 
       const tourData = resTour.data;

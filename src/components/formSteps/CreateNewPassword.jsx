@@ -1,7 +1,6 @@
 import styles from "./FormSteps.module.css";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import Button from "../common/button/Button.jsx";
 
@@ -43,8 +42,8 @@ function CreatedNewPassword() {
         isAdmin: user?.isAdmin || false,
       };
 
-      const response = await axios.put(
-        `${API}/users/${user.id}`,
+      const response = await API.put(
+        `/users/${user.id}`,
         userUpdatePayload,
         {
           headers: {

@@ -1,6 +1,5 @@
 import style from "./StatsVieuw.module.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import teamImg from "../../assets/image/Icons/team.svg";
 import matchEnd from "../../assets/icons/matchEnd.svg";
@@ -42,8 +41,8 @@ function PastMatches({ tournamentId, teamId }) {
     const fetchMatches = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `${API}/matches/tournament/${tournamentId}`,
+        const res = await API.get(
+          `/matches/tournament/${tournamentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

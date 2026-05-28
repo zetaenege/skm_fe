@@ -1,6 +1,5 @@
 import styles from "./floatMenu.module.css";
 import { useState, useRef, useContext } from "react";
-import axios from "axios";
 import { API } from "../../../Api.jsx";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import { convertToBase64 } from "../../../helpers/ConvertToBase64.jsx";
@@ -49,10 +48,10 @@ function EditMenu({ type = "user", data, onUpdateSuccess }) {
 
       const endpoint =
         type === "tournament"
-          ? `${API}/tournaments/${data.id}`
-          : `${API}/users/${data.id}`;
+          ? `/tournaments/${data.id}`
+          : `/users/${data.id}`;
 
-      await axios.put(endpoint, updatePayload, {
+      await API.put(endpoint, updatePayload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

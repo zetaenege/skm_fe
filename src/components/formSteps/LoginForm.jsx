@@ -2,7 +2,6 @@ import Button from "../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { API } from "../../Api.jsx";
 
@@ -20,10 +19,11 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API}/auth/login`, {
+      const response = await API.post("/auth/login", {
         email,
         password,
       });
+
       const token = response.data.jwt;
 
       if (token) {

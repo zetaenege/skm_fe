@@ -2,7 +2,6 @@ import styles from "./FormSteps.module.css";
 import { useState, useEffect, useContext } from "react";
 import Confirmation from "./confirmations/Confirmation.jsx";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import Button from "../common/button/Button.jsx";
 
@@ -21,7 +20,7 @@ function JoinTeamForm() {
     async function fetchTeams() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${API}/teams`, {
+        const response = await API.get(`/teams`, {
           signal: controller.signal,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -30,7 +29,7 @@ function JoinTeamForm() {
 
         setTeams(Array.isArray(response.data) ? response.data : []);
       } catch (err) {
-        if (!axios.isCancel(err)) {
+        if (!API.isCancel(err)) {
           console.error("Error loading teams:", err);
           setError("Error loading teams list.");
         }
@@ -68,8 +67,8 @@ function JoinTeamForm() {
         isAdmin: user.isAdmin,
       };
 
-      await axios.put(
-        `${API}/users/${user.id}`,
+      await API.put(
+        `/users/${user.id}`,
         userUpdatePayload,
         {
           headers: {

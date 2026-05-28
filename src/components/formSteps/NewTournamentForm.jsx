@@ -1,7 +1,6 @@
 import Button from "../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useState, useRef } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import { convertToBase64 } from "../../helpers/ConvertToBase64.jsx";
 import uploadIcon from "../../assets/image/Icons/upload.svg";
@@ -56,8 +55,8 @@ function NewTournamentForm() {
         base64Image = await convertToBase64(profileImage);
       }
 
-      await axios.post(
-        `${API}/tournaments`,
+      await API.post(
+        `/tournaments`,
         {
           name,
           imgProfile: base64Image,

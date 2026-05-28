@@ -11,7 +11,6 @@ import PastMatches from "../../components/statsvieuw/PastMatches.jsx";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { API } from "../../Api.jsx";
-import axios from "axios";
 import Champion from "../../components/formSteps/confirmations/Champion/ChampionTeam.jsx";
 import DownloadReport from "../../helpers/DownloadReport.jsx";
 
@@ -33,8 +32,8 @@ function DashboardUser() {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         const [resTour, resMatches] = await Promise.all([
-          axios.get(`${API}/tournaments/${searchId}`, config),
-          axios.get(`${API}/matches/tournament/${searchId}`, config),
+          API.get(`/tournaments/${searchId}`, config),
+          API.get(`/matches/tournament/${searchId}`, config),
         ]);
 
         const tourData = resTour.data;

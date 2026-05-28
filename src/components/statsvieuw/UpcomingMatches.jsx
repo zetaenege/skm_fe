@@ -1,7 +1,6 @@
 import style from "./StatsVieuw.module.css";
 import { useEffect, useState } from "react";
 import { API } from "../../Api.jsx";
-import axios from "axios";
 import teamImg from "../../assets/image/Icons/team.svg";
 import matchSchedule from "../../assets/icons/matchSchedule.svg";
 import Button from "../common/button/Button.jsx";
@@ -35,8 +34,8 @@ function UpcomingMatches({ tournamentId, teamId }) {
     const fetchMatches = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `${API}/matches/tournament/${tournamentId}`,
+        const res = await API.get(
+          `/matches/tournament/${tournamentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

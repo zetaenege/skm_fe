@@ -2,7 +2,6 @@ import style from "./StatsVieuw.module.css";
 import Button from "../common/button/Button.jsx";
 import { useEffect, useState } from "react";
 import { API } from "../../Api.jsx";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import tournamentCup from "../../assets/image/Icons/tournament.svg";
 import TournamentCardInfo from "../dashElements/tournamentProfileInfo/TournamentCardInfo.jsx";
@@ -24,7 +23,7 @@ function TournamentCard() {
       }
 
       try {
-        const response = await axios.get(`${API}/tournaments`, {
+        const response = await API.get(`/tournaments`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

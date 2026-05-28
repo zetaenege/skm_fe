@@ -1,4 +1,3 @@
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import { useEffect, useState } from "react";
 import styles from "./Search.module.css";
@@ -32,8 +31,8 @@ function TournamentItem({ tournament, searchTerm = "" }) {
       setLoading(true);
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `${API}/tournaments/${localTournament.id}`,
+        const res = await API.get(
+          `/tournaments/${localTournament.id}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
         setTeams(res.data.teams || []);
@@ -50,7 +49,7 @@ function TournamentItem({ tournament, searchTerm = "" }) {
   const handleConfirmDelete = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${API}/tournaments/${localTournament.id}`, {
+      await API.delete(`/tournaments/${localTournament.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -1,9 +1,7 @@
 import style from "./management.module.css";
 import Button from "../../components/common/button/Button.jsx";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 import styles from "./management.module.css";
 
 function GenerateMatches({ tournamentId, onMatchesGenerated }) {
@@ -16,8 +14,8 @@ function GenerateMatches({ tournamentId, onMatchesGenerated }) {
     async function checkExistingMatches() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${API}/matches/tournament/${tournamentId}`,
+        const response = await API.get(
+          `/matches/tournament/${tournamentId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
 
@@ -51,8 +49,8 @@ function GenerateMatches({ tournamentId, onMatchesGenerated }) {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.post(
-        `${API}/tournaments/${tournamentId}/generate-matches`,
+      await API.post(
+        `/tournaments/${tournamentId}/generate-matches`,
         {},
         {
           headers: {
@@ -61,6 +59,7 @@ function GenerateMatches({ tournamentId, onMatchesGenerated }) {
         },
       );
       setMessage({ type: "success", text: "Matches generated successfully!" });
+      setHasMatches(true);
 
       if (onMatchesGenerated) {
         onMatchesGenerated();

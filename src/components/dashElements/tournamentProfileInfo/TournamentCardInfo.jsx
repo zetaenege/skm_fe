@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { API } from "../../../Api.jsx";
 import styles from "./TournamentProfileInfo.module.css";
 
@@ -18,8 +17,8 @@ function TournamentCardInfo({ variant = "light", tournamentId }) {
 
       try {
         const [resTour, resMatches] = await Promise.all([
-          axios.get(`${API}/tournaments/${tournamentId}`, config),
-          axios.get(`${API}/matches/tournament/${tournamentId}`, config),
+          API.get(`/tournaments/${tournamentId}`, config),
+          API.get(`/matches/tournament/${tournamentId}`, config),
         ]);
 
         const tour = resTour.data;

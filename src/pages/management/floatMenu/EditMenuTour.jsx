@@ -1,7 +1,6 @@
 import styles from "./floatMenu.module.css";
 import { useState, useRef, useContext, useEffect } from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom"; // <-- CAMBIO 1: Usamos useLocation en lugar de useParams
+import { useLocation } from "react-router-dom"; //
 import { API } from "../../../Api.jsx";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import { convertToBase64 } from "../../../helpers/ConvertToBase64.jsx";
@@ -27,7 +26,7 @@ function EditMenuTour({ type = "tournament", data, onUpdateSuccess }) {
       if (!id) return;
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${API}/tournaments/${id}`, {
+        const response = await API.get(`/tournaments/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFetchedData(response.data);
@@ -73,9 +72,9 @@ function EditMenuTour({ type = "tournament", data, onUpdateSuccess }) {
         imgProfile: base64Image,
       };
 
-      const endpoint = `${API}/tournaments/${id}`;
+      const endpoint = `/tournaments/${id}`;
 
-      await axios.put(endpoint, updatePayload, {
+      await API.put(endpoint, updatePayload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

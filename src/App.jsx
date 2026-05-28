@@ -10,12 +10,12 @@ import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import DashboardTournament from "./pages/dashboard/DashboardTournament.jsx";
 import DashboardUser from "./pages/dashboard/DashboardUser.jsx";
 
-import SignUp from "./components/features/formSteps/SignUpForm.jsx";
-import ForgotPassword from "./components/features/formSteps/ForgotPassword.jsx";
-import CreatedNewPassword from "./components/features/formSteps/CreateNewPassword.jsx";
-import NewTournamentForm from "./components/features/formSteps/NewTournamentForm.jsx";
-import NewTeamForm from "./components/features/formSteps/NewTeamForm.jsx";
-import JoinTeamForm from "./components/features/formSteps/JoinTeamForm.jsx";
+import SignUp from "./components/formSteps/SignUpForm.jsx";
+import ForgotPassword from "./components/formSteps/ForgotPassword.jsx";
+import CreatedNewPassword from "./components/formSteps/CreateNewPassword.jsx";
+import NewTournamentForm from "./components/formSteps/NewTournamentForm.jsx";
+import NewTeamForm from "./components/formSteps/NewTeamForm.jsx";
+import JoinTeamForm from "./components/formSteps/JoinTeamForm.jsx";
 
 function App() {
   return (

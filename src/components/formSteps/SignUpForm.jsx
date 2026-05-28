@@ -1,7 +1,6 @@
 import Button from "../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useState, useRef } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import uploadIcon from "../../assets/image/Icons/upload.svg";
 import { convertToBase64 } from "../../helpers/ConvertToBase64.jsx";
@@ -42,7 +41,7 @@ function SignUp() {
         base64Image = await convertToBase64(profileImage);
       }
 
-      const response = await axios.post(`${API}/users`, {
+      const response = await API.post(`/users`, {
         name,
         email,
         password,

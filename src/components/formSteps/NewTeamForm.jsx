@@ -1,7 +1,6 @@
 import Button from "../common/button/Button.jsx";
 import styles from "./FormSteps.module.css";
 import { useState, useEffect, useContext, useRef } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import { AuthContext } from "../../assets/context/AuthContext.jsx";
 import { convertToBase64 } from "../../helpers/ConvertToBase64.jsx";
@@ -27,7 +26,7 @@ function NewTeamForm() {
     async function fetchTournaments() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${API}/tournaments`, {
+        const response = await API.get(`/tournaments`, {
           signal: controller.signal,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -35,7 +34,7 @@ function NewTeamForm() {
         });
         setTournaments(response.data);
       } catch (err) {
-        if (!axios.isCancel(err)) {
+        if (!API.isCancel(err)) {
           console.error("Error al cargar torneos:", err);
           setError("Error loading tournaments.");
         }
@@ -80,8 +79,8 @@ function NewTeamForm() {
         base64Image = await convertToBase64(profileImage);
       }
 
-      const response = await axios.post(
-        `${API}/teams`,
+      const response = await API.post(
+        `/teams`,
         {
           name,
           imgProfile: base64Image,
@@ -108,7 +107,7 @@ function NewTeamForm() {
           isAdmin: user.isAdmin,
         };
 
-        await axios.put(`${API}/users/${user.id}`, userUpdatePayload, {
+        await API.put(`/users/${user.id}`, userUpdatePayload, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

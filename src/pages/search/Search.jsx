@@ -2,7 +2,6 @@ import styles from "./Search.module.css";
 import Button from "../../components/common/button/Button.jsx";
 import searchIcon from "../../assets/icons/search.svg";
 import { useState } from "react";
-import axios from "axios";
 import { API } from "../../Api.jsx";
 import TournamentItem from "./TournamentItem.jsx";
 
@@ -27,8 +26,8 @@ function Search() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.get(
-        `${API}/tournaments/search?query=${searchTerm}`,
+      const res = await API.get(
+        `/tournaments/search?query=${searchTerm}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

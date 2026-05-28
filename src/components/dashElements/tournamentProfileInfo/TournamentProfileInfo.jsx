@@ -2,7 +2,6 @@ import styles from "./TournamentProfileInfo.module.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
 import { API } from "../../../Api.jsx";
-import axios from "axios";
 import teamImg from "../../../assets/image/Icons/team.svg";
 import style from "../../statsvieuw/StatsVieuw.module.css";
 
@@ -10,7 +9,7 @@ function TournamentProfileInfo({
   type = "global",
   variant = "dark",
   tournamentId = null,
-  tournamentData = null, // <-- CAMBIO 1: Recibe la data
+  tournamentData = null,
 }) {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState(null);
@@ -57,8 +56,8 @@ function TournamentProfileInfo({
         const tId = tournamentId || user?.tournamentId;
         if (type === "tournament" && tId) {
           const [resTour, resMatches] = await Promise.all([
-            axios.get(`${API}/tournaments/${tId}`, config),
-            axios.get(`${API}/matches/tournament/${tId}`, config),
+            API.get(`/tournaments/${tId}`, config),
+            API.get(`/matches/tournament/${tId}`, config),
           ]);
 
           const tour = resTour.data;
@@ -99,10 +98,10 @@ function TournamentProfileInfo({
         } else if (type === "global" && user.isAdmin) {
           const [resTournaments, resTeams, resUsers, resMatches] =
             await Promise.all([
-              axios.get(`${API}/tournaments`, config),
-              axios.get(`${API}/teams`, config),
-              axios.get(`${API}/users`, config),
-              axios.get(`${API}/matches`, config),
+              API.get(`/tournaments`, config),
+              API.get(`/teams`, config),
+              API.get(`/users`, config),
+              API.get(`/matches`, config),
             ]);
 
           const allMatches = resMatches.data;
@@ -129,8 +128,8 @@ function TournamentProfileInfo({
           });
         } else if (user?.teamId) {
           const searchTourId = tournamentId || user.tournamentId || 1;
-          const resTour = await axios.get(
-            `${API}/tournaments/${searchTourId}`,
+          const resTour = await API.get(
+            `/tournaments/${searchTourId}`,
             config,
           );
           const allTeams = resTour.data.teams || [];

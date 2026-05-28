@@ -1,7 +1,6 @@
 import styles from "./ProfileArea.module.css";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../assets/context/AuthContext.jsx";
-import axios from "axios";
 import { API } from "../../../Api.jsx";
 import tournamentCup from "../../../assets/icons/img_tournament.svg";
 import userProfile from "../../../assets/image/Profile/user_Profile.svg";
@@ -29,12 +28,12 @@ function ProfileArea({ mode = "user", tournamentId = null }) {
         const token = localStorage.getItem("token");
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
-        const resTeams = await axios.get(`${API}/teams`, config);
+        const resTeams = await API.get(`/teams`, config);
         setTeams(resTeams.data);
 
         const tId = tournamentId || user?.tournamentId;
         if (mode === "tournament" && tId) {
-          const resTour = await axios.get(`${API}/tournaments/${tId}`, config);
+          const resTour = await API.get(`/tournaments/${tId}`, config);
           setTournamentData(resTour.data);
         }
       } catch (err) {

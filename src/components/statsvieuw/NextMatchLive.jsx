@@ -1,7 +1,6 @@
 import style from "./StatsVieuw.module.css";
 import { useEffect, useState } from "react";
 import { API } from "../../Api.jsx";
-import axios from "axios";
 import teamImg from "../../assets/image/Icons/team.svg";
 import Button from "../common/button/Button.jsx";
 import plusIcon from "../../assets/image/Icons/plus.svg";
@@ -47,8 +46,8 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         const [matchesRes, tournamentRes] = await Promise.all([
-          axios.get(`${API}/matches/tournament/${tournamentId}`, config),
-          axios.get(`${API}/tournaments/${tournamentId}`, config),
+          API.get(`/matches/tournament/${tournamentId}`, config),
+          API.get(`/tournaments/${tournamentId}`, config),
         ]);
 
         const next = matchesRes.data.find((m) => m.status === "SCHEDULED");
@@ -84,7 +83,7 @@ function NextMatchLive({ tournamentId, onMatchFinished }) {
         status: "FINISHED",
       };
 
-      await axios.put(`${API}/matches/${match.id}`, updatedMatch, {
+      await API.put(`/matches/${match.id}`, updatedMatch, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

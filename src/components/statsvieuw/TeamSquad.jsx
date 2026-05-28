@@ -1,7 +1,6 @@
 import style from "./StatsVieuw.module.css";
 import { useEffect, useState } from "react";
 import { API } from "../../Api.jsx";
-import axios from "axios";
 import TeamImg from "../../assets/image/Icons/team.svg";
 
 function TeamSquad({ teamId }) {
@@ -15,7 +14,7 @@ function TeamSquad({ teamId }) {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API}/teams/${teamId}`, {
+        const res = await API.get(`/teams/${teamId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSquad(res.data.squad || []);
